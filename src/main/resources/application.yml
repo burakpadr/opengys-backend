@@ -1,0 +1,19 @@
+spring:
+  profiles:
+    active: local
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
+
+server:
+  port: 8080
+  servlet:
+    contextPath: /gys/api/v1
+
+security:
+  jwt:
+    secret: ovVBYAe9BR1e6pMD6SM4rZtbFvPzBXCV
+    expiresInDays: 2
