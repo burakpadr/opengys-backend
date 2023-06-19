@@ -1,10 +1,10 @@
-package com.abctech.gys.domain.core.realestate.location.service;
+package com.abctech.gys.domain.realestate.location.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.abctech.gys.domain.core.realestate.location.port.NeighborhoodServicePort;
+import com.abctech.gys.domain.realestate.location.port.NeighborhoodServicePort;
 
 import io.github.burakpadr.turkeylocation4j.Neighborhood;
 

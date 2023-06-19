@@ -1,4 +1,4 @@
-package com.abctech.gys.domain.core.realestate.location.port;
+package com.abctech.gys.domain.realestate.location.port;
 
 import java.util.List;
 

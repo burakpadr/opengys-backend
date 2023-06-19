@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.abctech.gys.domain.core.realestate.location.port.CityServicePort;
+import com.abctech.gys.domain.realestate.location.port.CityServicePort;
 import com.abctech.gys.infra.inbound.model.response.CityResponse;
 
 import lombok.RequiredArgsConstructor;
