@@ -36,7 +36,7 @@ public class LocationAdapter {
     }
 
     @GetMapping("/cities/{cityName}/districts/{districtName}/neighborhoods")
-    public List<NeighborhoodResponse> getNeighborhoodsByCityNameAndDistrictName(String cityName, String districtName) {
+    public List<NeighborhoodResponse> getNeighborhoodsByCityNameAndDistrictName(@PathVariable String cityName, @PathVariable String districtName) {
         return findNeighborhoodsUseCase.execute(cityName, districtName);
     }
 }
