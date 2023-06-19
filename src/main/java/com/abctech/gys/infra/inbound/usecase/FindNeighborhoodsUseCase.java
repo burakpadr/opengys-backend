@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FindNeighborhoodsUseCase {
 
-    private NeighborhoodServicePort neighborhoodServicePort;
+    private final NeighborhoodServicePort neighborhoodServicePort;
 
     public List<NeighborhoodResponse> execute(String cityName, String districtName) {
         return neighborhoodServicePort.getNeighborhoodsByCityNameAndDistrictName(cityName, districtName).stream()

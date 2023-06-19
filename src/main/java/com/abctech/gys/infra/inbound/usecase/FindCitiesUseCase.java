@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FindCitiesUseCase {
 
-    private CityServicePort cityServicePort;
+    private final CityServicePort cityServicePort;
 
     public List<CityResponse> execute() {
         return cityServicePort.getCities().stream().map(CityResponse::of).toList();

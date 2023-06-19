@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FindDistrictsUseCase {
 
-    private DistrictServicePort districtServicePort;
+    private final DistrictServicePort districtServicePort;
 
     public List<DistrictResponse> execute(String cityName) {
         return districtServicePort.getDisctrictByCityName(cityName).stream().map(DistrictResponse::of).toList();

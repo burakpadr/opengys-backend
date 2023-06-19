@@ -21,9 +21,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LocationAdapter {
 
-    private FindCitiesUseCase findCitiesUseCase;
-    private FindDistrictsUseCase findDistrictsUseCase;
-    private FindNeighborhoodsUseCase findNeighborhoodsUseCase;
+    private final FindCitiesUseCase findCitiesUseCase;
+    private final FindDistrictsUseCase findDistrictsUseCase;
+    private final FindNeighborhoodsUseCase findNeighborhoodsUseCase;
 
     @GetMapping("/cities")
     public List<CityResponse> getCities() {
