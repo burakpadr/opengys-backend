@@ -1,4 +1,4 @@
-package com.abctech.gys.infra.inbound.common.model.response;
+package com.abctech.gys.domain.realestate.common.model.response;
 
 import lombok.Builder;
 import lombok.Data;

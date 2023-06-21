@@ -1,7 +1,7 @@
 package com.abctech.gys.infra.inbound.common.advice;
 
-import com.abctech.gys.infra.inbound.common.exception.BaseException;
-import com.abctech.gys.infra.inbound.common.model.response.ExceptionResponse;
+import com.abctech.gys.domain.realestate.common.exception.BaseException;
+import com.abctech.gys.domain.realestate.common.model.response.ExceptionResponse;
 
 public class BaseAdvice {
     

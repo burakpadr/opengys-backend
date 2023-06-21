@@ -1,6 +1,6 @@
-package com.abctech.gys.infra.inbound.status.exception;
+package com.abctech.gys.domain.realestate.status.exception;
 
-import com.abctech.gys.infra.inbound.common.exception.BaseException;
+import com.abctech.gys.domain.realestate.common.exception.BaseException;
 
 public class StatusNotFoundException extends BaseException {
     

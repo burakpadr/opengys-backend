@@ -1,4 +1,4 @@
-package com.abctech.gys.infra.inbound.common.exception;
+package com.abctech.gys.domain.realestate.common.exception;
 
 import lombok.Getter;
 
