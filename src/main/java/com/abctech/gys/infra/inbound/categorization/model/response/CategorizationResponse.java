@@ -1,7 +1,7 @@
 package com.abctech.gys.infra.inbound.categorization.model.response;
 
-import com.abctech.gys.domain.categorization.entity.Category;
-import com.abctech.gys.domain.categorization.entity.SubCategory;
+import com.abctech.gys.domain.realestate.categorization.entity.Category;
+import com.abctech.gys.domain.realestate.categorization.entity.SubCategory;
 
 import lombok.Builder;
 import lombok.Data;

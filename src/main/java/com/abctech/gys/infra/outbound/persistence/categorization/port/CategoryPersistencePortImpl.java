@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import com.abctech.gys.domain.categorization.entity.Category;
+import com.abctech.gys.domain.realestate.categorization.entity.Category;
 import com.abctech.gys.infra.outbound.persistence.categorization.repository.CategoryRepository;
 
 import lombok.RequiredArgsConstructor;

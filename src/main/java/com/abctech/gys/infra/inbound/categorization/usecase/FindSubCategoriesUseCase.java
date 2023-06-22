@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.abctech.gys.domain.categorization.port.SubCategoryServicePort;
+import com.abctech.gys.domain.realestate.categorization.port.SubCategoryServicePort;
 import com.abctech.gys.infra.inbound.categorization.model.response.CategorizationResponse;
 
 import lombok.RequiredArgsConstructor;

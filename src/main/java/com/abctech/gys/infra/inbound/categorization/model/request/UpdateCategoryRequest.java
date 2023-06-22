@@ -2,7 +2,7 @@ package com.abctech.gys.infra.inbound.categorization.model.request;
 
 import java.util.List;
 
-import com.abctech.gys.domain.categorization.entity.Category;
+import com.abctech.gys.domain.realestate.categorization.entity.Category;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.NotNull;

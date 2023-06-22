@@ -7,8 +7,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import com.abctech.gys.domain.categorization.entity.Category;
-import com.abctech.gys.domain.categorization.port.CategoryServicePort;
+import com.abctech.gys.domain.realestate.categorization.entity.Category;
+import com.abctech.gys.domain.realestate.categorization.port.CategoryServicePort;
 import com.abctech.gys.infra.inbound.categorization.model.response.CategorizationResponse;
 
 import lombok.RequiredArgsConstructor;

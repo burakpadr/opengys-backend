@@ -1,6 +1,6 @@
 package com.abctech.gys.infra.inbound.categorization.model.request;
 
-import com.abctech.gys.domain.categorization.entity.SubCategory;
+import com.abctech.gys.domain.realestate.categorization.entity.SubCategory;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

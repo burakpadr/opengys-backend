@@ -1,8 +1,8 @@
-package com.abctech.gys.domain.categorization.port;
+package com.abctech.gys.domain.realestate.categorization.port;
 
 import java.util.List;
 
-import com.abctech.gys.domain.categorization.entity.SubCategory;
+import com.abctech.gys.domain.realestate.categorization.entity.SubCategory;
 
 public interface SubCategoryServicePort {
     

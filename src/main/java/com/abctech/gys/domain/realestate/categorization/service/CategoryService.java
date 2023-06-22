@@ -1,12 +1,12 @@
-package com.abctech.gys.domain.categorization.service;
+package com.abctech.gys.domain.realestate.categorization.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.abctech.gys.domain.categorization.entity.Category;
-import com.abctech.gys.domain.categorization.exception.CategoryNotFoundException;
-import com.abctech.gys.domain.categorization.port.CategoryServicePort;
+import com.abctech.gys.domain.realestate.categorization.entity.Category;
+import com.abctech.gys.domain.realestate.categorization.exception.CategoryNotFoundException;
+import com.abctech.gys.domain.realestate.categorization.port.CategoryServicePort;
 import com.abctech.gys.infra.outbound.persistence.categorization.port.CategoryPersistencePort;
 
 import lombok.RequiredArgsConstructor;

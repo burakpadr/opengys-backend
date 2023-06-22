@@ -1,9 +1,9 @@
-package com.abctech.gys.domain.categorization.port;
+package com.abctech.gys.domain.realestate.categorization.port;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.abctech.gys.domain.categorization.entity.Category;
+import com.abctech.gys.domain.realestate.categorization.entity.Category;
 
 public interface CategoryServicePort {
 

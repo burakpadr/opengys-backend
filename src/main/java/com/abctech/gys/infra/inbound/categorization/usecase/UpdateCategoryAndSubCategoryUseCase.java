@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.abctech.gys.domain.categorization.entity.SubCategory;
-import com.abctech.gys.domain.categorization.port.CategoryServicePort;
-import com.abctech.gys.domain.categorization.port.SubCategoryServicePort;
+import com.abctech.gys.domain.realestate.categorization.entity.SubCategory;
+import com.abctech.gys.domain.realestate.categorization.port.CategoryServicePort;
+import com.abctech.gys.domain.realestate.categorization.port.SubCategoryServicePort;
 import com.abctech.gys.infra.inbound.categorization.model.request.UpdateCategoryRequest;
 import com.abctech.gys.infra.inbound.categorization.model.request.UpdateSubCategoryRequest;
 

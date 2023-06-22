@@ -1,4 +1,4 @@
-package com.abctech.gys.domain.categorization.entity;
+package com.abctech.gys.domain.realestate.categorization.entity;
 
 import org.hibernate.envers.Audited;
 

@@ -1,4 +1,4 @@
-package com.abctech.gys.domain.categorization.service;
+package com.abctech.gys.domain.realestate.categorization.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,9 +6,9 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.abctech.gys.domain.categorization.entity.SubCategory;
-import com.abctech.gys.domain.categorization.exception.SubCategoryNotFoundException;
-import com.abctech.gys.domain.categorization.port.SubCategoryServicePort;
+import com.abctech.gys.domain.realestate.categorization.entity.SubCategory;
+import com.abctech.gys.domain.realestate.categorization.exception.SubCategoryNotFoundException;
+import com.abctech.gys.domain.realestate.categorization.port.SubCategoryServicePort;
 import com.abctech.gys.infra.outbound.persistence.categorization.port.SubCategoryPersistencePort;
 
 import lombok.RequiredArgsConstructor;

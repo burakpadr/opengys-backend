@@ -1,4 +1,4 @@
-package com.abctech.gys.domain.categorization.exception;
+package com.abctech.gys.domain.realestate.categorization.exception;
 
 import com.abctech.gys.domain.common.exception.BaseException;
 
