@@ -9,7 +9,7 @@
 		<version>3.1.0</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.abctech</groupId>
+	<groupId>com.padr</groupId>
 	<artifactId>gys</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>gys</name>

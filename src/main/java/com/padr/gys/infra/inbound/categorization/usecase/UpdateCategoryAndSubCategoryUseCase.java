@@ -1,0 +1,30 @@
+package com.padr.gys.infra.inbound.categorization.usecase;
+
+import java.util.List;
+
+import org.springframework.stereotype.Component;
+
+import com.padr.gys.domain.realestate.categorization.entity.SubCategory;
+import com.padr.gys.domain.realestate.categorization.port.CategoryServicePort;
+import com.padr.gys.domain.realestate.categorization.port.SubCategoryServicePort;
+import com.padr.gys.infra.inbound.categorization.model.request.UpdateCategoryRequest;
+import com.padr.gys.infra.inbound.categorization.model.request.UpdateSubCategoryRequest;
+
+import lombok.RequiredArgsConstructor;
+
+@Component
+@RequiredArgsConstructor
+public class UpdateCategoryAndSubCategoryUseCase {
+
+    private final CategoryServicePort categoryServicePort;
+    private final SubCategoryServicePort subCategoryServicePort;
+
+    public void execute(UpdateCategoryRequest request) {
+        categoryServicePort.update(request.to());
+
+        List<SubCategory> subCategories = request.getSubCategoryRequests().stream().map(UpdateSubCategoryRequest::to)
+                .toList();
+
+        subCategoryServicePort.updateAll(request.getId(), subCategories);
+    }
+}
