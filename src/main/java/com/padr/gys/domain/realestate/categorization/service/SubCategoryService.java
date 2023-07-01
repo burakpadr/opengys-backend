@@ -2,10 +2,12 @@ package com.padr.gys.domain.realestate.categorization.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.padr.gys.domain.realestate.categorization.entity.Category;
 import com.padr.gys.domain.realestate.categorization.entity.SubCategory;
 import com.padr.gys.domain.realestate.categorization.exception.SubCategoryNotFoundException;
 import com.padr.gys.domain.realestate.categorization.port.SubCategoryServicePort;
@@ -34,12 +36,12 @@ public class SubCategoryService implements SubCategoryServicePort {
     }
 
     @Override
-    public List<SubCategory> updateAll(Long categoryId, List<SubCategory> subCategories) {
-        List<SubCategory> oldSubCategories = findByCategoryIdAndIsActive(categoryId, true);
+    public void updateAll(Category category, List<SubCategory> subCategories) {
+        List<SubCategory> oldSubCategories = findByCategoryIdAndIsActive(category.getId(), true);
 
         oldSubCategories.stream().forEach(oldSubCategory -> {
             Optional<SubCategory> subCategoryOptional = subCategories.stream()
-                    .filter(s -> s.getId().equals(oldSubCategory.getId())).findAny();
+                    .filter(s -> Objects.nonNull(s.getId()) && s.getId().equals(oldSubCategory.getId())).findAny();
 
             if (!subCategoryOptional.isPresent())
                 oldSubCategory.setIsActive(false);
@@ -47,15 +49,21 @@ public class SubCategoryService implements SubCategoryServicePort {
                 oldSubCategory.setName(subCategoryOptional.get().getName());
         });
 
+        List<SubCategory> newSubCategories = new ArrayList<>();
+
         subCategories.stream().forEach(subCategory -> {
             Optional<SubCategory> subCategoryOptional = oldSubCategories.stream()
-                    .filter(s -> s.getId().equals(subCategory.getId())).findAny();
+                    .filter(s -> Objects.nonNull(s.getId()) && s.getId().equals(subCategory.getId())).findAny();
 
-            if (!subCategoryOptional.isPresent())
-                oldSubCategories.add(subCategory);
+            if (!subCategoryOptional.isPresent()) {
+                subCategory.setCategory(category);
+
+                newSubCategories.add(subCategory);
+            }
         });
 
-        return subCategoryPersistencePort.saveAll(oldSubCategories);
+        createAll(newSubCategories);
+        subCategoryPersistencePort.saveAll(oldSubCategories);
     }
 
     @Override

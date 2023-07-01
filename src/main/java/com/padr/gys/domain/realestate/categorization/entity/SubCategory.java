@@ -29,7 +29,7 @@ import lombok.experimental.SuperBuilder;
 public class SubCategory extends BaseEntity {
     
     @Id
-    @SequenceGenerator(name = "sub_category_id_seq", sequenceName = "sub_category_id_seq")
+    @SequenceGenerator(name = "sub_category_id_seq", sequenceName = "sub_category_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sub_category_id_seq")
     private Long id;
 

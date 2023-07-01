@@ -46,11 +46,13 @@ public class BaseEntity {
 
     @PrePersist
     private void prePersist() {
+        createDate = lastModifiedDate = LocalDateTime.now();
         ip = IpUtil.getClientIp();
     }
 
     @PreUpdate
     private void preUpdate() {
+        createDate = lastModifiedDate = LocalDateTime.now();
         ip = IpUtil.getClientIp();
     }
 }

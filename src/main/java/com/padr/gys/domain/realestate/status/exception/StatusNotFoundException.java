@@ -1,6 +1,6 @@
 package com.padr.gys.domain.realestate.status.exception;
 
-import com.padr.gys.domain.realestate.common.exception.BaseException;
+import com.padr.gys.domain.common.exception.BaseException;
 
 public class StatusNotFoundException extends BaseException {
     
