@@ -1,4 +1,4 @@
-package com.padr.gys.infra.inbound.model.response;
+package com.padr.gys.infra.inbound.location.model.response;
 
 import io.github.burakpadr.turkeylocation4j.City;
 import lombok.Data;

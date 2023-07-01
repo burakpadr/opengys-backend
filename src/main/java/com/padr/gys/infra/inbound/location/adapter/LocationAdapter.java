@@ -1,4 +1,4 @@
-package com.padr.gys.infra.inbound.adapter;
+package com.padr.gys.infra.inbound.location.adapter;
 
 import java.util.List;
 
@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.padr.gys.infra.inbound.model.response.CityResponse;
-import com.padr.gys.infra.inbound.model.response.DistrictResponse;
-import com.padr.gys.infra.inbound.model.response.NeighborhoodResponse;
-import com.padr.gys.infra.inbound.usecase.FindCitiesUseCase;
-import com.padr.gys.infra.inbound.usecase.FindDistrictsUseCase;
-import com.padr.gys.infra.inbound.usecase.FindNeighborhoodsUseCase;
+import com.padr.gys.infra.inbound.location.model.response.CityResponse;
+import com.padr.gys.infra.inbound.location.model.response.DistrictResponse;
+import com.padr.gys.infra.inbound.location.model.response.NeighborhoodResponse;
+import com.padr.gys.infra.inbound.location.usecase.FindCitiesUseCase;
+import com.padr.gys.infra.inbound.location.usecase.FindDistrictsUseCase;
+import com.padr.gys.infra.inbound.location.usecase.FindNeighborhoodsUseCase;
 
 import lombok.RequiredArgsConstructor;
 

@@ -1,11 +1,11 @@
-package com.padr.gys.infra.inbound.usecase;
+package com.padr.gys.infra.inbound.location.usecase;
 
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
 import com.padr.gys.domain.realestate.location.port.NeighborhoodServicePort;
-import com.padr.gys.infra.inbound.model.response.NeighborhoodResponse;
+import com.padr.gys.infra.inbound.location.model.response.NeighborhoodResponse;
 
 import lombok.RequiredArgsConstructor;
 
