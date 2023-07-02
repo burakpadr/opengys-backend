@@ -11,6 +11,8 @@ public interface RealEstateServicePort {
 
     RealEstate findByIdAndIsActive(Long id, Boolean isActive);
 
+    RealEstate findByNoAndIsActive(String no, Boolean isActive);
+
     Page<RealEstate> findByIsActive(Boolean isActive, Pageable pageable);
 
     RealEstate update(Long id, RealEstate realEstate);

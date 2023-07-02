@@ -19,7 +19,7 @@ public class AddressRequest {
     private String districtName;
     private String neighborhoodName;
     private Integer postCode;
-    private String openAdddress;
+    private String openAddress;
 
     public Address to() {
         return Address.builder()
@@ -29,7 +29,7 @@ public class AddressRequest {
                 .districtName(districtName)
                 .neighborhoodName(neighborhoodName)
                 .postCode(postCode)
-                .openAddress(openAdddress)
+                .openAddress(openAddress)
                 .build();
     }
 }

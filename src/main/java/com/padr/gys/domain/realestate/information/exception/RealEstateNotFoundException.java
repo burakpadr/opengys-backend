@@ -9,4 +9,8 @@ public class RealEstateNotFoundException extends BaseException {
     public RealEstateNotFoundException(Long id) {
         super(CODE, String.format("%d id'li gayrimenkul kaydı bulunamadı", id));
     }
+
+    public RealEstateNotFoundException(String no) {
+        super(CODE, String.format("%s no'lu gayrimenkul kaydı bulunamadı", no));
+    }
 }

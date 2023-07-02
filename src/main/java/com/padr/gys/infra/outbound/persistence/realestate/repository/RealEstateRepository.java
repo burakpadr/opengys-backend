@@ -15,4 +15,6 @@ public interface RealEstateRepository extends JpaRepository<RealEstate, Long> {
     Optional<RealEstate> findByIdAndIsActive(Long id, Boolean isActive);
 
     Page<RealEstate> findByIsActive(Boolean isActive, Pageable pageable);
+
+    Optional<RealEstate> findByNoAndIsActive(String no, Boolean isActive);
 }

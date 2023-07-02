@@ -54,4 +54,10 @@ public class RealEstateService implements RealEstateServicePort {
 
         realEstatePersistencePort.save(realEstate);
     }
+
+    @Override
+    public RealEstate findByNoAndIsActive(String no, Boolean isActive) {
+        return realEstatePersistencePort.findByNoAndIsActive(no, isActive)
+                .orElseThrow(() -> new RealEstateNotFoundException(no));
+    }
 }

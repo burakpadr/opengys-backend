@@ -31,4 +31,9 @@ public class RealEstatePersistencePortImpl implements RealEstatePersistencePort 
     public Page<RealEstate> findByIsActive(Boolean isActive, Pageable pageable) {
         return realEstateRepository.findByIsActive(isActive, pageable);
     }
+
+    @Override
+    public Optional<RealEstate> findByNoAndIsActive(String no, Boolean isActive) {
+        return realEstateRepository.findByNoAndIsActive(no, isActive);
+    }
 }
