@@ -21,7 +21,7 @@ import lombok.experimental.SuperBuilder;
 
 @Entity
 @Audited
-@Table(name = "categories")
+@Table(name = "addresses")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
