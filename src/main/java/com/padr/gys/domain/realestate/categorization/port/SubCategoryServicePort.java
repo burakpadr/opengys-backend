@@ -9,6 +9,8 @@ public interface SubCategoryServicePort {
     
     List<SubCategory> findByCategoryIdAndIsActive(Long categoryId, Boolean isActive);
 
+    SubCategory findByIdAndIsActive(Long id, Boolean isActive);
+
     List<SubCategory> createAll(List<SubCategory> subCategories);
 
     void updateAll(Category category, List<SubCategory> subCategories);

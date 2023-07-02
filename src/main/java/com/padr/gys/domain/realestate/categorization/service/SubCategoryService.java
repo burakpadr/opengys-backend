@@ -81,7 +81,8 @@ public class SubCategoryService implements SubCategoryServicePort {
         subCategoryPersistencePort.saveAll(subCategories);
     }
 
-    private SubCategory findByIdAndIsActive(Long id, Boolean isActive) {
+    @Override
+    public SubCategory findByIdAndIsActive(Long id, Boolean isActive) {
         return subCategoryPersistencePort.findByIdAndIsActive(id, true)
                 .orElseThrow(() -> new SubCategoryNotFoundException(id));
     }
