@@ -9,7 +9,7 @@ import com.padr.gys.domain.common.model.response.ExceptionResponse;
 import com.padr.gys.domain.realestate.status.exception.StatusNotFoundException;
 import com.padr.gys.infra.inbound.common.advice.BaseAdvice;
 
-@ControllerAdvice("com.padr.gys.infra.inbound.realestate.status.adapter")
+@ControllerAdvice("com.padr.gys.infra.inbound")
 public class StatusAdvice extends BaseAdvice {
 
     @ExceptionHandler(StatusNotFoundException.class)

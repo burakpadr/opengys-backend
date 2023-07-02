@@ -10,7 +10,7 @@ import com.padr.gys.domain.realestate.categorization.exception.CategoryNotFoundE
 import com.padr.gys.domain.realestate.categorization.exception.SubCategoryNotFoundException;
 import com.padr.gys.infra.inbound.common.advice.BaseAdvice;
 
-@ControllerAdvice("com.padr.gys.infra.inbound.realestate.categorization.adapter")
+@ControllerAdvice("com.padr.gys.infra.inbound")
 public class CategorizationAdvice extends BaseAdvice {
 
     @ExceptionHandler(CategoryNotFoundException.class)
