@@ -1,7 +1,6 @@
 package com.padr.gys.infra.inbound.realestate.information.usecase;
 
 import java.util.Objects;
-import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
@@ -12,7 +11,6 @@ import com.padr.gys.domain.realestate.categorization.entity.SubCategory;
 import com.padr.gys.domain.realestate.categorization.port.CategoryServicePort;
 import com.padr.gys.domain.realestate.categorization.port.SubCategoryServicePort;
 import com.padr.gys.domain.realestate.information.entity.RealEstate;
-import com.padr.gys.domain.realestate.information.exception.RealEstateAlreadyExistException;
 import com.padr.gys.domain.realestate.information.port.RealEstateServicePort;
 import com.padr.gys.infra.inbound.realestate.information.model.request.CreateRealEstateRequest;
 import com.padr.gys.infra.inbound.realestate.information.model.response.RealEstateResponse;
@@ -29,10 +27,6 @@ public class CreateRealEstateUseCase {
     private final SubCategoryServicePort subCategoryServicePort;
 
     public RealEstateResponse execute(CreateRealEstateRequest request) {
-        Optional.ofNullable(realEstateServicePort.findByNoAndIsActive(request.getNo(), true)).ifPresent(r -> {
-            throw new RealEstateAlreadyExistException(r.getNo());
-        });
-
         Address address = addressServicePort.create(request.getAddressRequest().to());
 
         Category category = categoryServicePort.findByIdAndIsActive(request.getCategoryId(), true);
