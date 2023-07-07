@@ -1,10 +1,13 @@
 package com.padr.gys.domain.realestate.information.service;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.padr.gys.domain.realestate.information.entity.RealEstate;
+import com.padr.gys.domain.realestate.information.exception.RealEstateAlreadyExistException;
 import com.padr.gys.domain.realestate.information.exception.RealEstateNotFoundException;
 import com.padr.gys.domain.realestate.information.port.RealEstateServicePort;
 import com.padr.gys.infra.outbound.persistence.realestate.port.RealEstatePersistencePort;
@@ -19,6 +22,8 @@ public class RealEstateService implements RealEstateServicePort {
 
     @Override
     public RealEstate create(RealEstate realEstate) {
+        throwExceptionIfExistAssociatedWith(realEstate.getNo());
+
         realEstate.setIsActive(true);
 
         return realEstatePersistencePort.save(realEstate);
@@ -37,6 +42,8 @@ public class RealEstateService implements RealEstateServicePort {
 
     @Override
     public RealEstate update(Long id, RealEstate realEstate) {
+        throwExceptionIfExistAssociatedWith(realEstate.getNo());
+
         RealEstate oldRealEstate = findByIdAndIsActive(id, true);
 
         oldRealEstate.setNo(realEstate.getNo());
@@ -59,5 +66,11 @@ public class RealEstateService implements RealEstateServicePort {
     public RealEstate findByNoAndIsActive(String no, Boolean isActive) {
         return realEstatePersistencePort.findByNoAndIsActive(no, isActive)
                 .orElseThrow(() -> new RealEstateNotFoundException(no));
+    }
+
+    private void throwExceptionIfExistAssociatedWith(String no) {
+        Optional.ofNullable(findByNoAndIsActive(no, true)).ifPresent(r -> {
+            throw new RealEstateAlreadyExistException(r.getNo());
+        });
     }
 }
