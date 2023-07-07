@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
-import com.padr.gys.domain.realestate.address.entity.Address;
+import com.padr.gys.domain.address.entity.Address;
 import com.padr.gys.infra.outbound.persistence.address.repository.AddressRepository;
 
 import lombok.RequiredArgsConstructor;

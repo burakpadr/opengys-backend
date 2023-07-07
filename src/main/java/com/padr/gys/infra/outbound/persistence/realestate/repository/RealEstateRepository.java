@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.padr.gys.domain.realestate.information.entity.RealEstate;
+import com.padr.gys.domain.realestate.entity.RealEstate;
 
 @Repository
 public interface RealEstateRepository extends JpaRepository<RealEstate, Long> {

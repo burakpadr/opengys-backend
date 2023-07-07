@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.padr.gys.domain.realestate.information.entity.RealEstate;
+import com.padr.gys.domain.realestate.entity.RealEstate;
 
 public interface RealEstatePersistencePort {
     
