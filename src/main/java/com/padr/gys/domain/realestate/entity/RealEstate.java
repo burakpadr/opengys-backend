@@ -1,8 +1,11 @@
 package com.padr.gys.domain.realestate.entity;
 
+import java.util.List;
+
 import org.hibernate.envers.Audited;
 
 import com.padr.gys.domain.address.entity.Address;
+import com.padr.gys.domain.advert.entity.Advert;
 import com.padr.gys.domain.categorization.entity.Category;
 import com.padr.gys.domain.categorization.entity.SubCategory;
 import com.padr.gys.domain.common.model.entity.BaseEntity;
@@ -18,9 +21,11 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -65,6 +70,10 @@ public class RealEstate extends BaseEntity {
 
     @OneToOne
     private Address address;
+
+    @OneToMany(mappedBy = "realEstate")
+    @Transient
+    private List<Advert> adverts;
 
     public SubStatus getSubStatus() {
         return switch (mainStatus) {
