@@ -2,6 +2,7 @@ package com.padr.gys.domain.realestate.entity;
 
 import java.util.List;
 
+import com.padr.gys.domain.rentalcontract.entity.RentalContract;
 import org.hibernate.envers.Audited;
 
 import com.padr.gys.domain.address.entity.Address;
@@ -74,6 +75,10 @@ public class RealEstate extends BaseEntity {
     @OneToMany(mappedBy = "realEstate")
     @Transient
     private List<Advert> adverts;
+
+    @OneToMany(mappedBy = "realEstate")
+    @Transient
+    private List<RentalContract> rentalContracts;
 
     public SubStatus getSubStatus() {
         return switch (mainStatus) {
