@@ -4,19 +4,22 @@ import com.padr.gys.domain.rentalcontract.entity.RentalContract;
 import com.padr.gys.domain.rentalcontract.exception.RentalContractAlreadyExistException;
 import com.padr.gys.domain.rentalcontract.exception.RentalContractNotFoundException;
 import com.padr.gys.domain.rentalcontract.port.RentalContractServicePort;
+import com.padr.gys.domain.statusmanager.constant.StatusChangeReportType;
+import com.padr.gys.domain.statusmanager.model.StatusChangeReportModel;
+import com.padr.gys.domain.statusmanager.reporter.StatusChangeReporter;
 import com.padr.gys.infra.outbound.persistence.rentalcontract.port.RentalContractPersistencePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class RentalContractService implements RentalContractServicePort {
 
     private final RentalContractPersistencePort rentalContractPersistencePort;
+
+    private final StatusChangeReporter statusChangeReporter;
 
     @Override
     public Page<RentalContract> findByRealEstateIdAndIsActive(Long realEstateId, Boolean isActive, Pageable pageable) {
@@ -42,12 +45,22 @@ public class RentalContractService implements RentalContractServicePort {
 
         rentalContract.setIsActive(true);
 
-        return rentalContractPersistencePort.save(rentalContract);
+        rentalContractPersistencePort.save(rentalContract);
+
+        statusChangeReporter.getCreateRentalContractReporter().submit(
+                StatusChangeReportModel.<RentalContract>builder()
+                        .type(StatusChangeReportType.CREATE)
+                        .oldEntity(rentalContract)
+                        .build());
+
+        return rentalContract;
     }
 
     @Override
     public RentalContract update(Long id, RentalContract rentalContract) {
         RentalContract oldRentalContract = findByIdAndIsActive(id, true);
+
+        RentalContract oldRentalContractCopy = new RentalContract(oldRentalContract);
 
         oldRentalContract.setTenantTitle(rentalContract.getTenantTitle());
         oldRentalContract.setTenantIdentityNumber(rentalContract.getTenantIdentityNumber());
@@ -57,7 +70,16 @@ public class RentalContractService implements RentalContractServicePort {
         oldRentalContract.setStartDate(rentalContract.getStartDate());
         oldRentalContract.setEndDate(rentalContract.getEndDate());
 
-        return rentalContractPersistencePort.save(oldRentalContract);
+        statusChangeReporter.getCreateRentalContractReporter().submit(
+                StatusChangeReportModel.<RentalContract>builder()
+                        .type(StatusChangeReportType.UPDATE)
+                        .oldEntity(oldRentalContractCopy)
+                        .updatedEntity(oldRentalContract)
+                        .build());
+
+        rentalContractPersistencePort.save(oldRentalContract);
+
+        return oldRentalContract;
     }
 
     @Override
@@ -67,5 +89,11 @@ public class RentalContractService implements RentalContractServicePort {
         rentalContract.setIsActive(false);
 
         rentalContractPersistencePort.save(rentalContract);
+
+        statusChangeReporter.getCreateRentalContractReporter().submit(
+                StatusChangeReportModel.<RentalContract>builder()
+                        .type(StatusChangeReportType.DELETE)
+                        .oldEntity(rentalContract)
+                        .build());
     }
 }

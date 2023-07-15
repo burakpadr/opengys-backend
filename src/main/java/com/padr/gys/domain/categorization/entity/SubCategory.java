@@ -1,22 +1,18 @@
 package com.padr.gys.domain.categorization.entity;
 
+import com.padr.gys.domain.realestate.entity.RealEstate;
+import jakarta.persistence.*;
 import org.hibernate.envers.Audited;
 
 import com.padr.gys.domain.common.model.entity.BaseEntity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 @Entity
 @Audited
@@ -35,6 +31,10 @@ public class SubCategory extends BaseEntity {
 
     @Column
     private String name;
+
+    @OneToMany(mappedBy = "subCategory")
+    @Transient
+    private List<RealEstate> realEstates;
 
     @ManyToOne
     private Category category;

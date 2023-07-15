@@ -3,6 +3,7 @@ package com.padr.gys.domain.realestate.entity;
 import java.util.List;
 
 import com.padr.gys.domain.rentalcontract.entity.RentalContract;
+import jakarta.persistence.*;
 import org.hibernate.envers.Audited;
 
 import com.padr.gys.domain.address.entity.Address;
@@ -15,18 +16,6 @@ import com.padr.gys.domain.status.constant.ForSaleSubStatus;
 import com.padr.gys.domain.status.constant.MainStatus;
 import com.padr.gys.domain.status.constant.SubStatus;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -51,10 +40,10 @@ public class RealEstate extends BaseEntity {
     @Column
     private String no;
 
-    @OneToOne
+    @ManyToOne
     private Category category;
 
-    @OneToOne
+    @ManyToOne
     private SubCategory subCategory;
 
     @Column

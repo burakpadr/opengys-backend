@@ -2,6 +2,9 @@ package com.padr.gys.domain.realestate.service;
 
 import java.util.Optional;
 
+import com.padr.gys.domain.statusmanager.constant.StatusChangeReportType;
+import com.padr.gys.domain.statusmanager.model.StatusChangeReportModel;
+import com.padr.gys.domain.statusmanager.reporter.StatusChangeReporter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,13 +23,23 @@ public class RealEstateService implements RealEstateServicePort {
 
     private final RealEstatePersistencePort realEstatePersistencePort;
 
+    private final StatusChangeReporter statusChangeReporter;
+
     @Override
     public RealEstate create(RealEstate realEstate) {
         throwExceptionIfExistAssociatedWith(realEstate.getNo());
 
         realEstate.setIsActive(true);
 
-        return realEstatePersistencePort.save(realEstate);
+        realEstatePersistencePort.save(realEstate);
+
+        statusChangeReporter.getCreateRealEstateReporter().submit(
+                StatusChangeReportModel.<RealEstate>builder()
+                .type(StatusChangeReportType.CREATE)
+                .oldEntity(realEstate)
+                .build());
+
+        return realEstate;
     }
 
     @Override
@@ -69,7 +82,7 @@ public class RealEstateService implements RealEstateServicePort {
     }
 
     private void throwExceptionIfExistAssociatedWith(String no) {
-        Optional.ofNullable(findByNoAndIsActive(no, true)).ifPresent(r -> {
+        realEstatePersistencePort.findByNoAndIsActive(no, true).ifPresent(r -> {
             throw new RealEstateAlreadyExistException(r.getNo());
         });
     }

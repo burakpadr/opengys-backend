@@ -1,5 +1,6 @@
 package com.padr.gys.infra.outbound.persistence.advert.port;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -20,6 +21,11 @@ public class AdvertPersistencePortImpl implements AdvertPersistencePort {
     @Override
     public Page<Advert> findByRealEstateIdAndIsActive(Long realEstateId, Boolean isActive, Pageable pageable) {
         return advertRepository.findByRealEstateIdAndIsActive(realEstateId, isActive, pageable);
+    }
+
+    @Override
+    public List<Advert> findByRealEstateIdAndIsActive(Long realEstateId, Boolean isActive) {
+        return advertRepository.findByRealEstateIdAndIsActive(realEstateId, isActive);
     }
 
     @Override
