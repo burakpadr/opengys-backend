@@ -31,10 +31,17 @@ public class RentalContractStatusChangeHandler extends StatusChangeHandler<Statu
                 SubStatus currentSubStatus = item.getOldEntity().getRealEstate().getSubStatus();
 
                 if (currentSubStatus instanceof ForRentSubStatus) {
+                    boolean anAdvertIsPublished = advertPersistencePort.
+                            findByRealEstateIdAndIsActive(item.getOldEntity().getId(), true)
+                            .stream()
+                            .anyMatch(Advert::getIsPublished);
+
                     if (item.getUpdatedEntity().getIsPublished())
                         item.getUpdatedEntity().getRealEstate().setForRentSubStatus(ForRentSubStatus.RENTED);
-                    else
+                    else if (anAdvertIsPublished)
                         item.getUpdatedEntity().getRealEstate().setForRentSubStatus(ForRentSubStatus.IN_NOTICE);
+                    else
+                        item.getUpdatedEntity().getRealEstate().setForRentSubStatus(ForRentSubStatus.IN_PREPARATION);
                 }
 
                 realEstatePersistencePort.save(item.getUpdatedEntity().getRealEstate());
