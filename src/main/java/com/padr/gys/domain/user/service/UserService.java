@@ -34,6 +34,12 @@ public class UserService implements UserServicePort {
     }
 
     @Override
+    public User findByEmailAndIsActive(String email, Boolean isActive) {
+        return userPersistencePort.findByEmailAndIsActive(email, isActive)
+                .orElseThrow(UserNotFoundException::new);
+    }
+
+    @Override
     public User update(Long id, User user) {
         User oldUser = findById(id);
 

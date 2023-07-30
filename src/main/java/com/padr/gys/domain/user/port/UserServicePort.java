@@ -8,6 +8,8 @@ public interface UserServicePort {
 
     User findById(Long id);
 
+    User findByEmailAndIsActive(String email, Boolean isActive);
+
     User update(Long id, User user);
 
     void delete(Long id);
