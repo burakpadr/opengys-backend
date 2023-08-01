@@ -8,6 +8,3 @@ spring:
   redis:
     host: localhost
     port: 18000
-
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration

@@ -35,38 +35,38 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        if (request.getServletPath().contains("/auth"))
+        if (request.getServletPath().contains("/auth")) {
             filterChain.doFilter(request, response);
-        else {
-            String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-            if (Objects.nonNull(authHeader) && authHeader.startsWith("Bearer ")) {
-                try {
-                    String jwtToken = authHeader.split("Bearer ")[1];
-                    Algorithm algorithm = Algorithm.HMAC256(securityProperty.getJwtSecret());
-                    JWTVerifier jwtVerifier = JWT.require(algorithm).build();
-                    DecodedJWT decodedJWT = jwtVerifier.verify(jwtToken);
+            return;
+        }
+        String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-                    Long userId = Long.valueOf(decodedJWT.getSubject());
+        if (Objects.nonNull(authHeader) && authHeader.startsWith("Bearer ")) {
+            try {
+                String jwtToken = authHeader.split("Bearer ")[1];
+                Algorithm algorithm = Algorithm.HMAC256(securityProperty.getJwtSecret());
+                JWTVerifier jwtVerifier = JWT.require(algorithm).build();
+                DecodedJWT decodedJWT = jwtVerifier.verify(jwtToken);
 
-                    request.setAttribute(SecurityConstant.LOGIN_USER_ID, userId);
+                Long userId = Long.valueOf(decodedJWT.getSubject());
 
-                    UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                            decodedJWT.getSubject(), null, null);
+                request.setAttribute(SecurityConstant.LOGIN_USER_ID, userId);
 
-                    SecurityContextHolder.getContext().setAuthentication(token);
+                UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+                        decodedJWT.getSubject(), null, null);
 
-                    filterChain.doFilter(request, response);
-                } catch (Exception e) {
-                    response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-                    response.setStatus(HttpStatus.UNAUTHORIZED.value());
-
-                    new ObjectMapper().writeValue(response.getOutputStream(), Map.of("message", e.getMessage()));
-                }
-            } else {
+                SecurityContextHolder.getContext().setAuthentication(token);
+            } catch (Exception e) {
                 response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                 response.setStatus(HttpStatus.UNAUTHORIZED.value());
+
+                new ObjectMapper().writeValue(response.getOutputStream(), Map.of("message", e.getMessage()));
             }
         }
+
+        filterChain.doFilter(request, response);
+
+        return;
     }
 }
