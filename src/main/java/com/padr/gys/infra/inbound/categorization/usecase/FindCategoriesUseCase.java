@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.padr.gys.domain.categorization.entity.Category;
 import com.padr.gys.domain.categorization.port.CategoryServicePort;
-import com.padr.gys.infra.inbound.categorization.model.response.CategorizationResponse;
+import com.padr.gys.infra.inbound.categorization.model.response.CategoryResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,11 +19,11 @@ public class FindCategoriesUseCase {
 
     private final CategoryServicePort categoryServicePort;
 
-    public Page<CategorizationResponse> execute(Pageable pageable) {
+    public Page<CategoryResponse> execute(Pageable pageable) {
         Page<Category> categories = categoryServicePort.findByIsActive(true, pageable);
 
-        List<CategorizationResponse> categorizationResponses = categories.getContent().stream()
-                .map(CategorizationResponse::of).toList();
+        List<CategoryResponse> categorizationResponses = categories.getContent().stream()
+                .map(CategoryResponse::of).toList();
 
         return new PageImpl<>(categorizationResponses, pageable, categories.getTotalElements());
     }

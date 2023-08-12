@@ -1,7 +1,5 @@
 package com.padr.gys.domain.statusmanager.handler;
 
-import lombok.Getter;
-
 import java.util.concurrent.Flow;
 
 public abstract class StatusChangeHandler<T> implements Flow.Subscriber<T> {

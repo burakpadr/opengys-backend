@@ -37,6 +37,5 @@ public class Category extends BaseEntity {
     private List<RealEstate> realEstates;
 
     @OneToMany(mappedBy = "category")
-    @Transient
     private List<SubCategory> subCategories;
 }

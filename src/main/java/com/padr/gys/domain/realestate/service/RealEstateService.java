@@ -1,7 +1,5 @@
 package com.padr.gys.domain.realestate.service;
 
-import java.util.Optional;
-
 import com.padr.gys.domain.statusmanager.constant.StatusChangeReportType;
 import com.padr.gys.domain.statusmanager.model.StatusChangeReportModel;
 import com.padr.gys.domain.statusmanager.reporter.StatusChangeReporter;

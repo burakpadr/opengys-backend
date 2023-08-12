@@ -9,7 +9,7 @@ import com.padr.gys.domain.categorization.entity.SubCategory;
 import com.padr.gys.domain.categorization.port.CategoryServicePort;
 import com.padr.gys.domain.categorization.port.SubCategoryServicePort;
 import com.padr.gys.infra.inbound.categorization.model.request.CreateCategoryRequest;
-import com.padr.gys.infra.inbound.categorization.model.response.CategorizationResponse;
+import com.padr.gys.infra.inbound.categorization.model.response.CategoryResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,7 +20,7 @@ public class CreateCategoryAndSubCategoryUseCase {
     private final CategoryServicePort categoryServicePort;
     private final SubCategoryServicePort subCategoryServicePort;
 
-    public CategorizationResponse execute(CreateCategoryRequest request) {
+    public CategoryResponse execute(CreateCategoryRequest request) {
         Category category = categoryServicePort.create(request.to());
 
         List<SubCategory> subCategories = request.getSubCategoryRequests().stream().map(subCategoryRequest -> {
@@ -33,6 +33,6 @@ public class CreateCategoryAndSubCategoryUseCase {
 
         subCategoryServicePort.createAll(subCategories);
 
-        return CategorizationResponse.of(category);
+        return CategoryResponse.of(category);
     }
 }
