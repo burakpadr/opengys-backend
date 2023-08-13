@@ -31,7 +31,7 @@ public class CreateCategoryAndSubCategoryUseCase {
             return subCategory;
         }).toList();
 
-        subCategoryServicePort.createAll(subCategories);
+        category.setSubCategories(subCategoryServicePort.createAll(subCategories));
 
         return CategoryResponse.of(category);
     }
