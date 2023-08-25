@@ -7,9 +7,9 @@ import com.padr.gys.domain.categorization.entity.SubCategory;
 
 public interface SubCategoryServicePort {
     
-    List<SubCategory> findByCategoryIdAndIsActive(Long categoryId, Boolean isActive);
+    List<SubCategory> findByCategoryId(Long categoryId);
 
-    SubCategory findByIdAndIsActive(Long id, Boolean isActive);
+    SubCategory findById(Long id);
 
     List<SubCategory> createAll(List<SubCategory> subCategories);
 

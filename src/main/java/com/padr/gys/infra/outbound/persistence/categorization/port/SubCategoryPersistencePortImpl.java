@@ -17,8 +17,8 @@ public class SubCategoryPersistencePortImpl implements SubCategoryPersistencePor
     private final SubCategoryRepository subCategoryRepository;
 
     @Override
-    public List<SubCategory> findByCategoryIdAndIsActive(Long categoryId, Boolean isActive) {
-        return subCategoryRepository.findByCategoryIdAndIsActive(categoryId, isActive);
+    public List<SubCategory> findByCategoryId(Long categoryId) {
+        return subCategoryRepository.findByCategoryId(categoryId);
     }
 
     @Override
@@ -27,7 +27,7 @@ public class SubCategoryPersistencePortImpl implements SubCategoryPersistencePor
     }
 
     @Override
-    public Optional<SubCategory> findByIdAndIsActive(Long id, Boolean isActive) {
-        return subCategoryRepository.findByIdAndIsActive(id, isActive);
+    public Optional<SubCategory> findById(Long id) {
+        return subCategoryRepository.findById(id);
     }
 }

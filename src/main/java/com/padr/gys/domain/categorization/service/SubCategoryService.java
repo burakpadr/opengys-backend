@@ -22,8 +22,8 @@ public class SubCategoryService implements SubCategoryServicePort {
     private final SubCategoryPersistencePort subCategoryPersistencePort;
 
     @Override
-    public List<SubCategory> findByCategoryIdAndIsActive(Long categoryId, Boolean isActive) {
-        return subCategoryPersistencePort.findByCategoryIdAndIsActive(categoryId, isActive);
+    public List<SubCategory> findByCategoryId(Long categoryId) {
+        return subCategoryPersistencePort.findByCategoryId(categoryId);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class SubCategoryService implements SubCategoryServicePort {
 
     @Override
     public void updateAll(Category category, List<SubCategory> subCategories) {
-        List<SubCategory> oldSubCategories = findByCategoryIdAndIsActive(category.getId(), true);
+        List<SubCategory> oldSubCategories = findByCategoryId(category.getId());
 
         oldSubCategories.stream().forEach(oldSubCategory -> {
             Optional<SubCategory> subCategoryOptional = subCategories.stream()
@@ -71,7 +71,7 @@ public class SubCategoryService implements SubCategoryServicePort {
         List<SubCategory> subCategories = new ArrayList<>();
 
         subCategoryIds.stream().forEach(subCategoryId -> {
-            SubCategory subCategory = findByIdAndIsActive(subCategoryId, true);
+            SubCategory subCategory = findById(subCategoryId);
 
             subCategory.setIsActive(false);
 
@@ -82,8 +82,8 @@ public class SubCategoryService implements SubCategoryServicePort {
     }
 
     @Override
-    public SubCategory findByIdAndIsActive(Long id, Boolean isActive) {
-        return subCategoryPersistencePort.findByIdAndIsActive(id, true)
+    public SubCategory findById(Long id) {
+        return subCategoryPersistencePort.findById(id)
                 .orElseThrow(() -> new SubCategoryNotFoundException(id));
     }
 }

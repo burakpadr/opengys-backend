@@ -18,7 +18,7 @@ public class DeleteCategoryUseCase {
     private final SubCategoryServicePort subCategoryServicePort;
 
     public void execute(Long categoryId) {
-        List<Long> subCategoryIds = subCategoryServicePort.findByCategoryIdAndIsActive(categoryId, true).stream()
+        List<Long> subCategoryIds = subCategoryServicePort.findByCategoryId(categoryId).stream()
                 .map(SubCategory::getId).toList();
 
         subCategoryServicePort.deleteAll(subCategoryIds);

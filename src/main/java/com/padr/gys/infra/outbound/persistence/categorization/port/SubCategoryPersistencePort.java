@@ -7,9 +7,9 @@ import com.padr.gys.domain.categorization.entity.SubCategory;
 
 public interface SubCategoryPersistencePort {
 
-    Optional<SubCategory> findByIdAndIsActive(Long id, Boolean isActive);
+    Optional<SubCategory> findById(Long id);
     
-    List<SubCategory> findByCategoryIdAndIsActive(Long categoryId, Boolean isActive);
+    List<SubCategory> findByCategoryId(Long categoryId);
 
     List<SubCategory> saveAll(List<SubCategory> subCategories);
 }

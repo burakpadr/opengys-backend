@@ -17,6 +17,7 @@ import com.padr.gys.infra.inbound.categorization.model.response.CategoryResponse
 import com.padr.gys.infra.inbound.categorization.usecase.CreateCategoryAndSubCategoryUseCase;
 import com.padr.gys.infra.inbound.categorization.usecase.DeleteCategoryUseCase;
 import com.padr.gys.infra.inbound.categorization.usecase.FindCategoriesUseCase;
+import com.padr.gys.infra.inbound.categorization.usecase.FindCategoryByIdUseCase;
 import com.padr.gys.infra.inbound.categorization.usecase.UpdateCategoryAndSubCategoryUseCase;
 
 import jakarta.validation.Valid;
@@ -28,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class CategorizationAdapter {
 
     private final FindCategoriesUseCase findCategoriesUseCase;
+    private final FindCategoryByIdUseCase findCategoryByIdUseCase;
     private final CreateCategoryAndSubCategoryUseCase createCategoryAndSubCategoryUseCase;
     private final DeleteCategoryUseCase deleteCategoryUseCase;
     private final UpdateCategoryAndSubCategoryUseCase updateCategoryAndSubCategoryUseCase;
@@ -35,6 +37,11 @@ public class CategorizationAdapter {
     @GetMapping
     public Page<CategoryResponse> findAllCategories(Pageable pageable) {
         return findCategoriesUseCase.execute(pageable);
+    }
+
+    @GetMapping("/{categoryId}")
+    public CategoryResponse findById(@PathVariable Long categoryId) {
+        return findCategoryByIdUseCase.execute(categoryId);
     }
 
     @PostMapping

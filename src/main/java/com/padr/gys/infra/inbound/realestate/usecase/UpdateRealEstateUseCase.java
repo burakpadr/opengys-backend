@@ -32,7 +32,7 @@ public class UpdateRealEstateUseCase {
 
         Category category = categoryServicePort.findByIdAndIsActive(request.getCategoryId(), true);
         SubCategory subCategory = Objects.nonNull(request.getSubCategoryId())
-                ? subCategoryServicePort.findByIdAndIsActive(request.getSubCategoryId(), true)
+                ? subCategoryServicePort.findById(request.getSubCategoryId())
                 : null;
 
         RealEstate updatedRealEstate = request.to();

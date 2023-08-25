@@ -2,6 +2,8 @@ package com.padr.gys.domain.categorization.entity;
 
 import com.padr.gys.domain.realestate.entity.RealEstate;
 import jakarta.persistence.*;
+
+import org.hibernate.annotations.Where;
 import org.hibernate.envers.Audited;
 
 import com.padr.gys.domain.common.model.entity.BaseEntity;
@@ -17,6 +19,7 @@ import java.util.List;
 @Entity
 @Audited
 @Table(name = "sub_categories")
+@Where(clause = "is_active=true")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

@@ -11,7 +11,7 @@ import com.padr.gys.domain.categorization.entity.SubCategory;
 @Repository
 public interface SubCategoryRepository extends JpaRepository<SubCategory, Long> {
     
-    List<SubCategory> findByCategoryIdAndIsActive(Long categoryId, Boolean isActive);
+    List<SubCategory> findByCategoryId(Long categoryId);
 
-    Optional<SubCategory> findByIdAndIsActive(Long id, Boolean isActive);
+    Optional<SubCategory> findById(Long id);
 }
