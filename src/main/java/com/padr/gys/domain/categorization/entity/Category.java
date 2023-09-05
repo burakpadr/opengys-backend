@@ -6,6 +6,7 @@ import com.padr.gys.domain.realestate.entity.RealEstate;
 import jakarta.persistence.*;
 import org.hibernate.envers.Audited;
 
+import com.padr.gys.domain.attribute.entity.Attribute;
 import com.padr.gys.domain.common.model.entity.BaseEntity;
 
 import lombok.AllArgsConstructor;
@@ -38,4 +39,8 @@ public class Category extends BaseEntity {
 
     @OneToMany(mappedBy = "category")
     private List<SubCategory> subCategories;
+
+    @OneToMany(mappedBy = "category")
+    @Transient
+    private List<Attribute> attributes;
 }

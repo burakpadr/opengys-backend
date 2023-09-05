@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.Where;
 import org.hibernate.envers.Audited;
 
+import com.padr.gys.domain.attribute.entity.Attribute;
 import com.padr.gys.domain.common.model.entity.BaseEntity;
 
 import lombok.AllArgsConstructor;
@@ -26,7 +27,7 @@ import java.util.List;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 public class SubCategory extends BaseEntity {
-    
+
     @Id
     @SequenceGenerator(name = "sub_category_id_seq", sequenceName = "sub_category_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sub_category_id_seq")
@@ -38,6 +39,10 @@ public class SubCategory extends BaseEntity {
     @OneToMany(mappedBy = "subCategory")
     @Transient
     private List<RealEstate> realEstates;
+
+    @OneToMany(mappedBy = "subCategory")
+    @Transient
+    private List<Attribute> attributes;
 
     @ManyToOne
     private Category category;
