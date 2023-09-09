@@ -2,6 +2,7 @@ package com.padr.gys.infra.inbound.attribute.model.request;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.padr.gys.domain.attribute.entity.Attribute;
 
 import jakarta.validation.constraints.NotEmpty;
@@ -21,6 +22,8 @@ public class UpdateAttributeRequest {
 
     @NotNull
     private Integer screenOrder;
+
+    @JsonProperty("attributeValues")
     private List<UpdateAttributeValueRequest> attributeValuesRequest;
 
     public Attribute to() {

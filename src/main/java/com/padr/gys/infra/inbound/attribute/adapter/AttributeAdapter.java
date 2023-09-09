@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.padr.gys.infra.inbound.attribute.model.request.CreateAttributeRequest;
 import com.padr.gys.infra.inbound.attribute.model.request.UpdateAttributeRequest;
-import com.padr.gys.infra.inbound.attribute.model.response.AttributeDetailResponse;
 import com.padr.gys.infra.inbound.attribute.model.response.AttributeResponse;
 import com.padr.gys.infra.inbound.attribute.usecase.CreateAttributeUseCase;
 import com.padr.gys.infra.inbound.attribute.usecase.DeleteAttributeByIdUseCase;
@@ -59,7 +58,7 @@ public class AttributeAdapter {
     }
 
     @GetMapping("/{attributeId}")
-    public AttributeDetailResponse findById(@PathVariable Long attributeId) {
+    public AttributeResponse findById(@PathVariable Long attributeId) {
         return findAttributeByIdUseCase.execute(attributeId);
     }
 
