@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.padr.gys.infra.inbound.adverplace.model.AdvertPlaceRequest;
@@ -17,6 +18,7 @@ import com.padr.gys.infra.inbound.adverplace.usecase.CreateAdvertPlaceUseCase;
 import com.padr.gys.infra.inbound.adverplace.usecase.DeleteAdvertPlaceUseCase;
 import com.padr.gys.infra.inbound.adverplace.usecase.FindAdvertPlaceByIdUseCase;
 import com.padr.gys.infra.inbound.adverplace.usecase.FindAdvertPlacesUseCase;
+import com.padr.gys.infra.inbound.adverplace.usecase.SearchAdvertPlacesUseCase;
 import com.padr.gys.infra.inbound.adverplace.usecase.UpdateAdvertPlaceUseCase;
 
 import jakarta.validation.Valid;
@@ -32,10 +34,16 @@ public class AdvertPlaceAdapter {
     private final CreateAdvertPlaceUseCase createAdvertPlaceUseCase;
     private final UpdateAdvertPlaceUseCase updateAdvertPlaceUseCase;
     private final DeleteAdvertPlaceUseCase deleteAdvertPlaceUseCase;
+    private final SearchAdvertPlacesUseCase searchAdvertPlacesUseCase;
 
     @GetMapping
     public Page<AdvertPlaceResponse> findAll(Pageable pageable) {
         return findAdvertPlacesUseCase.execute(pageable);
+    }
+
+    @GetMapping("/search")
+    public void search(@RequestParam("search") String searchTerm, Pageable pageable) {
+        searchAdvertPlacesUseCase.execute(searchTerm, pageable);
     }
 
     @PostMapping

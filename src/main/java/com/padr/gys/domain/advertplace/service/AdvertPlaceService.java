@@ -2,6 +2,7 @@ package com.padr.gys.domain.advertplace.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
 import org.springframework.stereotype.Service;
 
 import com.padr.gys.domain.advertplace.entity.elasticsearch.AdvertPlaceElasticsearch;
@@ -23,6 +24,11 @@ public class AdvertPlaceService implements AdvertPlaceServicePort {
     @Override
     public Page<AdvertPlace> findByIsActive(Boolean isActive, Pageable pageable) {
         return advertPlacePersistencePort.findByIsActive(isActive, pageable);
+    }
+
+    @Override
+    public Page<AdvertPlaceElasticsearch> search(String searchTerm, Pageable pageable) {
+        return advertPlaceElasticsearchPort.findByName(searchTerm, pageable);
     }
 
     @Override

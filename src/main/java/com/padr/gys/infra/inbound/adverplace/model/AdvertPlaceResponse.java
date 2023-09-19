@@ -1,5 +1,6 @@
 package com.padr.gys.infra.inbound.adverplace.model;
 
+import com.padr.gys.domain.advertplace.entity.elasticsearch.AdvertPlaceElasticsearch;
 import com.padr.gys.domain.advertplace.entity.persistence.AdvertPlace;
 
 import lombok.Builder;
@@ -16,6 +17,13 @@ public class AdvertPlaceResponse {
         return AdvertPlaceResponse.builder()
                 .id(advertPlace.getId())
                 .name(advertPlace.getName())
+                .build();
+    }
+
+    public static AdvertPlaceResponse of(AdvertPlaceElasticsearch advertPlaceElasticsearch) {
+        return AdvertPlaceResponse.builder()
+                .id(advertPlaceElasticsearch.getRowId())
+                .name(advertPlaceElasticsearch.getName())
                 .build();
     }
 }
