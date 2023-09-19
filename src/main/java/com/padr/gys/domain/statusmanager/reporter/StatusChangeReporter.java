@@ -9,7 +9,7 @@ import com.padr.gys.domain.statusmanager.handler.RentalContractStatusChangeHandl
 import com.padr.gys.domain.statusmanager.model.StatusChangeReportModel;
 import com.padr.gys.infra.outbound.persistence.advert.port.AdvertPersistencePort;
 import com.padr.gys.infra.outbound.persistence.realestate.port.RealEstatePersistencePort;
-import com.padr.gys.infra.outbound.persistence.rentalcontract.port.RentalContractPersistencePort;
+
 import lombok.Getter;
 
 import java.util.concurrent.SubmissionPublisher;

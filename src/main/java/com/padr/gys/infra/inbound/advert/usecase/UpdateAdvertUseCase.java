@@ -2,7 +2,7 @@ package com.padr.gys.infra.inbound.advert.usecase;
 
 import com.padr.gys.domain.advert.entity.Advert;
 import com.padr.gys.domain.advert.port.AdvertServicePort;
-import com.padr.gys.domain.advertplace.entity.AdvertPlace;
+import com.padr.gys.domain.advertplace.entity.persistence.AdvertPlace;
 import com.padr.gys.domain.advertplace.port.AdvertPlaceServicePort;
 import com.padr.gys.infra.inbound.advert.model.request.UpdateAdvertRequest;
 import com.padr.gys.infra.inbound.advert.model.response.AdvertResponse;

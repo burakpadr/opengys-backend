@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.padr.gys.domain.advertplace.entity.AdvertPlace;
+import com.padr.gys.domain.advertplace.entity.persistence.AdvertPlace;
 
 @Repository
 public interface AdvertPlaceRepository extends JpaRepository<AdvertPlace, Long> {

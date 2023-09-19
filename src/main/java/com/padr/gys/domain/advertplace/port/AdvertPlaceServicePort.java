@@ -3,7 +3,7 @@ package com.padr.gys.domain.advertplace.port;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.padr.gys.domain.advertplace.entity.AdvertPlace;
+import com.padr.gys.domain.advertplace.entity.persistence.AdvertPlace;
 
 public interface AdvertPlaceServicePort {
     

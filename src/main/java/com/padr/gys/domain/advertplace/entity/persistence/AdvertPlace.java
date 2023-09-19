@@ -1,4 +1,4 @@
-package com.padr.gys.domain.advertplace.entity;
+package com.padr.gys.domain.advertplace.entity.persistence;
 
 import org.hibernate.envers.Audited;
 
