@@ -42,8 +42,8 @@ public class AdvertPlaceAdapter {
     }
 
     @GetMapping("/search")
-    public void search(@RequestParam("search") String searchTerm, Pageable pageable) {
-        searchAdvertPlacesUseCase.execute(searchTerm, pageable);
+    public Page<AdvertPlaceResponse> search(@RequestParam("search") String searchTerm, Pageable pageable) {
+        return searchAdvertPlacesUseCase.execute(searchTerm, pageable);
     }
 
     @PostMapping
