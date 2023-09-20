@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.elasticsearch.core.SearchHit;
+import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.stereotype.Component;
 
 import com.padr.gys.domain.advertplace.entity.elasticsearch.AdvertPlaceElasticsearch;
@@ -20,12 +22,12 @@ public class SearchAdvertPlacesUseCase {
     private final AdvertPlaceServicePort advertPlaceServicePort;
 
     public Page<AdvertPlaceResponse> execute(String searchTerm, Pageable pageable) {
-        Page<AdvertPlaceElasticsearch> advertPlaces = advertPlaceServicePort.search(searchTerm, pageable);
+        SearchHits<AdvertPlaceElasticsearch> advertPlaces = advertPlaceServicePort.search(searchTerm, pageable);
 
-        List<AdvertPlaceResponse> advertPlaceResponses = advertPlaces.getContent().stream().map(AdvertPlaceResponse::of)
-                .toList();
+        List<AdvertPlaceResponse> advertPlaceResponses = advertPlaces.getSearchHits().stream().map(SearchHit::getContent)
+                .map(AdvertPlaceResponse::of).toList();
 
-        return new PageImpl<>(advertPlaceResponses, pageable, advertPlaces.getTotalElements());
+        return new PageImpl<>(advertPlaceResponses, pageable, advertPlaces.getTotalHits());
 
     }
 }

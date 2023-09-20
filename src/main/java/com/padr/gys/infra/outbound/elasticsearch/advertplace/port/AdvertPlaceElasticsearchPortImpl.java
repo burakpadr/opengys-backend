@@ -1,7 +1,5 @@
 package com.padr.gys.infra.outbound.elasticsearch.advertplace.port;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import com.padr.gys.domain.advertplace.entity.elasticsearch.AdvertPlaceElasticsearch;
@@ -28,10 +26,5 @@ public class AdvertPlaceElasticsearchPortImpl implements AdvertPlaceElasticsearc
     @Override
     public AdvertPlaceElasticsearch findByRowId(Long rowId) {
         return advertPlaceElasticsearchRepository.findByRowId(rowId);
-    }
-
-    @Override
-    public Page<AdvertPlaceElasticsearch> findByName(String name, Pageable pageable) {
-       return advertPlaceElasticsearchRepository.findByName(name, pageable);
     }
 }
