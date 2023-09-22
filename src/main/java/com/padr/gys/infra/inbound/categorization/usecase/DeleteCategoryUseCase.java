@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.padr.gys.domain.categorization.entity.SubCategory;
+import com.padr.gys.domain.categorization.entity.persistence.SubCategory;
 import com.padr.gys.domain.categorization.port.CategoryServicePort;
 import com.padr.gys.domain.categorization.port.SubCategoryServicePort;
 

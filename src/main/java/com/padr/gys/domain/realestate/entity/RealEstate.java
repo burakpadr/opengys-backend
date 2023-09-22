@@ -8,8 +8,8 @@ import org.hibernate.envers.Audited;
 
 import com.padr.gys.domain.address.entity.Address;
 import com.padr.gys.domain.advert.entity.Advert;
-import com.padr.gys.domain.categorization.entity.Category;
-import com.padr.gys.domain.categorization.entity.SubCategory;
+import com.padr.gys.domain.categorization.entity.persistence.Category;
+import com.padr.gys.domain.categorization.entity.persistence.SubCategory;
 import com.padr.gys.domain.common.model.entity.BaseEntity;
 import com.padr.gys.domain.status.constant.ForRentSubStatus;
 import com.padr.gys.domain.status.constant.ForSaleSubStatus;

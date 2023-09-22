@@ -2,8 +2,8 @@ package com.padr.gys.domain.categorization.port;
 
 import java.util.List;
 
-import com.padr.gys.domain.categorization.entity.Category;
-import com.padr.gys.domain.categorization.entity.SubCategory;
+import com.padr.gys.domain.categorization.entity.persistence.Category;
+import com.padr.gys.domain.categorization.entity.persistence.SubCategory;
 
 public interface SubCategoryServicePort {
     

@@ -5,8 +5,8 @@ import java.util.Objects;
 import org.springframework.stereotype.Component;
 
 import com.padr.gys.domain.address.port.AddressServicePort;
-import com.padr.gys.domain.categorization.entity.Category;
-import com.padr.gys.domain.categorization.entity.SubCategory;
+import com.padr.gys.domain.categorization.entity.persistence.Category;
+import com.padr.gys.domain.categorization.entity.persistence.SubCategory;
 import com.padr.gys.domain.categorization.port.CategoryServicePort;
 import com.padr.gys.domain.categorization.port.SubCategoryServicePort;
 import com.padr.gys.domain.realestate.entity.RealEstate;

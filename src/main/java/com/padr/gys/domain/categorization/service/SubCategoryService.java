@@ -7,8 +7,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.padr.gys.domain.categorization.entity.Category;
-import com.padr.gys.domain.categorization.entity.SubCategory;
+import com.padr.gys.domain.categorization.entity.persistence.Category;
+import com.padr.gys.domain.categorization.entity.persistence.SubCategory;
 import com.padr.gys.domain.categorization.exception.SubCategoryNotFoundException;
 import com.padr.gys.domain.categorization.port.SubCategoryServicePort;
 import com.padr.gys.infra.outbound.persistence.categorization.port.SubCategoryPersistencePort;

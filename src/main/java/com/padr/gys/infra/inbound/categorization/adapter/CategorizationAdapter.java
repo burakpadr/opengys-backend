@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.padr.gys.infra.inbound.categorization.model.request.CreateCategoryRequest;
@@ -18,6 +19,7 @@ import com.padr.gys.infra.inbound.categorization.usecase.CreateCategoryAndSubCat
 import com.padr.gys.infra.inbound.categorization.usecase.DeleteCategoryUseCase;
 import com.padr.gys.infra.inbound.categorization.usecase.FindCategoriesUseCase;
 import com.padr.gys.infra.inbound.categorization.usecase.FindCategoryByIdUseCase;
+import com.padr.gys.infra.inbound.categorization.usecase.SearchCategoriesUseCase;
 import com.padr.gys.infra.inbound.categorization.usecase.UpdateCategoryAndSubCategoryUseCase;
 
 import jakarta.validation.Valid;
@@ -33,10 +35,16 @@ public class CategorizationAdapter {
     private final CreateCategoryAndSubCategoryUseCase createCategoryAndSubCategoryUseCase;
     private final DeleteCategoryUseCase deleteCategoryUseCase;
     private final UpdateCategoryAndSubCategoryUseCase updateCategoryAndSubCategoryUseCase;
+    private final SearchCategoriesUseCase searchCategoriesUseCase;
 
     @GetMapping
     public Page<CategoryResponse> findAllCategories(Pageable pageable) {
         return findCategoriesUseCase.execute(pageable);
+    }
+
+    @GetMapping("/search")
+    public Page<CategoryResponse> search(@RequestParam("search") String searchTerm, Pageable pageable) {
+        return searchCategoriesUseCase.execute(searchTerm, pageable);
     }
 
     @GetMapping("/{categoryId}")

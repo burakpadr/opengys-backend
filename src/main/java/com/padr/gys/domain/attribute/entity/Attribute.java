@@ -5,8 +5,8 @@ import java.util.List;
 import org.hibernate.annotations.Where;
 import org.hibernate.envers.Audited;
 
-import com.padr.gys.domain.categorization.entity.Category;
-import com.padr.gys.domain.categorization.entity.SubCategory;
+import com.padr.gys.domain.categorization.entity.persistence.Category;
+import com.padr.gys.domain.categorization.entity.persistence.SubCategory;
 import com.padr.gys.domain.common.model.entity.BaseEntity;
 import com.padr.gys.domain.frontend.constant.InputType;
 

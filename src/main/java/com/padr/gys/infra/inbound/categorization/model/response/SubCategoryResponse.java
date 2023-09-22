@@ -1,6 +1,6 @@
 package com.padr.gys.infra.inbound.categorization.model.response;
 
-import com.padr.gys.domain.categorization.entity.SubCategory;
+import com.padr.gys.domain.categorization.entity.persistence.SubCategory;
 
 import lombok.Builder;
 import lombok.Data;

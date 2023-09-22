@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
-import com.padr.gys.domain.categorization.entity.SubCategory;
+import com.padr.gys.domain.categorization.entity.persistence.SubCategory;
 import com.padr.gys.infra.outbound.persistence.categorization.repository.SubCategoryRepository;
 
 import lombok.RequiredArgsConstructor;
