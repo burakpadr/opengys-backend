@@ -62,7 +62,6 @@ public class RealEstate extends BaseEntity {
     private Address address;
 
     @OneToMany(mappedBy = "realEstate")
-    @Transient
     private List<RealEstatePhoto> realEstatePhotos;
 
     @OneToMany(mappedBy = "realEstate")

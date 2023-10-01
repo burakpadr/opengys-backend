@@ -43,6 +43,9 @@ public class RealEstatePhoto extends BaseEntity {
     private String contentBase64;
 
     @Column
+    private String sftpPath;
+
+    @Column
     private String path;
 
     @Column

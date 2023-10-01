@@ -23,8 +23,8 @@ sftp:
     username: burakpadr
     password: xxx
     remoteBasePath: Documents/nginx/gys-storage/
-    remoteImagesBasePath: Documents/nginx/gys-storage/images/
-    remoteFilesBasePath: Documents/nginx/gys-storage/files/
+    remoteImagesBasePath: images/
+    remoteFilesBasePath: files/
 
 static-server:
   url: http://localhost:9000/

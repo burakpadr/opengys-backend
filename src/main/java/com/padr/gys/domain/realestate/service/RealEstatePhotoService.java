@@ -23,8 +23,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 class RealEstatePhotoService implements RealEstatePhotoServicePort {
 
+    @Value(value = "${sftp.storage.remoteBasePath}")
+    private String remoteBasePath;
+
     @Value(value = "${sftp.storage.remoteImagesBasePath}")
     private String remoteImagesBasePath;
+
+    @Value(value = "${static-server.url}")
+    private String staticServerUrl;
 
     private final RealEstatePhotoPersistencePort realEstatePhotoPersistencePort;
 
@@ -35,12 +41,20 @@ class RealEstatePhotoService implements RealEstatePhotoServicePort {
         throwExceptionIfDuplicatedCoverPhoto(realEstatePhotos);
 
         realEstatePhotos.stream().forEach(realEstatePhoto -> {
-            String path = String.format("%s/%s.%s",
-                    remoteImagesBasePath + realEstatePhoto.getRealEstate().getId().toString(),
-                    UUID.randomUUID().toString(), realEstatePhoto.getExtension());
+            String fileName = UUID.randomUUID().toString();
+
+            String photoPath = String.format("%s%s/%s.%s",
+                    staticServerUrl, remoteImagesBasePath + realEstatePhoto.getRealEstate().getId().toString(),
+                    fileName, realEstatePhoto.getExtension());
 
             realEstatePhoto.setIsActive(true);
-            realEstatePhoto.setPath(path);
+            realEstatePhoto.setPath(photoPath);
+
+            String photoPathSftp = String.format("%s%s/%s.%s",
+                    remoteBasePath, remoteImagesBasePath + realEstatePhoto.getRealEstate().getId().toString(),
+                    fileName, realEstatePhoto.getExtension());
+
+            realEstatePhoto.setSftpPath(photoPathSftp);
         });
 
         realEstatePhotoPersistencePort.saveAll(realEstatePhotos);
@@ -48,7 +62,7 @@ class RealEstatePhotoService implements RealEstatePhotoServicePort {
         realEstatePhotos.stream().forEach(realEstatePhoto -> {
             byte[] content = Base64.getDecoder().decode(realEstatePhoto.getContentBase64());
 
-            storageSFTPClientPort.put(realEstatePhoto.getPath(), content);
+            storageSFTPClientPort.put(realEstatePhoto.getSftpPath(), content);
         });
 
         return realEstatePhotos;
@@ -72,7 +86,7 @@ class RealEstatePhotoService implements RealEstatePhotoServicePort {
             if (!realEstatePhotoOptional.isPresent()) {
                 oldRealEstatePhoto.setIsActive(false);
 
-                storageSFTPClientPort.delete(oldRealEstatePhoto.getPath());
+                storageSFTPClientPort.delete(oldRealEstatePhoto.getSftpPath());
             } else
                 oldRealEstatePhoto.setIsCover(realEstatePhotoOptional.get().getIsCover());
         });

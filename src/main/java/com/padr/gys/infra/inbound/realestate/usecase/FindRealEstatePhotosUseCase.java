@@ -24,11 +24,6 @@ public class FindRealEstatePhotosUseCase {
 
     public List<RealEstatePhotoResponse> execute(Long realEstateId) {
         return realEstatePhotoServicePort.findByRealEstateId(realEstateId).stream().map(RealEstatePhotoResponse::of)
-                .map(realEstatePhotoResponse -> {
-                    realEstatePhotoResponse
-                            .setPath(staticServerUrl + realEstatePhotoResponse.getPath().replace(remoteBasePath, ""));
-
-                    return realEstatePhotoResponse;
-                }).toList();
+                .toList();
     }
 }

@@ -1,5 +1,7 @@
 package com.padr.gys.infra.inbound.realestate.model.response;
 
+import java.util.Objects;
+
 import com.padr.gys.domain.realestate.entity.RealEstate;
 
 import lombok.Builder;
@@ -15,6 +17,7 @@ public class RealEstateResponse {
     private String subStatus;
     private String districtName;
     private String cityName;
+    private String coverPhotoPath;
 
     public static RealEstateResponse of(RealEstate realEstate) {
         return RealEstateResponse.builder()
@@ -24,6 +27,9 @@ public class RealEstateResponse {
                 .subStatus(realEstate.getSubStatus().getValue())
                 .districtName(realEstate.getAddress().getDistrictName())
                 .cityName(realEstate.getAddress().getCityName())
+                .coverPhotoPath(Objects.nonNull(realEstate.getCoverPhoto())
+                        ? realEstate.getCoverPhoto().getPath()
+                        : null)
                 .build();
     }
 }
