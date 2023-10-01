@@ -15,3 +15,16 @@ spring:
       cluster-nodes: localhost:9200
       repositories:
         enabled: true
+
+sftp:
+  storage:
+    host: localhost
+    port: 22
+    username: burakpadr
+    password: xxx
+    remoteBasePath: Documents/nginx/gys-storage/
+    remoteImagesBasePath: Documents/nginx/gys-storage/images/
+    remoteFilesBasePath: Documents/nginx/gys-storage/files/
+
+static-server:
+  url: http://localhost:9000/

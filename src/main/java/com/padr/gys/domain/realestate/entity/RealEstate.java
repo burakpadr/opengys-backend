@@ -63,11 +63,24 @@ public class RealEstate extends BaseEntity {
 
     @OneToMany(mappedBy = "realEstate")
     @Transient
+    private List<RealEstatePhoto> realEstatePhotos;
+
+    @OneToMany(mappedBy = "realEstate")
+    @Transient
     private List<Advert> adverts;
 
     @OneToMany(mappedBy = "realEstate")
     @Transient
     private List<RentalContract> rentalContracts;
+
+    public RealEstatePhoto getCoverPhoto() {
+        return realEstatePhotos
+                .stream()
+                .parallel()
+                .filter(RealEstatePhoto::getIsCover)
+                .findFirst()
+                .orElse(null);
+    }
 
     public SubStatus getSubStatus() {
         return switch (mainStatus) {

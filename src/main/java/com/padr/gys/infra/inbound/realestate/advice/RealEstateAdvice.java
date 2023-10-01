@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.padr.gys.domain.common.model.response.ExceptionResponse;
+import com.padr.gys.domain.realestate.exception.DuplicateRealEstateCoverPhotoException;
 import com.padr.gys.domain.realestate.exception.RealEstateAlreadyExistException;
 import com.padr.gys.domain.realestate.exception.RealEstateNotFoundException;
 import com.padr.gys.infra.inbound.common.advice.BaseAdvice;
@@ -20,6 +21,11 @@ public class RealEstateAdvice extends BaseAdvice {
 
     @ExceptionHandler(RealEstateAlreadyExistException.class)
     public ResponseEntity<ExceptionResponse> handleException(RealEstateAlreadyExistException exception) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(generateExceptionResponse(exception));
+    }
+
+    @ExceptionHandler(DuplicateRealEstateCoverPhotoException.class)
+    public ResponseEntity<ExceptionResponse> handleException(DuplicateRealEstateCoverPhotoException exception) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(generateExceptionResponse(exception));
     }
 }
