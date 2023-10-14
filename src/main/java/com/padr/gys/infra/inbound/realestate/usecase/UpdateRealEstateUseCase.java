@@ -12,7 +12,7 @@ import com.padr.gys.domain.categorization.port.SubCategoryServicePort;
 import com.padr.gys.domain.realestate.entity.RealEstate;
 import com.padr.gys.domain.realestate.port.RealEstateServicePort;
 import com.padr.gys.infra.inbound.realestate.model.request.UpdateRealEstateRequest;
-import com.padr.gys.infra.inbound.realestate.model.response.RealEstateResponse;
+import com.padr.gys.infra.inbound.realestate.model.response.RealEstateDetailResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,7 +25,7 @@ public class UpdateRealEstateUseCase {
     private final CategoryServicePort categoryServicePort;
     private final SubCategoryServicePort subCategoryServicePort;
 
-    public RealEstateResponse execute(Long realEstateId, UpdateRealEstateRequest request) {
+    public RealEstateDetailResponse execute(Long realEstateId, UpdateRealEstateRequest request) {
         RealEstate oldRealEstate = realEstateServicePort.findByIdAndIsActive(realEstateId, true);
 
         addressServicePort.update(oldRealEstate.getAddress().getId(), request.getAddressRequest().to());
@@ -39,6 +39,6 @@ public class UpdateRealEstateUseCase {
         updatedRealEstate.setCategory(category);
         updatedRealEstate.setSubCategory(subCategory);
 
-        return RealEstateResponse.of(realEstateServicePort.update(realEstateId, updatedRealEstate));
+        return RealEstateDetailResponse.of(realEstateServicePort.update(realEstateId, updatedRealEstate));
     }
 }
