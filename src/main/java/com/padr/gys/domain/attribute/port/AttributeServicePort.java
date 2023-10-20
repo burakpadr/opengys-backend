@@ -1,5 +1,7 @@
 package com.padr.gys.domain.attribute.port;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -13,11 +15,11 @@ public interface AttributeServicePort {
 
     Page<Attribute> findByCategoryId(Long categoryId, Pageable pageable);
 
-    Page<Attribute> findBySubCategoryId(Long subCategoryId, Pageable pageable);
-
     Attribute create(Attribute attribute);
 
     Attribute update(Long id, Attribute attribute);
 
     void delete(Long id);
+
+    void deleteAll(List<Attribute> attributes);
 }

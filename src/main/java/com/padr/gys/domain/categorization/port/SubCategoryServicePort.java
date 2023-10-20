@@ -15,6 +15,6 @@ public interface SubCategoryServicePort {
 
     void updateAll(Category category, List<SubCategory> subCategories);
 
-    void deleteAll(List<Long> subCategoryIds);
+    void deleteAll(List<SubCategory> subCategories);
 
 }

@@ -21,7 +21,6 @@ import com.padr.gys.infra.inbound.attribute.usecase.CreateAttributeUseCase;
 import com.padr.gys.infra.inbound.attribute.usecase.DeleteAttributeByIdUseCase;
 import com.padr.gys.infra.inbound.attribute.usecase.FindAllAttributeUseCase;
 import com.padr.gys.infra.inbound.attribute.usecase.FindAttributeByIdUseCase;
-import com.padr.gys.infra.inbound.attribute.usecase.FindAttributeBySubCategoryIdUseCase;
 import com.padr.gys.infra.inbound.attribute.usecase.FindAttributesByCategoryIdUseCase;
 import com.padr.gys.infra.inbound.attribute.usecase.UpdateAttributeUseCase;
 
@@ -37,7 +36,6 @@ public class AttributeAdapter {
     private final DeleteAttributeByIdUseCase deleteAttributeByIdUseCase;
     private final FindAllAttributeUseCase findAllAttributeUseCase;
     private final FindAttributesByCategoryIdUseCase findAttributesByCategoryIdUseCase;
-    private final FindAttributeBySubCategoryIdUseCase findAttributeBySubCategoryIdUseCase;
     private final FindAttributeByIdUseCase findAttributeByIdUseCase;
     private final UpdateAttributeUseCase updateAttributeUseCase;
 
@@ -51,8 +49,6 @@ public class AttributeAdapter {
             @RequestParam("subCategoryId") Optional<Long> subCategoryIdOptional, Pageable pageable) {
         if (categoryIdOptional.isPresent())
             return findAttributesByCategoryIdUseCase.execute(categoryIdOptional.get(), pageable);
-        else if (subCategoryIdOptional.isPresent())
-            return findAttributeBySubCategoryIdUseCase.execute(subCategoryIdOptional.get(), pageable);
 
         return findAllAttributeUseCase.execute(pageable);
     }

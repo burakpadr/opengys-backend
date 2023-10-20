@@ -1,5 +1,6 @@
 package com.padr.gys.infra.outbound.persistence.attribute.port;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -23,6 +24,11 @@ class AttributePersistencePortImpl implements AttributePersistencePort {
     }
 
     @Override
+    public List<Attribute> saveAll(List<Attribute> attributes) {
+        return attributeRepository.saveAll(attributes);
+    }
+
+    @Override
     public Page<Attribute> find(Pageable pageable) {
         return attributeRepository.findAll(pageable);
     }
@@ -35,10 +41,5 @@ class AttributePersistencePortImpl implements AttributePersistencePort {
     @Override
     public Page<Attribute> findByCategoryId(Long categoryId, Pageable pageable) {
         return attributeRepository.findByCategoryIdOrderByScreenOrderAsc(categoryId, pageable);
-    }
-
-    @Override
-    public Page<Attribute> findBySubCategoryId(Long subCategoryId, Pageable pageable) {
-        return attributeRepository.findBySubCategoryIdOrderByScreenOrderAsc(subCategoryId, pageable);
     }
 }

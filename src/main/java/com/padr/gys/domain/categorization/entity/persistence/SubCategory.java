@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.Where;
 import org.hibernate.envers.Audited;
 
-import com.padr.gys.domain.attribute.entity.Attribute;
 import com.padr.gys.domain.common.model.entity.BaseEntity;
 
 import lombok.AllArgsConstructor;
@@ -39,10 +38,6 @@ public class SubCategory extends BaseEntity {
     @OneToMany(mappedBy = "subCategory")
     @Transient
     private List<RealEstate> realEstates;
-
-    @OneToMany(mappedBy = "subCategory")
-    @Transient
-    private List<Attribute> attributes;
 
     @ManyToOne
     private Category category;

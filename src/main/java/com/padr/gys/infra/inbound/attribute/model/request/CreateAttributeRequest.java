@@ -36,10 +36,6 @@ public class CreateAttributeRequest {
     @Positive
     private Long categoryId;
 
-    @NotNull
-    @Positive
-    private Long subCategoryId;
-
     @JsonProperty(value = "attributeValues")
     private List<CreateAttributeValueRequest> attributeValuesRequest;
 

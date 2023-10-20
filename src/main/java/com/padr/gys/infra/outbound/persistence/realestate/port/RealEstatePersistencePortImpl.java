@@ -1,5 +1,6 @@
 package com.padr.gys.infra.outbound.persistence.realestate.port;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -20,6 +21,11 @@ public class RealEstatePersistencePortImpl implements RealEstatePersistencePort 
     @Override
     public RealEstate save(RealEstate realEstate) {
         return realEstateRepository.save(realEstate);
+    }
+
+    @Override
+    public List<RealEstate> saveAll(List<RealEstate> realEstates) {
+        return realEstateRepository.saveAll(realEstates);
     }
 
     @Override

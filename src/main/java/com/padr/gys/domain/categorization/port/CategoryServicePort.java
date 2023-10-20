@@ -19,5 +19,5 @@ public interface CategoryServicePort {
 
     Category update(Category category);
 
-    void delete(Long id);
+    void delete(Category category);
 }

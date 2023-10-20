@@ -1,5 +1,7 @@
 package com.padr.gys.domain.realestate.port;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -18,4 +20,6 @@ public interface RealEstateServicePort {
     RealEstate update(Long id, RealEstate realEstate);
 
     void delete(Long id);
+
+    void deleteAll(List<RealEstate> realEstates);
 }

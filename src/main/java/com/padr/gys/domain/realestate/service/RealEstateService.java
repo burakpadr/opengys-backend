@@ -3,6 +3,9 @@ package com.padr.gys.domain.realestate.service;
 import com.padr.gys.domain.statusmanager.constant.StatusChangeReportType;
 import com.padr.gys.domain.statusmanager.model.StatusChangeReportModel;
 import com.padr.gys.domain.statusmanager.reporter.StatusChangeReporter;
+
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -33,9 +36,9 @@ public class RealEstateService implements RealEstateServicePort {
 
         statusChangeReporter.getCreateRealEstateReporter().submit(
                 StatusChangeReportModel.<RealEstate>builder()
-                .type(StatusChangeReportType.CREATE)
-                .oldEntity(realEstate)
-                .build());
+                        .type(StatusChangeReportType.CREATE)
+                        .oldEntity(realEstate)
+                        .build());
 
         return realEstate;
     }
@@ -53,7 +56,7 @@ public class RealEstateService implements RealEstateServicePort {
 
     @Override
     public RealEstate update(Long id, RealEstate realEstate) {
-        throwExceptionIfExistAssociatedWith(realEstate.getNo());
+        throwExceptionIfExistAssociatedWith(id, realEstate.getNo());
 
         RealEstate oldRealEstate = findByIdAndIsActive(id, true);
 
@@ -74,9 +77,25 @@ public class RealEstateService implements RealEstateServicePort {
     }
 
     @Override
+    public void deleteAll(List<RealEstate> realEstates) {
+        realEstates.stream().forEach(realEstate -> {
+            realEstate.setIsActive(false);
+        });
+
+        realEstatePersistencePort.saveAll(realEstates);
+    }
+
+    @Override
     public RealEstate findByNoAndIsActive(String no, Boolean isActive) {
         return realEstatePersistencePort.findByNoAndIsActive(no, isActive)
                 .orElseThrow(() -> new RealEstateNotFoundException(no));
+    }
+
+    private void throwExceptionIfExistAssociatedWith(Long id, String no) {
+        realEstatePersistencePort.findByNoAndIsActive(no, true).ifPresent(r -> {
+            if (id != r.getId())
+                throw new RealEstateAlreadyExistException(r.getNo());
+        });
     }
 
     private void throwExceptionIfExistAssociatedWith(String no) {

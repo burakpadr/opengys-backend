@@ -31,7 +31,6 @@ public class AttributeResponse {
                 .screenOrder(attribute.getScreenOrder())
                 .inputType(InputTypeResponse.of(attribute.getInputType()))
                 .category(CategoryResponse.of(attribute.getCategory()))
-                .subCategory(SubCategoryResponse.of(attribute.getSubCategory()))
                 .attributeValues(attribute.getAttributeValues().stream().map(AttributeValueResponse::of).toList())
                 .build();
     }

@@ -69,12 +69,10 @@ public class CategoryService implements CategoryServicePort {
     }
 
     @Override
-    public void delete(Long id) {
-        Category category = findByIdAndIsActive(id, true);
-
+    public void delete(Category category) {
         category.setIsActive(false);
 
         categoryPersistencePort.save(category);
-        categoryElasticsearchPort.deleteAllByRowId(id);
+        categoryElasticsearchPort.deleteAllByRowId(category.getId());
     }
 }

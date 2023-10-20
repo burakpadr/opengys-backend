@@ -33,14 +33,12 @@ public class Category extends BaseEntity {
     @Column
     private String name;
 
-    @OneToMany(mappedBy = "category")
-    @Transient
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<RealEstate> realEstates;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<SubCategory> subCategories;
 
-    @OneToMany(mappedBy = "category")
-    @Transient
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Attribute> attributes;
 }

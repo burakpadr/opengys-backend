@@ -1,5 +1,7 @@
 package com.padr.gys.domain.attribute.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -33,11 +35,6 @@ class AttributeService implements AttributeServicePort {
     }
 
     @Override
-    public Page<Attribute> findBySubCategoryId(Long subCategoryId, Pageable pageable) {
-        return attributePersistencePort.findBySubCategoryId(subCategoryId, pageable);
-    }
-
-    @Override
     public Attribute create(Attribute attribute) {
         attribute.setIsActive(true);
 
@@ -61,5 +58,14 @@ class AttributeService implements AttributeServicePort {
         attribute.setIsActive(false);
 
         attributePersistencePort.save(attribute);
+    }
+
+    @Override
+    public void deleteAll(List<Attribute> attributes) {
+        attributes.stream().forEach(attribute -> {
+            attribute.setIsActive(false);
+        });
+
+        attributePersistencePort.saveAll(attributes);
     }
 }

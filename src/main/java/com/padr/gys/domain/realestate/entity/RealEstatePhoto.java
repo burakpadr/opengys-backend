@@ -13,7 +13,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -35,15 +34,6 @@ public class RealEstatePhoto extends BaseEntity {
     @SequenceGenerator(name = "real_estate_photo_id_seq", sequenceName = "real_estate_photo_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "real_estate_photo_id_seq")
     private Long id;
-
-    @Transient
-    private String extension;
-
-    @Transient
-    private String contentBase64;
-
-    @Column
-    private String sftpPath;
 
     @Column
     private String path;

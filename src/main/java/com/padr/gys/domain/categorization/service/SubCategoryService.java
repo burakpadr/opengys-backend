@@ -67,15 +67,9 @@ public class SubCategoryService implements SubCategoryServicePort {
     }
 
     @Override
-    public void deleteAll(List<Long> subCategoryIds) {
-        List<SubCategory> subCategories = new ArrayList<>();
-
-        subCategoryIds.stream().forEach(subCategoryId -> {
-            SubCategory subCategory = findById(subCategoryId);
-
+    public void deleteAll(List<SubCategory> subCategories) {
+        subCategories.stream().forEach(subCategory -> {
             subCategory.setIsActive(false);
-
-            subCategories.add(subCategory);
         });
 
         subCategoryPersistencePort.saveAll(subCategories);

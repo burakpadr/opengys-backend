@@ -11,6 +11,4 @@ import com.padr.gys.domain.attribute.entity.Attribute;
 public interface AttributeRepository extends JpaRepository<Attribute, Long> {
 
     Page<Attribute> findByCategoryIdOrderByScreenOrderAsc(Long categoryId, Pageable pageable);
-
-    Page<Attribute> findBySubCategoryIdOrderByScreenOrderAsc(Long subCategoryId, Pageable pageable);
 }

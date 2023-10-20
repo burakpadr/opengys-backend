@@ -6,7 +6,6 @@ import org.hibernate.annotations.Where;
 import org.hibernate.envers.Audited;
 
 import com.padr.gys.domain.categorization.entity.persistence.Category;
-import com.padr.gys.domain.categorization.entity.persistence.SubCategory;
 import com.padr.gys.domain.common.model.entity.BaseEntity;
 import com.padr.gys.domain.frontend.constant.InputType;
 
@@ -58,9 +57,6 @@ public class Attribute extends BaseEntity {
 
     @ManyToOne
     private Category category;
-
-    @ManyToOne
-    private SubCategory subCategory;
 
     @OneToMany(mappedBy = "attribute")
     private List<AttributeValue> attributeValues;
