@@ -1,8 +1,8 @@
 package com.padr.gys.domain.advert.service;
 
-import com.padr.gys.domain.statusmanager.constant.StatusChangeReportType;
-import com.padr.gys.domain.statusmanager.model.StatusChangeReportModel;
-import com.padr.gys.domain.statusmanager.reporter.StatusChangeReporter;
+import com.padr.gys.domain.statusmanager.constant.StatusChangeOperationType;
+import com.padr.gys.domain.statusmanager.context.StatusChangeHandlerContext;
+import com.padr.gys.domain.statusmanager.model.StatusChangeModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class AdvertService implements AdvertServicePort {
 
     private final AdvertPersistencePort advertPersistencePort;
 
-    private final StatusChangeReporter statusChangeReporter;
+    private final StatusChangeHandlerContext statusChangeHandlerContext;
 
     @Override
     public Page<Advert> findByRealEstateIdAndIsActive(Long realEstateId, Boolean isActive, Pageable pageable) {
@@ -39,11 +39,12 @@ public class AdvertService implements AdvertServicePort {
 
         advertPersistencePort.save(advert);
 
-        statusChangeReporter.getCreateAdvertReporter().submit(
-                StatusChangeReportModel.<Advert>builder()
-                        .type(StatusChangeReportType.CREATE)
-                        .oldEntity(advert)
-                        .build());
+        StatusChangeModel model = StatusChangeModel.builder()
+                .type(StatusChangeOperationType.CREATE)
+                .oldEntity(advert)
+                .build();
+
+        statusChangeHandlerContext.getStatusChangeHandler(Advert.class).handle(model);
 
         return advert;
     }
@@ -62,12 +63,13 @@ public class AdvertService implements AdvertServicePort {
 
         advertPersistencePort.save(oldAdvert);
 
-        statusChangeReporter.getUpdateAdvertReporter().submit(
-                StatusChangeReportModel.<Advert>builder()
-                        .type(StatusChangeReportType.UPDATE)
-                        .oldEntity(oldAdvertCopy)
-                        .updatedEntity(oldAdvert)
-                        .build());
+        StatusChangeModel model = StatusChangeModel.builder()
+                .type(StatusChangeOperationType.UPDATE)
+                .oldEntity(oldAdvertCopy)
+                .updatedEntity(oldAdvert)
+                .build();
+
+        statusChangeHandlerContext.getStatusChangeHandler(Advert.class).handle(model);
 
         return oldAdvert;
     }
@@ -80,10 +82,11 @@ public class AdvertService implements AdvertServicePort {
 
         advertPersistencePort.save(advert);
 
-        statusChangeReporter.getUpdateAdvertReporter().submit(
-                StatusChangeReportModel.<Advert>builder()
-                        .type(StatusChangeReportType.DELETE)
-                        .oldEntity(advert)
-                        .build());
+        StatusChangeModel model = StatusChangeModel.builder()
+                .type(StatusChangeOperationType.DELETE)
+                .oldEntity(advert)
+                .build();
+
+        statusChangeHandlerContext.getStatusChangeHandler(Advert.class).handle(model);
     }
 }

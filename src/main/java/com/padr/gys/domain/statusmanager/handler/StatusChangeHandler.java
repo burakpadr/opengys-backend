@@ -1,24 +1,8 @@
 package com.padr.gys.domain.statusmanager.handler;
 
-import java.util.concurrent.Flow;
+import com.padr.gys.domain.statusmanager.model.StatusChangeModel;
 
-public abstract class StatusChangeHandler<T> implements Flow.Subscriber<T> {
+public interface StatusChangeHandler {
 
-    protected Flow.Subscription subscription;
-
-    @Override
-    public void onSubscribe(Flow.Subscription subscription) {
-        this.subscription = subscription;
-        this.subscription.request(1);
-    }
-
-    @Override
-    public void onError(Throwable throwable) {
-
-    }
-
-    @Override
-    public void onComplete() {
-
-    }
+    void handle(StatusChangeModel statusChangeModel);
 }

@@ -1,8 +1,8 @@
 package com.padr.gys.domain.realestate.service;
 
-import com.padr.gys.domain.statusmanager.constant.StatusChangeReportType;
-import com.padr.gys.domain.statusmanager.model.StatusChangeReportModel;
-import com.padr.gys.domain.statusmanager.reporter.StatusChangeReporter;
+import com.padr.gys.domain.statusmanager.constant.StatusChangeOperationType;
+import com.padr.gys.domain.statusmanager.context.StatusChangeHandlerContext;
+import com.padr.gys.domain.statusmanager.model.StatusChangeModel;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class RealEstateService implements RealEstateServicePort {
 
     private final RealEstatePersistencePort realEstatePersistencePort;
 
-    private final StatusChangeReporter statusChangeReporter;
+    private final StatusChangeHandlerContext statusChangeHandlerContext;
 
     @Override
     public RealEstate create(RealEstate realEstate) {
@@ -34,11 +34,12 @@ public class RealEstateService implements RealEstateServicePort {
 
         realEstatePersistencePort.save(realEstate);
 
-        statusChangeReporter.getCreateRealEstateReporter().submit(
-                StatusChangeReportModel.<RealEstate>builder()
-                        .type(StatusChangeReportType.CREATE)
-                        .oldEntity(realEstate)
-                        .build());
+        StatusChangeModel model = StatusChangeModel.builder()
+                .type(StatusChangeOperationType.CREATE)
+                .oldEntity(realEstate)
+                .build();
+
+        statusChangeHandlerContext.getStatusChangeHandler(RealEstate.class).handle(model);
 
         return realEstate;
     }

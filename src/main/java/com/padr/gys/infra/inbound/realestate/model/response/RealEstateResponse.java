@@ -1,7 +1,5 @@
 package com.padr.gys.infra.inbound.realestate.model.response;
 
-import java.util.Objects;
-
 import com.padr.gys.domain.realestate.entity.RealEstate;
 
 import lombok.Builder;
@@ -23,7 +21,7 @@ public class RealEstateResponse {
                 .id(realEstate.getId())
                 .no(realEstate.getNo())
                 .mainStatus(realEstate.getMainStatus().getValue())
-                .subStatus(Objects.nonNull(realEstate.getSubStatus()) ? realEstate.getSubStatus().getValue() : null)
+                .subStatus(realEstate.getSubStatus().getValue())
                 .districtName(realEstate.getAddress().getDistrictName())
                 .cityName(realEstate.getAddress().getCityName())
                 .build();

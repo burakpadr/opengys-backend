@@ -4,9 +4,9 @@ import com.padr.gys.domain.rentalcontract.entity.RentalContract;
 import com.padr.gys.domain.rentalcontract.exception.RentalContractAlreadyExistException;
 import com.padr.gys.domain.rentalcontract.exception.RentalContractNotFoundException;
 import com.padr.gys.domain.rentalcontract.port.RentalContractServicePort;
-import com.padr.gys.domain.statusmanager.constant.StatusChangeReportType;
-import com.padr.gys.domain.statusmanager.model.StatusChangeReportModel;
-import com.padr.gys.domain.statusmanager.reporter.StatusChangeReporter;
+import com.padr.gys.domain.statusmanager.constant.StatusChangeOperationType;
+import com.padr.gys.domain.statusmanager.context.StatusChangeHandlerContext;
+import com.padr.gys.domain.statusmanager.model.StatusChangeModel;
 import com.padr.gys.infra.outbound.persistence.rentalcontract.port.RentalContractPersistencePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,7 +19,7 @@ public class RentalContractService implements RentalContractServicePort {
 
     private final RentalContractPersistencePort rentalContractPersistencePort;
 
-    private final StatusChangeReporter statusChangeReporter;
+    private final StatusChangeHandlerContext statusChangeHandlerContext;
 
     @Override
     public Page<RentalContract> findByRealEstateIdAndIsActive(Long realEstateId, Boolean isActive, Pageable pageable) {
@@ -47,11 +47,12 @@ public class RentalContractService implements RentalContractServicePort {
 
         rentalContractPersistencePort.save(rentalContract);
 
-        statusChangeReporter.getCreateRentalContractReporter().submit(
-                StatusChangeReportModel.<RentalContract>builder()
-                        .type(StatusChangeReportType.CREATE)
-                        .oldEntity(rentalContract)
-                        .build());
+        StatusChangeModel model = StatusChangeModel.builder()
+                .type(StatusChangeOperationType.CREATE)
+                .oldEntity(rentalContract)
+                .build();
+
+        statusChangeHandlerContext.getStatusChangeHandler(RentalContract.class).handle(model);
 
         return rentalContract;
     }
@@ -70,12 +71,13 @@ public class RentalContractService implements RentalContractServicePort {
         oldRentalContract.setStartDate(rentalContract.getStartDate());
         oldRentalContract.setEndDate(rentalContract.getEndDate());
 
-        statusChangeReporter.getCreateRentalContractReporter().submit(
-                StatusChangeReportModel.<RentalContract>builder()
-                        .type(StatusChangeReportType.UPDATE)
-                        .oldEntity(oldRentalContractCopy)
-                        .updatedEntity(oldRentalContract)
-                        .build());
+        StatusChangeModel model = StatusChangeModel.builder()
+                .type(StatusChangeOperationType.UPDATE)
+                .oldEntity(oldRentalContractCopy)
+                .updatedEntity(oldRentalContract)
+                .build();
+
+        statusChangeHandlerContext.getStatusChangeHandler(RentalContract.class).handle(model);
 
         rentalContractPersistencePort.save(oldRentalContract);
 
@@ -90,10 +92,11 @@ public class RentalContractService implements RentalContractServicePort {
 
         rentalContractPersistencePort.save(rentalContract);
 
-        statusChangeReporter.getCreateRentalContractReporter().submit(
-                StatusChangeReportModel.<RentalContract>builder()
-                        .type(StatusChangeReportType.DELETE)
-                        .oldEntity(rentalContract)
-                        .build());
+        StatusChangeModel model = StatusChangeModel.builder()
+                .type(StatusChangeOperationType.DELETE)
+                .oldEntity(rentalContract)
+                .build();
+
+        statusChangeHandlerContext.getStatusChangeHandler(RentalContract.class).handle(model);
     }
 }
