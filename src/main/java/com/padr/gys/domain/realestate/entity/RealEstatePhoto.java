@@ -2,6 +2,7 @@ package com.padr.gys.domain.realestate.entity;
 
 import org.hibernate.annotations.Where;
 import org.hibernate.envers.Audited;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.padr.gys.domain.common.model.entity.BaseEntity;
 
@@ -13,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -43,4 +45,7 @@ public class RealEstatePhoto extends BaseEntity {
 
     @ManyToOne
     private RealEstate realEstate;
+
+    @Transient
+    private MultipartFile image;
 }

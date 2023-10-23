@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/gys/api/v1/users")
 @RequiredArgsConstructor
 public class UserAdapter {
 

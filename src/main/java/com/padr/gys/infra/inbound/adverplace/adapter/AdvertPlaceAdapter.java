@@ -25,7 +25,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/advert-places")
+@RequestMapping("/gys/api/v1/advert-places")
 @RequiredArgsConstructor
 public class AdvertPlaceAdapter {
 

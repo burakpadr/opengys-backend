@@ -12,7 +12,7 @@ import com.padr.gys.infra.inbound.frontend.usecase.FindInputTypesUseCase;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/frontend")
+@RequestMapping("/gys/api/v1/frontend")
 @RequiredArgsConstructor
 public class FrontendAdapter {
     

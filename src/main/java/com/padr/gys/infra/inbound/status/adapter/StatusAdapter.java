@@ -15,7 +15,7 @@ import com.padr.gys.infra.inbound.status.usecase.FindSubStatusUseCase;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/status")
+@RequestMapping("/gys/api/v1/status")
 @RequiredArgsConstructor
 public class StatusAdapter {
 

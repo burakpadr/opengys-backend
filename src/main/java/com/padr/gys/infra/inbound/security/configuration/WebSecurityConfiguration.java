@@ -1,5 +1,6 @@
 package com.padr.gys.infra.inbound.security.configuration;
 
+import com.padr.gys.domain.common.property.AppProperty;
 import com.padr.gys.infra.inbound.security.filter.JwtAuthorizationFilter;
 
 import lombok.RequiredArgsConstructor;
@@ -22,12 +23,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfiguration {
 
     private final SecurityProperty securityProperty;
+    private final AppProperty appProperty;
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((auth) -> {
+                    auth.requestMatchers(appProperty.getStorage().getBaseUrl() + "/**").permitAll();
                     auth.requestMatchers("/auth").permitAll()
                             .requestMatchers(HttpMethod.POST, "/users").permitAll()
                             .requestMatchers(HttpMethod.OPTIONS).permitAll()

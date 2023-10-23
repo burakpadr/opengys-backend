@@ -16,15 +16,16 @@ spring:
       repositories:
         enabled: true
 
-sftp:
+app:
   storage:
-    host: localhost
-    port: 22
-    username: burakpadr
-    password: xxx
-    remoteBasePath: Documents/nginx/gys-storage/
-    remoteImagesBasePath: images/
-    remoteFilesBasePath: files/
+    # Base properties
 
-static-server:
-  url: http://localhost:9000/
+    base-url: /storage
+    base-path: /Users/burakpadr/Documents/gys-storage
+    images-base-path: ${app.storage.base-path}/images
+    files-base-path: ${app.storage.base-path}/files
+
+    # Specific paths and their relative urls
+
+    real-estate-images-path: ${app.storage.images-base-path}/real-estates
+    real-estate-images-relative-url: ${app.storage.base-url}/images/real-estates

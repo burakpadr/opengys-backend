@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/rental-contracts")
+@RequestMapping("/gys/api/v1/rental-contracts")
 @RequiredArgsConstructor
 public class RentalContractAdapter {
 

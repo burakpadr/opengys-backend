@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/adverts")
+@RequestMapping("/gys/api/v1/adverts")
 @RequiredArgsConstructor
 public class AdvertAdapter {
 

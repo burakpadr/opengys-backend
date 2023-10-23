@@ -26,7 +26,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("/gys/api/v1/categories")
 @RequiredArgsConstructor
 public class CategorizationAdapter {
 

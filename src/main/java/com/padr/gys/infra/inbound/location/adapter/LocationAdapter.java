@@ -17,7 +17,7 @@ import com.padr.gys.infra.inbound.location.usecase.FindNeighborhoodsUseCase;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/location")
+@RequestMapping("/gys/api/v1/location")
 @RequiredArgsConstructor
 public class LocationAdapter {
 

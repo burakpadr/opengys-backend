@@ -28,7 +28,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/attributes")
+@RequestMapping("/gys/api/v1/attributes")
 @RequiredArgsConstructor
 public class AttributeAdapter {
 
