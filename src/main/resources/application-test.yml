@@ -9,13 +9,6 @@ spring:
     host: 185.87.253.127
     port: 18000
 
-  data:
-    elasticsearch:
-      cluster-name: docker-cluster
-      cluster-nodes: localhost:9200
-      repositories:
-        enabled: true
-
 app:
   storage:
     # Base properties
