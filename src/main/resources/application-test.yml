@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://185.87.253.127:25000/gys
+    username: postgres
+    password: postgres
+
+  redis:
+    host: 185.87.253.127
+    port: 18000
+
+  data:
+    elasticsearch:
+      cluster-name: docker-cluster
+      cluster-nodes: localhost:9200
+      repositories:
+        enabled: true
+
+app:
+  storage:
+    # Base properties
+
+    base-url: /storage
+    base-path: /root/gys-storage
+    images-base-path: ${app.storage.base-path}/images
+    files-base-path: ${app.storage.base-path}/files
+
+    # Specific paths and their relative urls
+
+    real-estate-images-path: ${app.storage.images-base-path}/real-estates
+    real-estate-images-relative-url: ${app.storage.base-url}/images/real-estates
