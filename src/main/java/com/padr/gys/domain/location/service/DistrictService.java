@@ -18,7 +18,7 @@ public class DistrictService implements DistrictServicePort {
     public List<String> getDistrictNamesByCityName(String cityName) {
         Map<String, Object> content = (Map<String, Object>) YamlUtil
                 .yamlToJson(LocationConstant.DISTRICTS_DIR_PATH.concat("/")
-                        .concat(StringUtil.clearTurkishChars(cityName).toLowerCase()).concat(".yaml"));
+                        .concat(StringUtil.clearTurkishChars(cityName.toLowerCase())).concat(".yaml"));
 
         return content.entrySet().stream()
                 .map(entry -> {
