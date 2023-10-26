@@ -1,0 +1,175 @@
+---
+Altınova:
+  Altınova:
+    postcode: 77700
+    neighborhoods:
+    - Cumhuriyet Mah
+    - Hersek Mah
+    - Hürriyet Mah
+  Kaytazdere:
+    postcode: 77720
+    neighborhoods:
+    - Merkez Mah (Kaytazdere Beldesi)
+  Merkezköyler:
+    postcode: 77702
+    neighborhoods:
+    - Ahmediye Köyü
+    - Aktoprak Köyü
+    - Çavuş Köyü
+    - Devletyolu Altı Mah (Çavuşçiftliği Köyü)
+    - Devletyolu Üstü Mah (Çavuşçiftliği Köyü)
+    - Fevziye Köyü
+    - Geyikdere Köyü
+    - Havuzdere Köyü
+    - Karadere Köyü
+    - Köy Altı Mah (Tokmak Köyü)
+    - Köy İçi Mah (Tokmak Köyü)
+    - Örencik Köyü
+    - Sermayecik Köyü
+    - Soğuksu Köyü
+  Subaşı:
+    postcode: 77710
+    neighborhoods:
+    - Altınkent Mah (Subaşı Beldesi)
+    - Denizgören Mah (Subaşı Beldesi)
+    - Merkez Mah (Subaşı Beldesi)
+  Tavşanlı:
+    postcode: 77740
+    neighborhoods:
+    - Fatih Mah (Tavşanlı Beldesi)
+    - Şehitlik Mah (Tavşanlı Beldesi)
+Armutlu:
+  Armutlu:
+    postcode: 77500
+    neighborhoods:
+    - 50. Yıl Mah
+    - Bayır Mah
+    - Karşıyaka Mah
+  Merkezköyler:
+    postcode: 77502
+    neighborhoods:
+    - Hayriye Merkez Mah (Hayriye Köyü)
+    - İhsaniye Mah (Mecidiye Köyü)
+    - Köy Merkezi Mah (Fıstıklı Köyü)
+    - Köy Merkezi Mah (Kapaklı Köyü)
+    - Köy Merkezi Mah (Mecidiye Köyü)
+    - Köy Merkezi Mah (Selimiye Köyü)
+    - Yalı Mah (Fıstıklı Köyü)
+Çınarcık:
+  Çınarcık:
+    postcode: 77300
+    neighborhoods:
+    - Çamlık Mah
+    - Harmanlar Mah
+    - Hasanbaba Mah
+    - Karpuzdere Mah
+    - Taşliman Mah
+  Esenköy:
+    postcode: 77310
+    neighborhoods:
+    - Aliye Hanım Mah (Esenköy Beldesi)
+    - Liman Mah (Esenköy Beldesi)
+  Koru:
+    postcode: 77340
+    neighborhoods:
+    - Atakent Mah (Koru Beldesi)
+    - Cumhuriyet Mah (Koru Beldesi)
+    - Hürriyet Mah (Koru Beldesi)
+  Merkezköyler:
+    postcode: 77302
+    neighborhoods:
+    - Köy İçi Mah (Şenköy Köyü)
+    - Merkez Mah (Çalıca Köyü)
+    - Merkez Mah (Kocadere Köyü)
+    - Merkez Mah (Ortaburun Köyü)
+    - Yalı Mah (Kocadere Köyü)
+  Teşvikiye:
+    postcode: 77330
+    neighborhoods:
+    - Cumhuriyet Mah (Teşvikiye Beldesi)
+    - İstiklal Mah (Teşvikiye Beldesi)
+    - Karşıyaka Mah (Teşvikiye Beldesi)
+Çiftlikköy:
+  Çiftlikköy:
+    postcode: 77600
+    neighborhoods:
+    - 500 Evler Mah
+    - Çiftlik Mah
+    - Mehmet Akif Ersoy Mah
+    - Sahil Mah
+    - Siteler Mah
+    - Sultaniye Mah
+  Merkezköyler:
+    postcode: 77602
+    neighborhoods:
+    - Burhaniye Köyü
+    - Dereköy Köyü
+    - Gacık Mah (Gacık Köyü)
+    - Göllü Mah (Gacık Köyü)
+    - Kılıç Merkez Mah (Kılıç Köyü)
+    - Merkez Mah (Çukurköy Köyü)
+    - Merkez Mah (İlyasköy Köyü)
+    - Merkez Mah (Laledere Köyü)
+    - Yalova İzmit Karayolu Mah (Kılıç Köyü)
+    - Yukarı Mah (Çukurköy Köyü)
+    - Yukarı Mah (İlyasköy Köyü)
+  Taşköprü:
+    postcode: 77610
+    neighborhoods:
+    - Kabaklı Köyü
+    - Merkez Mah (Denizçalı Köyü)
+    - Merkez Mah (Kabaklı Köyü)
+    - Taşköprü Merkez Mah (Taşköprü Beldesi)
+    - Taşköprü Yeni Mah (Taşköprü Beldesi)
+Merkez:
+  Bağlarbaşı:
+    postcode: 77200
+    neighborhoods:
+    - Adnan Menderes Mah
+    - Bağlarbaşı Mah
+    - Bahçelievler Mah
+    - Bayraktepe Mah
+    - Dere Mah
+    - Fevzi Çakmak Mah
+    - Gazi Osman Paşa Mah
+    - İsmet Paşa Mah
+    - Kazım Karabekir Mah
+    - Mustafa Kemal Paşa Mah
+    - Paşakent Mah
+    - Rüstem Paşa Mah
+    - Süleyman Bey Mah
+  Kadıköy:
+    postcode: 77210
+    neighborhoods:
+    - Merkez Mah (Kadıköy Beldesi)
+    - Özden Mah (Kadıköy Beldesi)
+  Merkezköyler:
+    postcode: 77202
+    neighborhoods:
+    - Güneyköy Mah (Güneyköy Köyü)
+    - Merkez Mah (Elmalık Köyü)
+    - Merkez Mah (Esadiye Köyü)
+    - Merkez Mah (Güneyköy Köyü)
+    - Merkez Mah (Hacımehmet Köyü)
+    - Merkez Mah (Kazımiye Köyü)
+    - Merkez Mah (Kirazlı Köyü)
+    - Merkez Mah (Kurtköy Köyü)
+    - Merkez Mah (Safran Köyü)
+    - Merkez Mah (Samanlı Köyü)
+    - Merkez Mah (Soğucak Köyü)
+    - Merkez Mah (Sugören Köyü)
+    - Sanayi Mah (Kirazlı Köyü)
+    - Seyrantepe Mah
+    - Sugören Mah (Sugören Köyü)
+    - Süpürgelik Mah (Sugören Köyü)
+Termal:
+  Merkezköyler:
+    postcode: 77402
+    neighborhoods:
+    - Köyiçi Mah (Akköy Köyü)
+    - Köyiçi Mah (Yenimahalle Köyü)
+  Termal:
+    postcode: 77400
+    neighborhoods:
+    - Gökçedere Mah
+    - Üvezpınar Mah

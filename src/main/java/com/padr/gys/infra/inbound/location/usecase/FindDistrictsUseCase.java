@@ -16,6 +16,6 @@ public class FindDistrictsUseCase {
     private final DistrictServicePort districtServicePort;
 
     public List<DistrictResponse> execute(String cityName) {
-        return districtServicePort.getDisctrictByCityName(cityName).stream().map(DistrictResponse::of).toList();
+        return districtServicePort.getDistrictNamesByCityName(cityName).stream().map(DistrictResponse::of).toList();
     }
 }

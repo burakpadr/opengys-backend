@@ -16,6 +16,6 @@ public class FindCitiesUseCase {
     private final CityServicePort cityServicePort;
 
     public List<CityResponse> execute() {
-        return cityServicePort.getCities().stream().map(CityResponse::of).toList();
+        return cityServicePort.getCityNames().stream().map(CityResponse::of).toList();
     }
 }

@@ -16,7 +16,7 @@ public class FindNeighborhoodsUseCase {
     private final NeighborhoodServicePort neighborhoodServicePort;
 
     public List<NeighborhoodResponse> execute(String cityName, String districtName) {
-        return neighborhoodServicePort.getNeighborhoodsByCityNameAndDistrictName(cityName, districtName).stream()
+        return neighborhoodServicePort.getNeighborhoodNamesByCityNameAndDistrictName(cityName, districtName).stream()
                 .map(NeighborhoodResponse::of).toList();
     }
 }
