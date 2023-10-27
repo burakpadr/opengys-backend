@@ -19,7 +19,7 @@ public class NeighborhoodService implements NeighborhoodServicePort {
     public List<String> getNeighborhoodNamesByCityNameAndDistrictName(String cityName, String districtName) {
         Map<String, Object> content = (Map<String, Object>) YamlUtil
                 .yamlToJson(LocationConstant.DISTRICTS_DIR_PATH.concat("/")
-                        .concat(StringUtil.clearTurkishChars(cityName.toLowerCase())).concat(".yaml"));
+                        .concat(StringUtil.clearTurkishChars(cityName).toLowerCase()).concat(".yaml"));
 
         List<String> neigborhoods = new ArrayList<>();
 
