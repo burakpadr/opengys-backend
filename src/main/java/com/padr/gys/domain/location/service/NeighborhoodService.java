@@ -2,6 +2,7 @@ package com.padr.gys.domain.location.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class NeighborhoodService implements NeighborhoodServicePort {
     public List<String> getNeighborhoodNamesByCityNameAndDistrictName(String cityName, String districtName) {
         Map<String, Object> content = (Map<String, Object>) YamlUtil
                 .yamlToJson(LocationConstant.DISTRICTS_DIR_PATH.concat("/")
-                        .concat(StringUtil.clearTurkishChars(cityName).toLowerCase()).concat(".yaml"));
+                        .concat(StringUtil.clearTurkishChars(cityName).toLowerCase( Locale.ENGLISH)).concat(".yaml"));
 
         List<String> neigborhoods = new ArrayList<>();
 
