@@ -28,8 +28,12 @@ public class CategoryPersistencePortImpl implements CategoryPersistencePort {
     }
 
     @Override
+    public Page<Category> findBySearchTerm(String searchTerm, Pageable pageable) {
+        return categoryRepository.findBySearchTerm(searchTerm, pageable);
+    }
+
+    @Override
     public Category save(Category category) {
         return categoryRepository.save(category);
     }
-
 }

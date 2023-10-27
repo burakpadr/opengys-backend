@@ -31,4 +31,9 @@ public class AdvertPlacePersistencePortImpl implements AdvertPlacePersistencePor
     public AdvertPlace save(AdvertPlace advertPlace) {
         return advertPlaceRepository.save(advertPlace);
     }
+
+    @Override
+    public Page<AdvertPlace> findBySearchTerm(String searchTerm, Pageable pageable) {
+        return advertPlaceRepository.findBySearchTerm(searchTerm, pageable);
+    }
 }

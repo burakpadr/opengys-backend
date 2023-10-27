@@ -13,5 +13,7 @@ public interface CategoryPersistencePort {
 
     Optional<Category> findByIdAndIsActive(Long id, Boolean isActive);
 
+    Page<Category> findBySearchTerm(String searchTerm, Pageable pageable);
+
     Category save(Category category);
 }

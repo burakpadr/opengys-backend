@@ -25,7 +25,7 @@ public class AdvertPlaceService implements AdvertPlaceServicePort {
 
     @Override
     public Page<AdvertPlace> search(String searchTerm, Pageable pageable) {
-        return null;
+        return advertPlacePersistencePort.findBySearchTerm(searchTerm, pageable);
     }
 
     @Override

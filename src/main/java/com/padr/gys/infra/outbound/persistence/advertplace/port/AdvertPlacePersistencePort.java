@@ -13,5 +13,7 @@ public interface AdvertPlacePersistencePort {
 
     Optional<AdvertPlace> findByIdAndIsActive(Long id, Boolean isActive);
 
+    Page<AdvertPlace> findBySearchTerm(String searchTerm, Pageable pageable);
+
     AdvertPlace save(AdvertPlace advertPlace);
 }

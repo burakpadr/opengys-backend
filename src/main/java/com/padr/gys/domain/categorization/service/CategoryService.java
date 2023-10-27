@@ -17,8 +17,6 @@ public class CategoryService implements CategoryServicePort {
 
     private final CategoryPersistencePort categoryPersistencePort;
 
-
-
     @Override
     public Page<Category> findByIsActive(Boolean isActive, Pageable Pageable) {
         return categoryPersistencePort.findByIsActive(isActive, Pageable);
@@ -26,7 +24,7 @@ public class CategoryService implements CategoryServicePort {
 
     @Override
     public Page<Category> search(String searchTerm, Pageable pageable) {
-        return null;
+        return categoryPersistencePort.findBySearchTerm(searchTerm, pageable);
     }
 
     @Override
