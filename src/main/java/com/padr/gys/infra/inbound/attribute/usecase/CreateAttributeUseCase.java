@@ -8,7 +8,7 @@ import com.padr.gys.domain.attribute.entity.Attribute;
 import com.padr.gys.domain.attribute.entity.AttributeValue;
 import com.padr.gys.domain.attribute.port.AttributeServicePort;
 import com.padr.gys.domain.attribute.port.AttributeValueServicePort;
-import com.padr.gys.domain.categorization.entity.persistence.Category;
+import com.padr.gys.domain.categorization.entity.Category;
 import com.padr.gys.domain.categorization.port.CategoryServicePort;
 import com.padr.gys.infra.inbound.attribute.model.request.CreateAttributeRequest;
 import com.padr.gys.infra.inbound.attribute.model.response.AttributeResponse;

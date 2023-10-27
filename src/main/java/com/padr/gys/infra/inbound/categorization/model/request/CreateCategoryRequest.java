@@ -3,7 +3,7 @@ package com.padr.gys.infra.inbound.categorization.model.request;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.padr.gys.domain.categorization.entity.persistence.Category;
+import com.padr.gys.domain.categorization.entity.Category;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

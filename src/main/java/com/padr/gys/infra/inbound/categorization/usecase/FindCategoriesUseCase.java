@@ -7,7 +7,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import com.padr.gys.domain.categorization.entity.persistence.Category;
+import com.padr.gys.domain.categorization.entity.Category;
 import com.padr.gys.domain.categorization.port.CategoryServicePort;
 import com.padr.gys.infra.inbound.categorization.model.response.CategoryResponse;
 

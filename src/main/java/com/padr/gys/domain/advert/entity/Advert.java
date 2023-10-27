@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 import org.hibernate.envers.Audited;
 
-import com.padr.gys.domain.advertplace.entity.persistence.AdvertPlace;
+import com.padr.gys.domain.advertplace.entity.AdvertPlace;
 import com.padr.gys.domain.common.model.entity.BaseEntity;
 import com.padr.gys.domain.realestate.entity.RealEstate;
 

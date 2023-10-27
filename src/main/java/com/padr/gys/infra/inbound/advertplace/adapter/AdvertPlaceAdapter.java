@@ -1,4 +1,4 @@
-package com.padr.gys.infra.inbound.adverplace.adapter;
+package com.padr.gys.infra.inbound.advertplace.adapter;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.padr.gys.infra.inbound.adverplace.model.AdvertPlaceRequest;
-import com.padr.gys.infra.inbound.adverplace.model.AdvertPlaceResponse;
-import com.padr.gys.infra.inbound.adverplace.usecase.CreateAdvertPlaceUseCase;
-import com.padr.gys.infra.inbound.adverplace.usecase.DeleteAdvertPlaceUseCase;
-import com.padr.gys.infra.inbound.adverplace.usecase.FindAdvertPlaceByIdUseCase;
-import com.padr.gys.infra.inbound.adverplace.usecase.FindAdvertPlacesUseCase;
-import com.padr.gys.infra.inbound.adverplace.usecase.SearchAdvertPlacesUseCase;
-import com.padr.gys.infra.inbound.adverplace.usecase.UpdateAdvertPlaceUseCase;
+import com.padr.gys.infra.inbound.advertplace.model.AdvertPlaceRequest;
+import com.padr.gys.infra.inbound.advertplace.model.AdvertPlaceResponse;
+import com.padr.gys.infra.inbound.advertplace.usecase.CreateAdvertPlaceUseCase;
+import com.padr.gys.infra.inbound.advertplace.usecase.DeleteAdvertPlaceUseCase;
+import com.padr.gys.infra.inbound.advertplace.usecase.FindAdvertPlaceByIdUseCase;
+import com.padr.gys.infra.inbound.advertplace.usecase.FindAdvertPlacesUseCase;
+import com.padr.gys.infra.inbound.advertplace.usecase.SearchAdvertPlacesUseCase;
+import com.padr.gys.infra.inbound.advertplace.usecase.UpdateAdvertPlaceUseCase;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

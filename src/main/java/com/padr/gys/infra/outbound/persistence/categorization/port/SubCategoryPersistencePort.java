@@ -3,7 +3,7 @@ package com.padr.gys.infra.outbound.persistence.categorization.port;
 import java.util.List;
 import java.util.Optional;
 
-import com.padr.gys.domain.categorization.entity.persistence.SubCategory;
+import com.padr.gys.domain.categorization.entity.SubCategory;
 
 public interface SubCategoryPersistencePort {
 

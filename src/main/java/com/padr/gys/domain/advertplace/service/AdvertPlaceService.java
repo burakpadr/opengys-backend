@@ -2,12 +2,10 @@ package com.padr.gys.domain.advertplace.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.elasticsearch.core.SearchHits;
 
 import org.springframework.stereotype.Service;
 
-import com.padr.gys.domain.advertplace.entity.elasticsearch.AdvertPlaceElasticsearch;
-import com.padr.gys.domain.advertplace.entity.persistence.AdvertPlace;
+import com.padr.gys.domain.advertplace.entity.AdvertPlace;
 import com.padr.gys.domain.advertplace.exception.AdvertPlaceNotFoundException;
 import com.padr.gys.domain.advertplace.port.AdvertPlaceServicePort;
 import com.padr.gys.infra.outbound.persistence.advertplace.port.AdvertPlacePersistencePort;
@@ -26,7 +24,7 @@ public class AdvertPlaceService implements AdvertPlaceServicePort {
     }
 
     @Override
-    public SearchHits<AdvertPlaceElasticsearch> search(String searchTerm, Pageable pageable) {
+    public Page<AdvertPlace> search(String searchTerm, Pageable pageable) {
         return null;
     }
 

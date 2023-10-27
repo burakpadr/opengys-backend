@@ -1,4 +1,4 @@
-package com.padr.gys.domain.categorization.entity.persistence;
+package com.padr.gys.domain.categorization.entity;
 
 import com.padr.gys.domain.realestate.entity.RealEstate;
 import jakarta.persistence.*;

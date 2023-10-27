@@ -2,16 +2,14 @@ package com.padr.gys.domain.advertplace.port;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.elasticsearch.core.SearchHits;
 
-import com.padr.gys.domain.advertplace.entity.elasticsearch.AdvertPlaceElasticsearch;
-import com.padr.gys.domain.advertplace.entity.persistence.AdvertPlace;
+import com.padr.gys.domain.advertplace.entity.AdvertPlace;
 
 public interface AdvertPlaceServicePort {
 
     Page<AdvertPlace> findByIsActive(Boolean isActive, Pageable pageable);
 
-    SearchHits<AdvertPlaceElasticsearch> search(String searchTerm, Pageable pageable);
+    Page<AdvertPlace> search(String searchTerm, Pageable pageable);
 
     AdvertPlace findByIdAndIsActive(Long id, Boolean isActive);
 

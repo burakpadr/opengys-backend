@@ -1,4 +1,4 @@
-package com.padr.gys.infra.inbound.adverplace.advice;
+package com.padr.gys.infra.inbound.advertplace.advice;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

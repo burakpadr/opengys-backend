@@ -3,7 +3,7 @@ package com.padr.gys.infra.inbound.categorization.usecase;
 import org.springframework.stereotype.Component;
 
 import com.padr.gys.domain.attribute.port.AttributeServicePort;
-import com.padr.gys.domain.categorization.entity.persistence.Category;
+import com.padr.gys.domain.categorization.entity.Category;
 import com.padr.gys.domain.categorization.port.CategoryServicePort;
 import com.padr.gys.domain.categorization.port.SubCategoryServicePort;
 import com.padr.gys.domain.realestate.port.RealEstateServicePort;

@@ -1,6 +1,6 @@
-package com.padr.gys.infra.inbound.adverplace.model;
+package com.padr.gys.infra.inbound.advertplace.model;
 
-import com.padr.gys.domain.advertplace.entity.persistence.AdvertPlace;
+import com.padr.gys.domain.advertplace.entity.AdvertPlace;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

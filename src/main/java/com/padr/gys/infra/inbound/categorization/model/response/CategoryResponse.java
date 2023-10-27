@@ -2,8 +2,7 @@ package com.padr.gys.infra.inbound.categorization.model.response;
 
 import java.util.List;
 
-import com.padr.gys.domain.categorization.entity.elasticsearch.CategoryElasticsearch;
-import com.padr.gys.domain.categorization.entity.persistence.Category;
+import com.padr.gys.domain.categorization.entity.Category;
 
 import lombok.Builder;
 import lombok.Data;
@@ -21,13 +20,6 @@ public class CategoryResponse {
                 .id(category.getId())
                 .name(category.getName())
                 .subCategories(category.getSubCategories().stream().map(SubCategoryResponse::of).toList())
-                .build();
-    }
-
-    public static CategoryResponse of(CategoryElasticsearch categoryElasticsearch) {
-        return CategoryResponse.builder()
-                .id(categoryElasticsearch.getRowId())
-                .name(categoryElasticsearch.getName())
                 .build();
     }
 }

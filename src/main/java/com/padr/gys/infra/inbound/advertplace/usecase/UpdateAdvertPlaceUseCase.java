@@ -1,10 +1,10 @@
-package com.padr.gys.infra.inbound.adverplace.usecase;
+package com.padr.gys.infra.inbound.advertplace.usecase;
 
 import org.springframework.stereotype.Component;
 
 import com.padr.gys.domain.advertplace.port.AdvertPlaceServicePort;
-import com.padr.gys.infra.inbound.adverplace.model.AdvertPlaceRequest;
-import com.padr.gys.infra.inbound.adverplace.model.AdvertPlaceResponse;
+import com.padr.gys.infra.inbound.advertplace.model.AdvertPlaceRequest;
+import com.padr.gys.infra.inbound.advertplace.model.AdvertPlaceResponse;
 
 import lombok.RequiredArgsConstructor;
 

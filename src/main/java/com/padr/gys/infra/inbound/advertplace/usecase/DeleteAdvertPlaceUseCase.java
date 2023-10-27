@@ -1,4 +1,4 @@
-package com.padr.gys.infra.inbound.adverplace.usecase;
+package com.padr.gys.infra.inbound.advertplace.usecase;
 
 import org.springframework.stereotype.Component;
 

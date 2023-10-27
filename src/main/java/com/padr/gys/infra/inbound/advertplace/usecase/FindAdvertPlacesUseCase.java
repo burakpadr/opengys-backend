@@ -1,4 +1,4 @@
-package com.padr.gys.infra.inbound.adverplace.usecase;
+package com.padr.gys.infra.inbound.advertplace.usecase;
 
 import java.util.List;
 
@@ -7,9 +7,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import com.padr.gys.domain.advertplace.entity.persistence.AdvertPlace;
+import com.padr.gys.domain.advertplace.entity.AdvertPlace;
 import com.padr.gys.domain.advertplace.port.AdvertPlaceServicePort;
-import com.padr.gys.infra.inbound.adverplace.model.AdvertPlaceResponse;
+import com.padr.gys.infra.inbound.advertplace.model.AdvertPlaceResponse;
 
 import lombok.RequiredArgsConstructor;
 

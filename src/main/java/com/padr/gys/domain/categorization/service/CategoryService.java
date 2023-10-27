@@ -2,11 +2,9 @@ package com.padr.gys.domain.categorization.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.stereotype.Service;
 
-import com.padr.gys.domain.categorization.entity.elasticsearch.CategoryElasticsearch;
-import com.padr.gys.domain.categorization.entity.persistence.Category;
+import com.padr.gys.domain.categorization.entity.Category;
 import com.padr.gys.domain.categorization.exception.CategoryNotFoundException;
 import com.padr.gys.domain.categorization.port.CategoryServicePort;
 import com.padr.gys.infra.outbound.persistence.categorization.port.CategoryPersistencePort;
@@ -27,7 +25,7 @@ public class CategoryService implements CategoryServicePort {
     }
 
     @Override
-    public SearchHits<CategoryElasticsearch> search(String searchTerm, Pageable pageable) {
+    public Page<Category> search(String searchTerm, Pageable pageable) {
         return null;
     }
 
