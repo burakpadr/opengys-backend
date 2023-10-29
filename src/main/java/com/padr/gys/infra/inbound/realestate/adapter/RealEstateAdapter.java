@@ -29,6 +29,7 @@ import com.padr.gys.infra.inbound.realestate.usecase.FindRealEstatesUseCase;
 import com.padr.gys.infra.inbound.realestate.usecase.UpdateRealEstatePhotosUseCase;
 import com.padr.gys.infra.inbound.realestate.usecase.UpdateRealEstateUseCase;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -83,7 +84,7 @@ public class RealEstateAdapter {
     }
 
     @PutMapping("/{realEstateId}/photos")
-    public void updateRealEstatePhotos(@PathVariable Long realEstateId, @RequestParam List<MultipartFile> images) {
+    public void updateRealEstatePhotos(HttpServletRequest httpServletRequest, @PathVariable Long realEstateId, @RequestParam List<MultipartFile> images) {
         updateRealEstatePhotosUseCase.execute(realEstateId, images);
     }
 }

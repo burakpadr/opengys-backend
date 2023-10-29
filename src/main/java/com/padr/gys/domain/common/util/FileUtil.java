@@ -3,22 +3,24 @@ package com.padr.gys.domain.common.util;
 import java.io.File;
 import java.util.List;
 
+import com.padr.gys.domain.common.constant.FileExceptionMessageConstant;
+
 public class FileUtil {
-    
+
     public static void createDirectoryIfNotExist(String path) {
         File file = new File(path);
 
         if (!file.isDirectory())
             if (!file.mkdirs())
-                throw new RuntimeException("Klasör oluşturulamadı");
-        
+                throw new RuntimeException(FileExceptionMessageConstant.COULD_NOT_BE_CREATED_FOLDER);
+
     }
 
     public static String getFileExtension(String fileName) {
         String[] splittedFileName = fileName.split("\\.");
 
         if (splittedFileName.length != 2)
-            throw new RuntimeException("Dosya ismi 'örnek.uzantı' formatında olmalıdır!");
+            throw new RuntimeException(FileExceptionMessageConstant.WRONG_FILE_NAME_FORMAT);
 
         return fileName.split("\\.")[1];
     }
@@ -28,7 +30,7 @@ public class FileUtil {
             File file = new File(filePath);
 
             if (!file.delete())
-                throw new RuntimeException("Dosya/Klasör silinemedi");
+                throw new RuntimeException(FileExceptionMessageConstant.COULD_NOT_BE_DELETED_FILE_OR_FOLDER);
         });
     }
 }

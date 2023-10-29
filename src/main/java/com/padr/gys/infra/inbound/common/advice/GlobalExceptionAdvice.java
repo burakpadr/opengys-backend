@@ -14,10 +14,22 @@ import com.padr.gys.domain.common.model.response.ExceptionResponse;
 import jakarta.validation.ConstraintViolationException;
 
 @ControllerAdvice
-public class BuiltInExceptionAdvice {
+public class GlobalExceptionAdvice {
+
+        @ExceptionHandler(RuntimeException.class)
+        public ResponseEntity<ExceptionResponse> handleException(RuntimeException exception) {
+                String code = "RUNTIME_EXCEPTION";
+
+                ExceptionResponse exceptionResponse = ExceptionResponse.builder()
+                                .code(code)
+                                .message(exception.getMessage())
+                                .build();
+
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exceptionResponse);
+        }
 
         @ExceptionHandler(MethodArgumentNotValidException.class)
-        protected ResponseEntity<ExceptionResponse> handleException(
+        public ResponseEntity<ExceptionResponse> handleException(
                         MethodArgumentNotValidException exception) {
                 String code = "METHOD_ARGUMENT_NOT_VALID_EXCEPTION";
                 String message = exception.getBindingResult().getFieldErrors().stream().map(FieldError::getField)
@@ -28,7 +40,7 @@ public class BuiltInExceptionAdvice {
         }
 
         @ExceptionHandler(ConstraintViolationException.class)
-        protected ResponseEntity<ExceptionResponse> handleException(
+        public ResponseEntity<ExceptionResponse> handleException(
                         ConstraintViolationException exception) {
                 String code = "CONSTRAINT_VIOLATION_EXCEPTION";
                 String message = exception.getConstraintViolations().stream().map(constraintViolation -> {
