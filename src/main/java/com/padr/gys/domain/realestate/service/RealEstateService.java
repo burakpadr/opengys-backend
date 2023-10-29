@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class RealEstateService implements RealEstateServicePort {
+class RealEstateService implements RealEstateServicePort {
 
     private final RealEstatePersistencePort realEstatePersistencePort;
 

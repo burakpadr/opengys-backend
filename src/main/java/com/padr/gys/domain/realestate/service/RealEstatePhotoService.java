@@ -2,11 +2,14 @@ package com.padr.gys.domain.realestate.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
+import com.padr.gys.domain.common.constant.AllowedFileType;
 import com.padr.gys.domain.common.property.AppProperty;
 import com.padr.gys.domain.common.util.FileUtil;
 import com.padr.gys.domain.realestate.entity.RealEstate;
@@ -18,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class RealEstatePhotoService implements RealEstatePhotoServicePort {
+class RealEstatePhotoService implements RealEstatePhotoServicePort {
 
     private final RealEstatePhotoPersistencePort realEstatePhotoPersistencePort;
 
@@ -32,13 +35,18 @@ public class RealEstatePhotoService implements RealEstatePhotoServicePort {
     @Override
     public List<RealEstatePhoto> createAll(List<RealEstatePhoto> realEstatePhotos) {
         realEstatePhotos.stream().forEach(realEstatePhoto -> {
+            realEstatePhoto.setIsActive(true);
+
             String folderPath = appProperty.getStorage().getRealEstateImagesPath() + "/"
                     + realEstatePhoto.getRealEstate().getId();
 
             FileUtil.createDirectoryIfNotExist(folderPath);
 
-            String fileName = UUID.randomUUID().toString()
-                    + realEstatePhoto.getImage().getOriginalFilename().split(".")[1];
+            String extension = Objects.nonNull(realEstatePhoto.getImage().getOriginalFilename())
+                    ? FileUtil.getFileExtension(realEstatePhoto.getImage().getOriginalFilename())
+                    : AllowedFileType.IMAGE_JPG.getExtension();
+
+            String fileName = UUID.randomUUID().toString() + "." + extension;
 
             File image = new File(folderPath + "/" + fileName);
 
@@ -52,12 +60,28 @@ public class RealEstatePhotoService implements RealEstatePhotoServicePort {
                     + realEstatePhoto.getRealEstate().getId() + "/" + fileName);
         });
 
-        return realEstatePhotos;
+        return realEstatePhotoPersistencePort.saveAll(realEstatePhotos);
     }
 
     @Override
     public void updateAll(RealEstate realEstate, List<RealEstatePhoto> realEstatePhotos) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateAll'");
+        List<RealEstatePhoto> oldRealEstatePhotos = findByRealEstateId(realEstate.getId());
+        List<String> oldImageAbsoluteFilePaths = new ArrayList<>();
+
+        oldRealEstatePhotos.stream().forEach(oldRealEstatePhoto -> {
+            oldRealEstatePhoto.setIsActive(false);
+
+            String absolutePath = appProperty.getStorage().getBasePath() + oldRealEstatePhoto.getPath()
+                    .replaceAll(appProperty.getStorage().getBaseUrl(), "");
+
+            oldImageAbsoluteFilePaths.add(absolutePath);
+
+        });
+
+        realEstatePhotoPersistencePort.saveAll(oldRealEstatePhotos);
+
+        FileUtil.deleteFiles(oldImageAbsoluteFilePaths);
+
+        createAll(realEstatePhotos);
     }
 }

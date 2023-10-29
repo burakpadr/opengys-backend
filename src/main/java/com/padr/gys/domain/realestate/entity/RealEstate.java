@@ -58,28 +58,22 @@ public class RealEstate extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ForRentSubStatus forRentSubStatus;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Address address;
 
-    @OneToMany(mappedBy = "realEstate")
+    @OneToOne(fetch = FetchType.LAZY)
+    private RealEstatePhoto coverPhoto;
+
+    @OneToMany(mappedBy = "realEstate", fetch = FetchType.LAZY)
     private List<RealEstatePhoto> realEstatePhotos;
 
-    @OneToMany(mappedBy = "realEstate")
+    @OneToMany(mappedBy = "realEstate", fetch = FetchType.LAZY)
     @Transient
     private List<Advert> adverts;
 
-    @OneToMany(mappedBy = "realEstate")
+    @OneToMany(mappedBy = "realEstate", fetch = FetchType.LAZY)
     @Transient
     private List<RentalContract> rentalContracts;
-
-    public RealEstatePhoto getCoverPhoto() {
-        return realEstatePhotos
-                .stream()
-                .parallel()
-                .filter(RealEstatePhoto::getIsCover)
-                .findFirst()
-                .orElse(null);
-    }
 
     public SubStatus getSubStatus() {
         return switch (mainStatus) {

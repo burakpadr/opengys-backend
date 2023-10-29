@@ -8,6 +8,7 @@ import com.padr.gys.domain.common.model.entity.BaseEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -40,10 +41,7 @@ public class RealEstatePhoto extends BaseEntity {
     @Column
     private String path;
 
-    @Column
-    private Boolean isCover;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private RealEstate realEstate;
 
     @Transient

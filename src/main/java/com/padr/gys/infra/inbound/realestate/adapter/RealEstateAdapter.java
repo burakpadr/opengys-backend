@@ -1,5 +1,7 @@
 package com.padr.gys.infra.inbound.realestate.adapter;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -9,16 +11,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.padr.gys.infra.inbound.realestate.model.request.CreateRealEstateRequest;
 import com.padr.gys.infra.inbound.realestate.model.request.UpdateRealEstateRequest;
 import com.padr.gys.infra.inbound.realestate.model.response.RealEstateDetailResponse;
+import com.padr.gys.infra.inbound.realestate.model.response.RealEstatePhotoResponse;
 import com.padr.gys.infra.inbound.realestate.model.response.RealEstateResponse;
+import com.padr.gys.infra.inbound.realestate.usecase.CreateRealEstatePhotosUseCase;
 import com.padr.gys.infra.inbound.realestate.usecase.CreateRealEstateUseCase;
 import com.padr.gys.infra.inbound.realestate.usecase.DeleteRealEstateUseCase;
 import com.padr.gys.infra.inbound.realestate.usecase.FindRealEstateByIdUseCase;
+import com.padr.gys.infra.inbound.realestate.usecase.FindRealEstatePhotosUseCase;
 import com.padr.gys.infra.inbound.realestate.usecase.FindRealEstatesUseCase;
+import com.padr.gys.infra.inbound.realestate.usecase.UpdateRealEstatePhotosUseCase;
 import com.padr.gys.infra.inbound.realestate.usecase.UpdateRealEstateUseCase;
 
 import jakarta.validation.Valid;
@@ -34,6 +42,9 @@ public class RealEstateAdapter {
     private final FindRealEstateByIdUseCase findRealEstateByIdUseCase;
     private final UpdateRealEstateUseCase updateRealEstateUseCase;
     private final DeleteRealEstateUseCase deleteRealEstateUseCase;
+    private final CreateRealEstatePhotosUseCase createRealEstatePhotosUseCase;
+    private final FindRealEstatePhotosUseCase findRealEstatePhotosUseCase;
+    private final UpdateRealEstatePhotosUseCase updateRealEstatePhotosUseCase;
 
     @GetMapping
     public Page<RealEstateResponse> findAll(Pageable pageable) {
@@ -51,12 +62,28 @@ public class RealEstateAdapter {
     }
 
     @PutMapping("/{realEstateId}")
-    public RealEstateDetailResponse update(@PathVariable Long realEstateId, @Valid @RequestBody UpdateRealEstateRequest request) {
+    public RealEstateDetailResponse update(@PathVariable Long realEstateId,
+            @Valid @RequestBody UpdateRealEstateRequest request) {
         return updateRealEstateUseCase.execute(realEstateId, request);
     }
 
     @DeleteMapping("/{realEstateId}")
     public void delete(@PathVariable Long realEstateId) {
         deleteRealEstateUseCase.execute(realEstateId);
+    }
+
+    @PostMapping("/{realEstateId}/photos")
+    public void createRealEstatePhotos(@PathVariable Long realEstateId, @RequestParam List<MultipartFile> images) {
+        createRealEstatePhotosUseCase.execute(realEstateId, images);
+    }
+
+    @GetMapping("/{realEstateId}/photos")
+    public List<RealEstatePhotoResponse> findRealEstatePhotos(@PathVariable Long realEstateId) {
+        return findRealEstatePhotosUseCase.execute(realEstateId);
+    }
+
+    @PutMapping("/{realEstateId}/photos")
+    public void updateRealEstatePhotos(@PathVariable Long realEstateId, @RequestParam List<MultipartFile> images) {
+        updateRealEstatePhotosUseCase.execute(realEstateId, images);
     }
 }
