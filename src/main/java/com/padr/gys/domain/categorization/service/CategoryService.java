@@ -1,11 +1,13 @@
 package com.padr.gys.domain.categorization.service;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.padr.gys.domain.categorization.constant.CategorizationExceptionMessage;
 import com.padr.gys.domain.categorization.entity.Category;
-import com.padr.gys.domain.categorization.exception.CategoryNotFoundException;
 import com.padr.gys.domain.categorization.port.CategoryServicePort;
 import com.padr.gys.infra.outbound.persistence.categorization.port.CategoryPersistencePort;
 
@@ -30,7 +32,7 @@ public class CategoryService implements CategoryServicePort {
     @Override
     public Category findByIdAndIsActive(Long id, Boolean isActive) {
         return categoryPersistencePort.findByIdAndIsActive(id, isActive)
-                .orElseThrow(() -> new CategoryNotFoundException(id));
+                .orElseThrow(() -> new NoSuchElementException(CategorizationExceptionMessage.CATEGORY_NOT_FOUND));
     }
 
     @Override

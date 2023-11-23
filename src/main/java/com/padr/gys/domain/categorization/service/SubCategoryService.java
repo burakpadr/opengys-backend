@@ -2,14 +2,15 @@ package com.padr.gys.domain.categorization.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.padr.gys.domain.categorization.constant.CategorizationExceptionMessage;
 import com.padr.gys.domain.categorization.entity.Category;
 import com.padr.gys.domain.categorization.entity.SubCategory;
-import com.padr.gys.domain.categorization.exception.SubCategoryNotFoundException;
 import com.padr.gys.domain.categorization.port.SubCategoryServicePort;
 import com.padr.gys.infra.outbound.persistence.categorization.port.SubCategoryPersistencePort;
 
@@ -78,6 +79,6 @@ public class SubCategoryService implements SubCategoryServicePort {
     @Override
     public SubCategory findById(Long id) {
         return subCategoryPersistencePort.findById(id)
-                .orElseThrow(() -> new SubCategoryNotFoundException(id));
+                .orElseThrow(() -> new NoSuchElementException(CategorizationExceptionMessage.SUBCATEGORY_NOT_FOUND));
     }
 }

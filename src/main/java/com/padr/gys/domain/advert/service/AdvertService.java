@@ -3,12 +3,15 @@ package com.padr.gys.domain.advert.service;
 import com.padr.gys.domain.statusmanager.constant.StatusChangeOperationType;
 import com.padr.gys.domain.statusmanager.context.StatusChangeHandlerContext;
 import com.padr.gys.domain.statusmanager.model.StatusChangeModel;
+
+import java.util.NoSuchElementException;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.padr.gys.domain.advert.constant.AdvertExceptionMessage;
 import com.padr.gys.domain.advert.entity.Advert;
-import com.padr.gys.domain.advert.exception.AdvertNotFoundException;
 import com.padr.gys.domain.advert.port.AdvertServicePort;
 import com.padr.gys.infra.outbound.persistence.advert.port.AdvertPersistencePort;
 
@@ -30,7 +33,7 @@ public class AdvertService implements AdvertServicePort {
     @Override
     public Advert findByIdAndIsActive(Long id, Boolean isActive) {
         return advertPersistencePort.findByIdAndIsActive(id, isActive)
-                .orElseThrow(() -> new AdvertNotFoundException(id));
+                .orElseThrow(() -> new NoSuchElementException(AdvertExceptionMessage.ADVERT_NOT_FOUND));
     }
 
     @Override

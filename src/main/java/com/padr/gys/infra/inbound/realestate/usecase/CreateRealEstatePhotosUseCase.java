@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.padr.gys.domain.common.util.FileUtil;
 import com.padr.gys.domain.realestate.entity.RealEstate;
 import com.padr.gys.domain.realestate.entity.RealEstatePhoto;
 import com.padr.gys.domain.realestate.port.RealEstatePhotoServicePort;
@@ -25,8 +24,6 @@ public class CreateRealEstatePhotosUseCase {
         RealEstate realEstate = realEstateServicePort.findByIdAndIsActive(realEstateId, true);
 
         List<RealEstatePhoto> realEstatePhotos = images.stream().map(image -> {
-            FileUtil.throwExceptionIfWrongFileNameFormat(image);
-
             return RealEstatePhoto.builder()
                     .realEstate(realEstate)
                     .image(image)

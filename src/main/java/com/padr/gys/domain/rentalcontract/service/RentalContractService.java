@@ -1,14 +1,18 @@
 package com.padr.gys.domain.rentalcontract.service;
 
+import com.padr.gys.domain.rentalcontract.constant.RentalContractExceptionMessage;
 import com.padr.gys.domain.rentalcontract.entity.RentalContract;
-import com.padr.gys.domain.rentalcontract.exception.RentalContractAlreadyExistException;
-import com.padr.gys.domain.rentalcontract.exception.RentalContractNotFoundException;
 import com.padr.gys.domain.rentalcontract.port.RentalContractServicePort;
 import com.padr.gys.domain.statusmanager.constant.StatusChangeOperationType;
 import com.padr.gys.domain.statusmanager.context.StatusChangeHandlerContext;
 import com.padr.gys.domain.statusmanager.model.StatusChangeModel;
 import com.padr.gys.infra.outbound.persistence.rentalcontract.port.RentalContractPersistencePort;
+
+import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
+
+import java.util.NoSuchElementException;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,7 +33,7 @@ public class RentalContractService implements RentalContractServicePort {
     @Override
     public RentalContract findByIdAndIsActive(Long id, Boolean isActive) {
         return rentalContractPersistencePort.findByIdAndIsActive(id, isActive)
-                .orElseThrow(RentalContractNotFoundException::new);
+                .orElseThrow(() -> new NoSuchElementException(RentalContractExceptionMessage.RENTAL_CONTRACT_NOT_FOUND));
     }
 
     @Override
@@ -40,7 +44,7 @@ public class RentalContractService implements RentalContractServicePort {
                 .filter(RentalContract::getIsPublished)
                 .findAny()
                 .ifPresent(rc -> {
-                    throw new RentalContractAlreadyExistException();
+                    throw new EntityExistsException(RentalContractExceptionMessage.RENTAL_CONTRACT_ALREADY_EXIST);
                 });
 
         rentalContract.setIsActive(true);

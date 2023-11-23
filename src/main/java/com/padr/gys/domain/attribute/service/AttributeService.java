@@ -1,13 +1,14 @@
 package com.padr.gys.domain.attribute.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.padr.gys.domain.attribute.constant.AttributeExceptionMessage;
 import com.padr.gys.domain.attribute.entity.Attribute;
-import com.padr.gys.domain.attribute.exception.AttributeNotFoundException;
 import com.padr.gys.domain.attribute.port.AttributeServicePort;
 import com.padr.gys.infra.outbound.persistence.attribute.port.AttributePersistencePort;
 
@@ -26,7 +27,8 @@ class AttributeService implements AttributeServicePort {
 
     @Override
     public Attribute findById(Long id) {
-        return attributePersistencePort.findById(id).orElseThrow(AttributeNotFoundException::new);
+        return attributePersistencePort.findById(id)
+                .orElseThrow(() -> new NoSuchElementException(AttributeExceptionMessage.ATTRIBUTE_NOT_FOUND));
     }
 
     @Override

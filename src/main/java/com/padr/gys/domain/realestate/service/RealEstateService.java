@@ -5,17 +5,18 @@ import com.padr.gys.domain.statusmanager.context.StatusChangeHandlerContext;
 import com.padr.gys.domain.statusmanager.model.StatusChangeModel;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.padr.gys.domain.realestate.constant.RealEstateExceptionMessage;
 import com.padr.gys.domain.realestate.entity.RealEstate;
-import com.padr.gys.domain.realestate.exception.RealEstateAlreadyExistException;
-import com.padr.gys.domain.realestate.exception.RealEstateNotFoundException;
 import com.padr.gys.domain.realestate.port.RealEstateServicePort;
 import com.padr.gys.infra.outbound.persistence.realestate.port.RealEstatePersistencePort;
 
+import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -47,7 +48,7 @@ class RealEstateService implements RealEstateServicePort {
     @Override
     public RealEstate findByIdAndIsActive(Long id, Boolean isActive) {
         return realEstatePersistencePort.findByIdAndIsActive(id, isActive)
-                .orElseThrow(() -> new RealEstateNotFoundException(id));
+                .orElseThrow(() -> new NoSuchElementException(RealEstateExceptionMessage.REAL_ESTATE_NOT_FOUND));
     }
 
     @Override
@@ -89,19 +90,19 @@ class RealEstateService implements RealEstateServicePort {
     @Override
     public RealEstate findByNoAndIsActive(String no, Boolean isActive) {
         return realEstatePersistencePort.findByNoAndIsActive(no, isActive)
-                .orElseThrow(() -> new RealEstateNotFoundException(no));
+                .orElseThrow(() -> new NoSuchElementException(RealEstateExceptionMessage.REAL_ESTATE_NOT_FOUND));
     }
 
     private void throwExceptionIfExistAssociatedWith(Long id, String no) {
         realEstatePersistencePort.findByNoAndIsActive(no, true).ifPresent(r -> {
             if (id != r.getId())
-                throw new RealEstateAlreadyExistException(r.getNo());
+                throw new EntityExistsException(RealEstateExceptionMessage.REAL_ESTATE_ALREADY_EXIST);
         });
     }
 
     private void throwExceptionIfExistAssociatedWith(String no) {
         realEstatePersistencePort.findByNoAndIsActive(no, true).ifPresent(r -> {
-            throw new RealEstateAlreadyExistException(r.getNo());
+            throw new EntityExistsException(RealEstateExceptionMessage.REAL_ESTATE_ALREADY_EXIST);
         });
     }
 }

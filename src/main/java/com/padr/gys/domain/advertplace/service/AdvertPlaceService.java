@@ -1,12 +1,14 @@
 package com.padr.gys.domain.advertplace.service;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import org.springframework.stereotype.Service;
 
+import com.padr.gys.domain.advertplace.constant.AdvertPlaceExceptionMessage;
 import com.padr.gys.domain.advertplace.entity.AdvertPlace;
-import com.padr.gys.domain.advertplace.exception.AdvertPlaceNotFoundException;
 import com.padr.gys.domain.advertplace.port.AdvertPlaceServicePort;
 import com.padr.gys.infra.outbound.persistence.advertplace.port.AdvertPlacePersistencePort;
 
@@ -31,7 +33,7 @@ public class AdvertPlaceService implements AdvertPlaceServicePort {
     @Override
     public AdvertPlace findByIdAndIsActive(Long id, Boolean isActive) {
         return advertPlacePersistencePort.findByIdAndIsActive(id, isActive)
-                .orElseThrow(() -> new AdvertPlaceNotFoundException(id));
+                .orElseThrow(() -> new NoSuchElementException(AdvertPlaceExceptionMessage.ADVERT_PLACE_NOT_FOUND));
     }
 
     @Override

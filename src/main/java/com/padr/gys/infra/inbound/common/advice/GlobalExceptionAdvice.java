@@ -1,5 +1,6 @@
 package com.padr.gys.infra.inbound.common.advice;
 
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.padr.gys.domain.common.model.response.ExceptionResponse;
 
+import jakarta.persistence.EntityExistsException;
 import jakarta.validation.ConstraintViolationException;
 
 @ControllerAdvice
@@ -49,5 +51,29 @@ public class GlobalExceptionAdvice {
 
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                                 .body(ExceptionResponse.builder().code(code).message(message).build());
+        }
+
+        @ExceptionHandler(NoSuchElementException.class)
+        public ResponseEntity<ExceptionResponse> handleException(
+                        NoSuchElementException exception) {
+                
+                String code = "NO_SUCH_ELEMENT_EXCEPTION";
+                ExceptionResponse exceptionResponse = ExceptionResponse.builder()
+                                .code(code)
+                                .message(exception.getMessage())
+                                .build();
+                
+                return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body(exceptionResponse);
+        }
+
+        @ExceptionHandler(EntityExistsException.class)
+        public ResponseEntity<ExceptionResponse> handleException(EntityExistsException exception) {
+                String code = "ENTITY_EXIST_EXCEPTION";
+                ExceptionResponse exceptionResponse = ExceptionResponse.builder()
+                                .code(code)
+                                .message(exception.getMessage())
+                                .build();
+
+                return ResponseEntity.status(HttpStatus.CONFLICT.value()).body(exceptionResponse);
         }
 }
