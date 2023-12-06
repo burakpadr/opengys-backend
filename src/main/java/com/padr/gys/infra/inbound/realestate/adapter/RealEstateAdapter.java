@@ -26,10 +26,8 @@ import com.padr.gys.infra.inbound.realestate.usecase.DeleteRealEstateUseCase;
 import com.padr.gys.infra.inbound.realestate.usecase.FindRealEstateByIdUseCase;
 import com.padr.gys.infra.inbound.realestate.usecase.FindRealEstatePhotosUseCase;
 import com.padr.gys.infra.inbound.realestate.usecase.FindRealEstatesUseCase;
-import com.padr.gys.infra.inbound.realestate.usecase.UpdateRealEstatePhotosUseCase;
 import com.padr.gys.infra.inbound.realestate.usecase.UpdateRealEstateUseCase;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -45,7 +43,6 @@ public class RealEstateAdapter {
     private final DeleteRealEstateUseCase deleteRealEstateUseCase;
     private final CreateRealEstatePhotosUseCase createRealEstatePhotosUseCase;
     private final FindRealEstatePhotosUseCase findRealEstatePhotosUseCase;
-    private final UpdateRealEstatePhotosUseCase updateRealEstatePhotosUseCase;
 
     @GetMapping
     public Page<RealEstateResponse> findAll(Pageable pageable) {
@@ -81,10 +78,5 @@ public class RealEstateAdapter {
     @GetMapping("/{realEstateId}/photos")
     public List<RealEstatePhotoResponse> findRealEstatePhotos(@PathVariable Long realEstateId) {
         return findRealEstatePhotosUseCase.execute(realEstateId);
-    }
-
-    @PutMapping("/{realEstateId}/photos")
-    public void updateRealEstatePhotos(HttpServletRequest httpServletRequest, @PathVariable Long realEstateId, @RequestParam List<MultipartFile> images) {
-        updateRealEstatePhotosUseCase.execute(realEstateId, images);
     }
 }

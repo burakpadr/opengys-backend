@@ -20,7 +20,7 @@ public class GlobalExceptionAdvice {
 
         @ExceptionHandler(RuntimeException.class)
         public ResponseEntity<ExceptionResponse> handleException(RuntimeException exception) {
-                String code = "RUNTIME_EXCEPTION";
+                String code = RuntimeException.class.getName();
 
                 ExceptionResponse exceptionResponse = ExceptionResponse.builder()
                                 .code(code)
@@ -33,7 +33,9 @@ public class GlobalExceptionAdvice {
         @ExceptionHandler(MethodArgumentNotValidException.class)
         public ResponseEntity<ExceptionResponse> handleException(
                         MethodArgumentNotValidException exception) {
-                String code = "METHOD_ARGUMENT_NOT_VALID_EXCEPTION";
+                
+                String code =  MethodArgumentNotValidException.class.getName();
+
                 String message = exception.getBindingResult().getFieldErrors().stream().map(FieldError::getField)
                                 .collect(Collectors.joining(";"));
 
@@ -44,7 +46,9 @@ public class GlobalExceptionAdvice {
         @ExceptionHandler(ConstraintViolationException.class)
         public ResponseEntity<ExceptionResponse> handleException(
                         ConstraintViolationException exception) {
-                String code = "CONSTRAINT_VIOLATION_EXCEPTION";
+                
+                String code = ConstraintViolationException.class.getName();
+
                 String message = exception.getConstraintViolations().stream().map(constraintViolation -> {
                         return constraintViolation.getPropertyPath().toString();
                 }).collect(Collectors.joining(";"));
@@ -57,7 +61,8 @@ public class GlobalExceptionAdvice {
         public ResponseEntity<ExceptionResponse> handleException(
                         NoSuchElementException exception) {
                 
-                String code = "NO_SUCH_ELEMENT_EXCEPTION";
+                String code = NoSuchElementException.class.getName();
+
                 ExceptionResponse exceptionResponse = ExceptionResponse.builder()
                                 .code(code)
                                 .message(exception.getMessage())
@@ -68,7 +73,8 @@ public class GlobalExceptionAdvice {
 
         @ExceptionHandler(EntityExistsException.class)
         public ResponseEntity<ExceptionResponse> handleException(EntityExistsException exception) {
-                String code = "ENTITY_EXIST_EXCEPTION";
+                String code = EntityExistsException.class.getName();
+
                 ExceptionResponse exceptionResponse = ExceptionResponse.builder()
                                 .code(code)
                                 .message(exception.getMessage())

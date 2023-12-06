@@ -1,15 +1,17 @@
 package com.padr.gys.infra.inbound.security.filter;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Objects;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException.BadRequest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.padr.gys.domain.common.constant.AllowedFileType;
-import com.padr.gys.domain.common.constant.FileExceptionMessageConstant;
+import com.padr.gys.domain.common.constant.IndependentExceptionMessageConstant;
 import com.padr.gys.domain.common.model.response.ExceptionResponse;
 
 import jakarta.servlet.Filter;
@@ -41,12 +43,15 @@ public class MultipartFileFilter implements Filter {
                     return;
                 }
 
-                for (AllowedFileType allowedFileType : AllowedFileType.values()) {
-                    if (!part.getContentType().contains(allowedFileType.getExtension())) {
-                        prepareResponseForUnsupportedFile(httpServletResponse);
+                boolean isAllowedType = Arrays.asList(AllowedFileType.values())
+                        .stream()
+                        .anyMatch(allowedFileType -> part.getContentType()
+                                .contains(allowedFileType.getExtension()));
 
-                        return;
-                    }
+                if (!isAllowedType) {
+                    prepareResponseForUnsupportedFile(httpServletResponse);
+
+                    return;
                 }
             }
         }
@@ -57,8 +62,8 @@ public class MultipartFileFilter implements Filter {
     public void prepareResponseForEmptyFile(HttpServletResponse httpServletResponse) {
         try {
             ExceptionResponse exceptionResponse = ExceptionResponse.builder()
-                    .code("BAD_REQUEST")
-                    .message(FileExceptionMessageConstant.FILE_CANNOT_BE_EMPTY)
+                    .code(BadRequest.class.getName())
+                    .message(IndependentExceptionMessageConstant.FILE_CANNOT_BE_EMPTY)
                     .build();
 
             httpServletResponse.setStatus(HttpStatus.BAD_REQUEST.value());
@@ -73,8 +78,8 @@ public class MultipartFileFilter implements Filter {
     public void prepareResponseForUnsupportedFile(HttpServletResponse httpServletResponse) {
         try {
             ExceptionResponse exceptionResponse = ExceptionResponse.builder()
-                    .code("BAD_REQUEST")
-                    .message(FileExceptionMessageConstant.UNSUPPORTED_FILE_TYPE)
+                    .code(BadRequest.class.getName())
+                    .message(IndependentExceptionMessageConstant.UNSUPPORTED_FILE_TYPE)
                     .build();
 
             httpServletResponse.setStatus(HttpStatus.BAD_REQUEST.value());

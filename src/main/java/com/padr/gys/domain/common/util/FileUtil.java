@@ -3,7 +3,7 @@ package com.padr.gys.domain.common.util;
 import java.io.File;
 import java.util.List;
 
-import com.padr.gys.domain.common.constant.FileExceptionMessageConstant;
+import com.padr.gys.domain.common.constant.IndependentExceptionMessageConstant;
 
 public class FileUtil {
 
@@ -12,7 +12,7 @@ public class FileUtil {
 
         if (!file.isDirectory())
             if (!file.mkdirs())
-                throw new RuntimeException(FileExceptionMessageConstant.COULD_NOT_BE_CREATED_FOLDER);
+                throw new RuntimeException(IndependentExceptionMessageConstant.COULD_NOT_BE_CREATED_FOLDER);
 
     }
 
@@ -20,7 +20,7 @@ public class FileUtil {
         String[] splittedFileName = fileName.split("\\.");
 
         if (splittedFileName.length != 2)
-            throw new RuntimeException(FileExceptionMessageConstant.WRONG_FILE_NAME_FORMAT);
+            throw new RuntimeException(IndependentExceptionMessageConstant.WRONG_FILE_NAME_FORMAT);
 
         return fileName.split("\\.")[1];
     }
@@ -30,7 +30,7 @@ public class FileUtil {
             File file = new File(filePath);
 
             if (!file.delete())
-                throw new RuntimeException(FileExceptionMessageConstant.COULD_NOT_BE_DELETED_FILE_OR_FOLDER);
+                throw new RuntimeException(IndependentExceptionMessageConstant.COULD_NOT_BE_DELETED_FILE_OR_FOLDER);
         });
     }
 }

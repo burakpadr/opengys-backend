@@ -1,6 +1,7 @@
 package com.padr.gys.infra.inbound.security.filter;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 import com.padr.gys.infra.inbound.security.configuration.SecurityProperty;
@@ -28,6 +29,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private final SecurityProperty securityProperty;
 
+    private final static List<String> EXCLUDED_ENDPOINTS = List.of(
+        "/gys/api/v1/auth"
+    );
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -50,5 +55,15 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
+
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String requestedEndpoint = request.getRequestURI();
+
+        return EXCLUDED_ENDPOINTS
+                .stream()
+                .anyMatch(excludedEndpoint -> excludedEndpoint.equals(requestedEndpoint));
     }
 }

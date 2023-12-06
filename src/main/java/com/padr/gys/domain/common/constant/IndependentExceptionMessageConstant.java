@@ -1,6 +1,6 @@
 package com.padr.gys.domain.common.constant;
 
-public class FileExceptionMessageConstant {
+public class IndependentExceptionMessageConstant {
 
     public static final String COULD_NOT_BE_CREATED_FOLDER = "Klasör oluşturulamadı!";
     public static final String WRONG_FILE_NAME_FORMAT = "Dosya ismi 'örnek.uzantı' formatında olmalıdır!";
