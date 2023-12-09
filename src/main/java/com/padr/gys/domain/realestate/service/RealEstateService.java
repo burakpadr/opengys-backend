@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.padr.gys.domain.realestate.constant.RealEstateExceptionMessage;
 import com.padr.gys.domain.realestate.entity.RealEstate;
+import com.padr.gys.domain.realestate.entity.RealEstatePhoto;
 import com.padr.gys.domain.realestate.port.RealEstateServicePort;
 import com.padr.gys.infra.outbound.persistence.realestate.port.RealEstatePersistencePort;
 
@@ -91,6 +92,24 @@ class RealEstateService implements RealEstateServicePort {
     public RealEstate findByNoAndIsActive(String no, Boolean isActive) {
         return realEstatePersistencePort.findByNoAndIsActive(no, isActive)
                 .orElseThrow(() -> new NoSuchElementException(RealEstateExceptionMessage.REAL_ESTATE_NOT_FOUND));
+    }
+
+    @Override
+    public RealEstate changeCoverPhoto(Long realEstateId, RealEstatePhoto coverPhoto) {
+        RealEstate realEstate = findByIdAndIsActive(realEstateId, true);
+
+        realEstate.setCoverPhoto(coverPhoto);
+
+        return realEstatePersistencePort.save(realEstate);
+    }
+
+    @Override
+    public void removeCoverPhoto(Long id) {
+        RealEstate realEstate = findByIdAndIsActive(id, true);
+
+        realEstate.setCoverPhoto(null);
+
+        realEstatePersistencePort.save(realEstate);
     }
 
     private void throwExceptionIfExistAssociatedWith(Long id, String no) {

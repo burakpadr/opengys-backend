@@ -1,7 +1,7 @@
 package com.padr.gys.infra.inbound.common.advice;
 
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.padr.gys.domain.common.model.response.ExceptionResponse;
 
 import jakarta.persistence.EntityExistsException;
+import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 
 @ControllerAdvice
@@ -33,11 +34,16 @@ public class GlobalExceptionAdvice {
         @ExceptionHandler(MethodArgumentNotValidException.class)
         public ResponseEntity<ExceptionResponse> handleException(
                         MethodArgumentNotValidException exception) {
-                
-                String code =  MethodArgumentNotValidException.class.getName();
 
-                String message = exception.getBindingResult().getFieldErrors().stream().map(FieldError::getField)
-                                .collect(Collectors.joining(";"));
+                String code = MethodArgumentNotValidException.class.getName();
+
+                Optional<FieldError> fieldErrorOptional = exception.getBindingResult().getFieldErrors().stream()
+                                .findFirst();
+
+                String message = "";
+
+                if (fieldErrorOptional.isPresent())
+                        message = fieldErrorOptional.get().getField() + " alanı boş bırakılamaz!";
 
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                                 .body(ExceptionResponse.builder().code(code).message(message).build());
@@ -46,12 +52,18 @@ public class GlobalExceptionAdvice {
         @ExceptionHandler(ConstraintViolationException.class)
         public ResponseEntity<ExceptionResponse> handleException(
                         ConstraintViolationException exception) {
-                
+
                 String code = ConstraintViolationException.class.getName();
 
-                String message = exception.getConstraintViolations().stream().map(constraintViolation -> {
-                        return constraintViolation.getPropertyPath().toString();
-                }).collect(Collectors.joining(";"));
+                Optional<ConstraintViolation<?>> constraintViolationOptional = exception.getConstraintViolations()
+                                .stream()
+                                .findFirst();
+
+                String message = "";
+
+                if (constraintViolationOptional.isPresent())
+                        message = constraintViolationOptional.get().getPropertyPath().toString()
+                                        + " alanı boş bırakılamaz!";
 
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                                 .body(ExceptionResponse.builder().code(code).message(message).build());
@@ -60,14 +72,14 @@ public class GlobalExceptionAdvice {
         @ExceptionHandler(NoSuchElementException.class)
         public ResponseEntity<ExceptionResponse> handleException(
                         NoSuchElementException exception) {
-                
+
                 String code = NoSuchElementException.class.getName();
 
                 ExceptionResponse exceptionResponse = ExceptionResponse.builder()
                                 .code(code)
                                 .message(exception.getMessage())
                                 .build();
-                
+
                 return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body(exceptionResponse);
         }
 
@@ -81,5 +93,17 @@ public class GlobalExceptionAdvice {
                                 .build();
 
                 return ResponseEntity.status(HttpStatus.CONFLICT.value()).body(exceptionResponse);
+        }
+
+        @ExceptionHandler(IllegalArgumentException.class)
+        public ResponseEntity<ExceptionResponse> handleException(IllegalArgumentException exception) {
+                String code = IllegalArgumentException.class.getName();
+
+                ExceptionResponse exceptionResponse = ExceptionResponse.builder()
+                                .code(code)
+                                .message(exception.getMessage())
+                                .build();
+
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(exceptionResponse);
         }
 }

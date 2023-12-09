@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.padr.gys.domain.realestate.entity.RealEstate;
 import com.padr.gys.domain.status.constant.MainStatus;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -30,6 +31,7 @@ public class CreateRealEstateRequest {
 
     @NotNull
     @JsonProperty("address")
+    @Valid
     private AddressRequest addressRequest;
 
     public RealEstate to() {

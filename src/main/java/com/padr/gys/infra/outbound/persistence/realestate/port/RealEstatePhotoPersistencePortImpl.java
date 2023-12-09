@@ -1,6 +1,7 @@
 package com.padr.gys.infra.outbound.persistence.realestate.port;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
@@ -23,5 +24,10 @@ class RealEstatePhotoPersistencePortImpl implements RealEstatePhotoPersistencePo
     @Override
     public List<RealEstatePhoto> findByRealEstateId(Long realEstateId) {
         return realEstatePhotoRepository.findByRealEstateId(realEstateId);
+    }
+
+    @Override
+    public Optional<RealEstatePhoto> findById(Long id) {
+        return realEstatePhotoRepository.findById(id);
     }
 }

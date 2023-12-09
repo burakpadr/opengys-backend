@@ -4,4 +4,5 @@ public class RealEstateExceptionMessage {
     
     public static final String REAL_ESTATE_NOT_FOUND = "Gayrimenkul bulunamadı.";
     public static final String REAL_ESTATE_ALREADY_EXIST = "Gayrimenkul zaten mevcut";
+    public static final String REAL_ESTATE_PHOTO_NOT_FOUND = "Gayrimenkul fotoğrafı bulunamadı.";
 }

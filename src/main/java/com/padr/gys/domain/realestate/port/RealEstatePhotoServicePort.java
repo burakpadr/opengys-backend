@@ -7,6 +7,10 @@ import com.padr.gys.domain.realestate.entity.RealEstatePhoto;
 public interface RealEstatePhotoServicePort {
 
     List<RealEstatePhoto> findByRealEstateId(Long realEstateId);
+
+    RealEstatePhoto findById(Long id);
     
     List<RealEstatePhoto> createAll(List<RealEstatePhoto> realEstatePhotos);
+
+    void deleteById(Long id);
 }

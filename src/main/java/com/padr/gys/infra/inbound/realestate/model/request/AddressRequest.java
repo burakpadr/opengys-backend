@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import com.padr.gys.domain.address.entity.Address;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,11 +14,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AddressRequest {
     
+    @NotEmpty
+    private String cityName;
+
+    @NotEmpty
+    private String districtName;
+
+    @NotEmpty
+    private String neighborhoodName;
+
     private BigDecimal latitude;
     private BigDecimal longitude;
-    private String cityName;
-    private String districtName;
-    private String neighborhoodName;
+    
     private Integer postCode;
     private String openAddress;
 
