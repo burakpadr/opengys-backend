@@ -1,5 +1,6 @@
 package com.padr.gys.infra.outbound.persistence.advertplace.port;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -35,5 +36,10 @@ public class AdvertPlacePersistencePortImpl implements AdvertPlacePersistencePor
     @Override
     public Page<AdvertPlace> findBySearchTerm(String searchTerm, Pageable pageable) {
         return advertPlaceRepository.findBySearchTerm(searchTerm, pageable);
+    }
+
+    @Override
+    public List<AdvertPlace> findByIsActive(Boolean isActive) {
+        return advertPlaceRepository.findByIsActive(isActive);
     }
 }

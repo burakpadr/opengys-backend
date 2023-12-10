@@ -1,5 +1,6 @@
 package com.padr.gys.domain.advertplace.service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.data.domain.Page;
@@ -28,6 +29,11 @@ public class AdvertPlaceService implements AdvertPlaceServicePort {
     @Override
     public Page<AdvertPlace> search(String searchTerm, Pageable pageable) {
         return advertPlacePersistencePort.findBySearchTerm(searchTerm, pageable);
+    }
+
+    @Override
+    public List<AdvertPlace> findByIsActive(Boolean isActive) {
+        return advertPlacePersistencePort.findByIsActive(isActive);
     }
 
     @Override

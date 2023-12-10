@@ -1,5 +1,7 @@
 package com.padr.gys.infra.inbound.advertplace.adapter;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +19,7 @@ import com.padr.gys.infra.inbound.advertplace.model.AdvertPlaceResponse;
 import com.padr.gys.infra.inbound.advertplace.usecase.CreateAdvertPlaceUseCase;
 import com.padr.gys.infra.inbound.advertplace.usecase.DeleteAdvertPlaceUseCase;
 import com.padr.gys.infra.inbound.advertplace.usecase.FindAdvertPlaceByIdUseCase;
+import com.padr.gys.infra.inbound.advertplace.usecase.FindAdvertPlacesAsListUseCase;
 import com.padr.gys.infra.inbound.advertplace.usecase.FindAdvertPlacesUseCase;
 import com.padr.gys.infra.inbound.advertplace.usecase.SearchAdvertPlacesUseCase;
 import com.padr.gys.infra.inbound.advertplace.usecase.UpdateAdvertPlaceUseCase;
@@ -31,6 +34,7 @@ public class AdvertPlaceAdapter {
 
     private final FindAdvertPlacesUseCase findAdvertPlacesUseCase;
     private final FindAdvertPlaceByIdUseCase findAdvertPlaceByIdUseCase;
+    private final FindAdvertPlacesAsListUseCase findAdvertPlacesAsListUseCase;
     private final CreateAdvertPlaceUseCase createAdvertPlaceUseCase;
     private final UpdateAdvertPlaceUseCase updateAdvertPlaceUseCase;
     private final DeleteAdvertPlaceUseCase deleteAdvertPlaceUseCase;
@@ -44,6 +48,11 @@ public class AdvertPlaceAdapter {
     @GetMapping("/search")
     public Page<AdvertPlaceResponse> search(@RequestParam("search") String searchTerm, Pageable pageable) {
         return searchAdvertPlacesUseCase.execute(searchTerm, pageable);
+    }
+
+    @GetMapping("/as-list")
+    public List<AdvertPlaceResponse> findAll() {
+        return findAdvertPlacesAsListUseCase.execute();
     }
 
     @PostMapping
