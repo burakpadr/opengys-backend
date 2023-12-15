@@ -1,4 +1,4 @@
-package com.padr.gys.domain.common.model.response;
+package com.padr.gys.infra.inbound.common.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

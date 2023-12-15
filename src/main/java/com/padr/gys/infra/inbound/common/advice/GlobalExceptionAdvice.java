@@ -10,7 +10,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.padr.gys.domain.common.model.response.ExceptionResponse;
+import com.padr.gys.infra.inbound.common.response.ExceptionResponse;
 
 import jakarta.persistence.EntityExistsException;
 import jakarta.validation.ConstraintViolation;

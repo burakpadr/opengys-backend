@@ -12,7 +12,7 @@ import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.padr.gys.domain.common.constant.AllowedFileType;
 import com.padr.gys.domain.common.constant.IndependentExceptionMessageConstant;
-import com.padr.gys.domain.common.model.response.ExceptionResponse;
+import com.padr.gys.infra.inbound.common.response.ExceptionResponse;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
