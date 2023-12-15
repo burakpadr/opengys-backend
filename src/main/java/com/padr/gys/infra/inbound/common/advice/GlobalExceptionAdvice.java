@@ -10,6 +10,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.padr.gys.domain.common.exception.BusinessException;
 import com.padr.gys.infra.inbound.common.response.ExceptionResponse;
 
 import jakarta.persistence.EntityExistsException;
@@ -19,11 +20,26 @@ import jakarta.validation.ConstraintViolationException;
 @ControllerAdvice
 public class GlobalExceptionAdvice {
 
+        @ExceptionHandler(BusinessException.class)
+        public ResponseEntity<ExceptionResponse> handleException(BusinessException exception) {
+                exception.printStackTrace();
+
+                String code = BusinessException.class.getSimpleName();
+
+                ExceptionResponse exceptionResponse = ExceptionResponse.builder()
+                                .code(code)
+                                .message(exception.getMessage())
+                                .build();
+
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionResponse);
+
+        }
+
         @ExceptionHandler(RuntimeException.class)
         public ResponseEntity<ExceptionResponse> handleException(RuntimeException exception) {
                 exception.printStackTrace();
 
-                String code = RuntimeException.class.getName();
+                String code = RuntimeException.class.getSimpleName();
 
                 ExceptionResponse exceptionResponse = ExceptionResponse.builder()
                                 .code(code)
@@ -39,7 +55,7 @@ public class GlobalExceptionAdvice {
 
                 exception.printStackTrace();
 
-                String code = MethodArgumentNotValidException.class.getName();
+                String code = MethodArgumentNotValidException.class.getSimpleName();
 
                 Optional<FieldError> fieldErrorOptional = exception.getBindingResult().getFieldErrors().stream()
                                 .findFirst();
@@ -59,7 +75,7 @@ public class GlobalExceptionAdvice {
 
                 exception.printStackTrace();
 
-                String code = ConstraintViolationException.class.getName();
+                String code = ConstraintViolationException.class.getSimpleName();
 
                 Optional<ConstraintViolation<?>> constraintViolationOptional = exception.getConstraintViolations()
                                 .stream()
@@ -81,7 +97,7 @@ public class GlobalExceptionAdvice {
 
                 exception.printStackTrace();
 
-                String code = NoSuchElementException.class.getName();
+                String code = NoSuchElementException.class.getSimpleName();
 
                 ExceptionResponse exceptionResponse = ExceptionResponse.builder()
                                 .code(code)
@@ -95,7 +111,7 @@ public class GlobalExceptionAdvice {
         public ResponseEntity<ExceptionResponse> handleException(EntityExistsException exception) {
                 exception.printStackTrace();
 
-                String code = EntityExistsException.class.getName();
+                String code = EntityExistsException.class.getSimpleName();
 
                 ExceptionResponse exceptionResponse = ExceptionResponse.builder()
                                 .code(code)
@@ -109,7 +125,7 @@ public class GlobalExceptionAdvice {
         public ResponseEntity<ExceptionResponse> handleException(IllegalArgumentException exception) {
                 exception.printStackTrace();
 
-                String code = IllegalArgumentException.class.getName();
+                String code = IllegalArgumentException.class.getSimpleName();
 
                 ExceptionResponse exceptionResponse = ExceptionResponse.builder()
                                 .code(code)
