@@ -21,6 +21,8 @@ public class GlobalExceptionAdvice {
 
         @ExceptionHandler(RuntimeException.class)
         public ResponseEntity<ExceptionResponse> handleException(RuntimeException exception) {
+                exception.printStackTrace();
+
                 String code = RuntimeException.class.getName();
 
                 ExceptionResponse exceptionResponse = ExceptionResponse.builder()
@@ -34,6 +36,8 @@ public class GlobalExceptionAdvice {
         @ExceptionHandler(MethodArgumentNotValidException.class)
         public ResponseEntity<ExceptionResponse> handleException(
                         MethodArgumentNotValidException exception) {
+
+                exception.printStackTrace();
 
                 String code = MethodArgumentNotValidException.class.getName();
 
@@ -52,6 +56,8 @@ public class GlobalExceptionAdvice {
         @ExceptionHandler(ConstraintViolationException.class)
         public ResponseEntity<ExceptionResponse> handleException(
                         ConstraintViolationException exception) {
+
+                exception.printStackTrace();
 
                 String code = ConstraintViolationException.class.getName();
 
@@ -73,6 +79,8 @@ public class GlobalExceptionAdvice {
         public ResponseEntity<ExceptionResponse> handleException(
                         NoSuchElementException exception) {
 
+                exception.printStackTrace();
+
                 String code = NoSuchElementException.class.getName();
 
                 ExceptionResponse exceptionResponse = ExceptionResponse.builder()
@@ -85,6 +93,8 @@ public class GlobalExceptionAdvice {
 
         @ExceptionHandler(EntityExistsException.class)
         public ResponseEntity<ExceptionResponse> handleException(EntityExistsException exception) {
+                exception.printStackTrace();
+
                 String code = EntityExistsException.class.getName();
 
                 ExceptionResponse exceptionResponse = ExceptionResponse.builder()
@@ -97,6 +107,8 @@ public class GlobalExceptionAdvice {
 
         @ExceptionHandler(IllegalArgumentException.class)
         public ResponseEntity<ExceptionResponse> handleException(IllegalArgumentException exception) {
+                exception.printStackTrace();
+
                 String code = IllegalArgumentException.class.getName();
 
                 ExceptionResponse exceptionResponse = ExceptionResponse.builder()

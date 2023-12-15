@@ -21,31 +21,31 @@ public class AdvertStatusChangeHandler implements StatusChangeHandler {
     public void handle(StatusChangeModel model) {
         Advert oldEntity = (Advert) model.getOldEntity();
 
-        switch (model.getType()) {
-            case CREATE -> {
-                SubStatus currentSubStatus = oldEntity.getRealEstate().getSubStatus();
+        // switch (model.getType()) {
+        //     case CREATE -> {
+        //         SubStatus currentSubStatus = oldEntity.getRealEstate().getSubStatus();
 
-                if (currentSubStatus instanceof  ForRentSubStatus)
-                    if (ForRentSubStatus.IN_NOTICE.getOrder() > currentSubStatus.getOrder())
-                        oldEntity.getRealEstate().setForRentSubStatus(ForRentSubStatus.IN_NOTICE);
+        //         if (currentSubStatus instanceof  ForRentSubStatus)
+        //             if (ForRentSubStatus.IN_NOTICE.getOrder() > currentSubStatus.getOrder())
+        //                 oldEntity.getRealEstate().setForRentSubStatus(ForRentSubStatus.IN_NOTICE);
 
-                realEstatePersistencePort.save(oldEntity.getRealEstate());
-            }
-            case UPDATE, DELETE -> {
-                SubStatus currentSubStatus = oldEntity.getRealEstate().getSubStatus();
+        //         realEstatePersistencePort.save(oldEntity.getRealEstate());
+        //     }
+        //     case UPDATE, DELETE -> {
+        //         SubStatus currentSubStatus = oldEntity.getRealEstate().getSubStatus();
 
-                if (currentSubStatus instanceof ForRentSubStatus) {
-                    boolean anAdvertIsPublished = advertPersistencePort.
-                            findByRealEstateIdAndIsActive(oldEntity.getId(), true)
-                            .stream()
-                            .anyMatch(Advert::getIsPublished);
+        //         if (currentSubStatus instanceof ForRentSubStatus) {
+        //             boolean anAdvertIsPublished = advertPersistencePort.
+        //                     findByRealEstateIdAndIsActive(oldEntity.getId(), true)
+        //                     .stream()
+        //                     .anyMatch(Advert::getIsPublished);
 
-                    if (currentSubStatus.equals(ForRentSubStatus.IN_NOTICE) && !anAdvertIsPublished)
-                        oldEntity.getRealEstate().setForRentSubStatus(ForRentSubStatus.IN_PREPARATION);
-                }
+        //             if (currentSubStatus.equals(ForRentSubStatus.IN_NOTICE) && !anAdvertIsPublished)
+        //                 oldEntity.getRealEstate().setForRentSubStatus(ForRentSubStatus.IN_PREPARATION);
+        //         }
 
-                realEstatePersistencePort.save(oldEntity.getRealEstate());
-            }
-        }
+        //         realEstatePersistencePort.save(oldEntity.getRealEstate());
+        //     }
+        // }
     }
 }
