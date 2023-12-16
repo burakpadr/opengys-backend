@@ -18,7 +18,7 @@ public class FindAdvertsUseCase {
     private final AdvertServicePort advertServicePort;
 
     public Page<AdvertResponse> execute(Long realEstateId, Pageable pageable) {
-        Page<Advert> adverts = advertServicePort.findByRealEstateIdAndIsActive(realEstateId, true, pageable);
+        Page<Advert> adverts = advertServicePort.findByRealEstateId(realEstateId, pageable);
 
         List<AdvertResponse> advertResponses = adverts.getContent().stream().map(AdvertResponse::of)
                 .toList();

@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+
+import org.hibernate.annotations.Where;
 import org.hibernate.envers.Audited;
 
 import java.math.BigDecimal;
@@ -21,6 +23,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
+@Where(clause = "is_active=true")
 public class RentalContract extends BaseEntity {
 
     public RentalContract(RentalContract rentalContract) {

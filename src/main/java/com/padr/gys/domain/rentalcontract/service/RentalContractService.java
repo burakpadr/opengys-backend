@@ -11,6 +11,7 @@ import com.padr.gys.infra.outbound.persistence.rentalcontract.port.RentalContrac
 import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.data.domain.Page;
@@ -19,27 +20,31 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class RentalContractService implements RentalContractServicePort {
+class RentalContractService implements RentalContractServicePort {
 
     private final RentalContractPersistencePort rentalContractPersistencePort;
 
     private final StatusChangeHandlerContext statusChangeHandlerContext;
 
     @Override
-    public Page<RentalContract> findByRealEstateIdAndIsActive(Long realEstateId, Boolean isActive, Pageable pageable) {
-        return rentalContractPersistencePort.findByRealEstateIdAndIsActive(realEstateId, isActive, pageable);
+    public Page<RentalContract> findByRealEstateId(Long realEstateId, Pageable pageable) {
+        return rentalContractPersistencePort.findByRealEstateId(realEstateId, pageable);
     }
 
     @Override
-    public RentalContract findByIdAndIsActive(Long id, Boolean isActive) {
-        return rentalContractPersistencePort.findByIdAndIsActive(id, isActive)
+    public List<RentalContract> findByRealEstateIdAndIsPublished(Long realEstateId, Boolean isPublished) {
+        return rentalContractPersistencePort.findByRealEstateIdAndIsPublished(realEstateId, isPublished);
+    }
+
+    @Override
+    public RentalContract findById(Long id) {
+        return rentalContractPersistencePort.findById(id)
                 .orElseThrow(() -> new NoSuchElementException(RentalContractExceptionMessage.RENTAL_CONTRACT_NOT_FOUND));
     }
 
     @Override
     public RentalContract create(RentalContract rentalContract) {
-        rentalContractPersistencePort.findByRealEstateIdAndIsActive(
-                rentalContract.getRealEstate().getId(), true)
+        rentalContractPersistencePort.findByRealEstateId(rentalContract.getRealEstate().getId())
                 .stream()
                 .filter(RentalContract::getIsPublished)
                 .findAny()
@@ -63,7 +68,7 @@ public class RentalContractService implements RentalContractServicePort {
 
     @Override
     public RentalContract update(Long id, RentalContract rentalContract) {
-        RentalContract oldRentalContract = findByIdAndIsActive(id, true);
+        RentalContract oldRentalContract = findById(id);
 
         RentalContract oldRentalContractCopy = new RentalContract(oldRentalContract);
 
@@ -90,7 +95,7 @@ public class RentalContractService implements RentalContractServicePort {
 
     @Override
     public void delete(Long id) {
-        RentalContract rentalContract = findByIdAndIsActive(id, true);
+        RentalContract rentalContract = findById(id);
 
         rentalContract.setIsActive(false);
 

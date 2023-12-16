@@ -19,18 +19,18 @@ public class AdvertPersistencePortImpl implements AdvertPersistencePort {
     private final AdvertRepository advertRepository;
 
     @Override
-    public Page<Advert> findByRealEstateIdAndIsActive(Long realEstateId, Boolean isActive, Pageable pageable) {
-        return advertRepository.findByRealEstateIdAndIsActive(realEstateId, isActive, pageable);
+    public Page<Advert> findByRealEstateId(Long realEstateId, Pageable pageable) {
+        return advertRepository.findByRealEstateId(realEstateId, pageable);
     }
 
     @Override
-    public List<Advert> findByRealEstateIdAndIsActive(Long realEstateId, Boolean isActive) {
-        return advertRepository.findByRealEstateIdAndIsActive(realEstateId, isActive);
+    public List<Advert> findByRealEstateId(Long realEstateId) {
+        return advertRepository.findByRealEstateId(realEstateId);
     }
 
     @Override
-    public Optional<Advert> findByIdAndIsActive(Long id, Boolean isActive) {
-        return advertRepository.findByIdAndIsActive(id, isActive);
+    public Optional<Advert> findById(Long id) {
+        return advertRepository.findById(id);
     }
 
     @Override

@@ -17,22 +17,27 @@ public class RentalContractPersistencePortImpl implements  RentalContractPersist
     private final RentalContractRepository rentalContractRepository;
 
     @Override
-    public Page<RentalContract> findByRealEstateIdAndIsActive(Long realEstateId, Boolean isActive, Pageable pageable) {
-        return rentalContractRepository.findByRealEstateIdAndIsActive(realEstateId, isActive, pageable);
+    public Page<RentalContract> findByRealEstateId(Long realEstateId, Pageable pageable) {
+        return rentalContractRepository.findByRealEstateId(realEstateId, pageable);
     }
 
     @Override
-    public List<RentalContract> findByRealEstateIdAndIsActive(Long realEstateId, Boolean isActive) {
-        return rentalContractRepository.findByRealEstateIdAndIsActive(realEstateId, isActive);
+    public List<RentalContract> findByRealEstateId(Long realEstateId) {
+        return rentalContractRepository.findByRealEstateId(realEstateId);
     }
 
     @Override
-    public Optional<RentalContract> findByIdAndIsActive(Long id, Boolean isActive) {
-        return rentalContractRepository.findByIdAndIsActive(id, isActive);
+    public Optional<RentalContract> findById(Long id) {
+        return rentalContractRepository.findById(id);
     }
 
     @Override
     public RentalContract save(RentalContract rentalContract) {
         return rentalContractRepository.save(rentalContract);
+    }
+
+    @Override
+    public List<RentalContract> findByRealEstateIdAndIsPublished(Long realEstateId, Boolean isPublished) {
+        return rentalContractRepository.findByRealEstateIdAndIsPublished(realEstateId, isPublished);
     }
 }

@@ -26,13 +26,13 @@ public class AdvertService implements AdvertServicePort {
     private final StatusChangeHandlerContext statusChangeHandlerContext;
 
     @Override
-    public Page<Advert> findByRealEstateIdAndIsActive(Long realEstateId, Boolean isActive, Pageable pageable) {
-        return advertPersistencePort.findByRealEstateIdAndIsActive(realEstateId, isActive, pageable);
+    public Page<Advert> findByRealEstateId(Long realEstateId, Pageable pageable) {
+        return advertPersistencePort.findByRealEstateId(realEstateId, pageable);
     }
 
     @Override
-    public Advert findByIdAndIsActive(Long id, Boolean isActive) {
-        return advertPersistencePort.findByIdAndIsActive(id, isActive)
+    public Advert findById(Long id) {
+        return advertPersistencePort.findById(id)
                 .orElseThrow(() -> new NoSuchElementException(AdvertExceptionMessage.ADVERT_NOT_FOUND));
     }
 
@@ -53,16 +53,14 @@ public class AdvertService implements AdvertServicePort {
     }
 
     @Override
-    public Advert update(Long id, Advert advert) {
-        Advert oldAdvert = findByIdAndIsActive(id, true);
-
+    public Advert update(Advert oldAdvert, Advert newAdvert) {
         Advert oldAdvertCopy = new Advert(oldAdvert);
 
-        oldAdvert.setAdvertPlace(advert.getAdvertPlace());
-        oldAdvert.setStartDate(advert.getStartDate());
-        oldAdvert.setEndDate(advert.getEndDate());
-        oldAdvert.setPrice(advert.getPrice());
-        oldAdvert.setIsPublished(advert.getIsPublished());
+        oldAdvert.setAdvertPlace(newAdvert.getAdvertPlace());
+        oldAdvert.setStartDate(newAdvert.getStartDate());
+        oldAdvert.setEndDate(newAdvert.getEndDate());
+        oldAdvert.setPrice(newAdvert.getPrice());
+        oldAdvert.setIsPublished(newAdvert.getIsPublished());
 
         advertPersistencePort.save(oldAdvert);
 
@@ -79,7 +77,7 @@ public class AdvertService implements AdvertServicePort {
 
     @Override
     public void delete(Long id) {
-        Advert advert = findByIdAndIsActive(id, true);
+        Advert advert = findById(id);
 
         advert.setIsActive(false);
 

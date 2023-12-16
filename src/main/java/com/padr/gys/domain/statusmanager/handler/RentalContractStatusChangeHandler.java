@@ -38,7 +38,7 @@ public class RentalContractStatusChangeHandler implements StatusChangeHandler {
 
                 if (currentSubStatus instanceof ForRentSubStatus) {
                     boolean anAdvertIsPublished = advertPersistencePort
-                            .findByRealEstateIdAndIsActive(oldEntity.getRealEstate().getId(), true)
+                            .findByRealEstateId(oldEntity.getRealEstate().getId())
                             .stream()
                             .anyMatch(Advert::getIsPublished);
 
@@ -57,7 +57,7 @@ public class RentalContractStatusChangeHandler implements StatusChangeHandler {
 
                 if (currentSubStatus instanceof ForRentSubStatus) {
                     boolean anAdvertIsPublished = advertPersistencePort
-                            .findByRealEstateIdAndIsActive(oldEntity.getId(), true)
+                            .findByRealEstateId(oldEntity.getId())
                             .stream()
                             .anyMatch(Advert::getIsPublished);
 

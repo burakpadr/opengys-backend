@@ -12,6 +12,6 @@ public class FindAdvertByIdUseCase {
     private final AdvertServicePort advertServicePort;
 
     public AdvertResponse execute(Long id) {
-        return AdvertResponse.of(advertServicePort.findByIdAndIsActive(id, true));
+        return AdvertResponse.of(advertServicePort.findById(id));
     }
 }

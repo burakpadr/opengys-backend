@@ -3,6 +3,7 @@ package com.padr.gys.domain.advert.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import org.hibernate.annotations.Where;
 import org.hibernate.envers.Audited;
 
 import com.padr.gys.domain.advertplace.entity.AdvertPlace;
@@ -31,6 +32,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
+@Where(clause = "is_active=true")
 public class Advert extends BaseEntity {
 
     public Advert(Advert advert) {

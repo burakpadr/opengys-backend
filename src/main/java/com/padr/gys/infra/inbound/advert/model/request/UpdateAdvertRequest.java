@@ -1,6 +1,5 @@
 package com.padr.gys.infra.inbound.advert.model.request;
 
-import com.padr.gys.domain.advert.entity.Advert;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
@@ -28,13 +27,4 @@ public class UpdateAdvertRequest {
 
     @NotNull
     private Boolean isPublished;
-
-    public Advert to() {
-        return Advert.builder()
-                .startDate(startDate)
-                .endDate(endDate)
-                .price(price)
-                .isPublished(isPublished)
-                .build();
-    }
 }

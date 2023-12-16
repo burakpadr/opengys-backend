@@ -13,9 +13,9 @@ import com.padr.gys.domain.advert.entity.Advert;
 @Repository
 public interface AdvertRepository extends JpaRepository<Advert, Long> {
     
-    Page<Advert> findByRealEstateIdAndIsActive(Long realEstateId, Boolean isActive, Pageable pageable);
+    Page<Advert> findByRealEstateId(Long realEstateId, Pageable pageable);
 
-    List<Advert> findByRealEstateIdAndIsActive(Long realEstateId, Boolean isActive);
+    List<Advert> findByRealEstateId(Long realEstateId);
 
-    Optional<Advert> findByIdAndIsActive(Long id, Boolean isActive);
+    Optional<Advert> findById(Long id);
 }

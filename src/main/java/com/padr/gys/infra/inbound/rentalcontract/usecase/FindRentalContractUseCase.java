@@ -18,8 +18,7 @@ public class FindRentalContractUseCase {
     private final RentalContractServicePort rentalContractServicePort;
 
     public Page<RentalContractResponse> execute(Long realEstateId, Pageable pageable) {
-        Page<RentalContract> rentalContracts = rentalContractServicePort.findByRealEstateIdAndIsActive(realEstateId,
-                true, pageable);
+        Page<RentalContract> rentalContracts = rentalContractServicePort.findByRealEstateId(realEstateId, pageable);
 
         List<RentalContractResponse> rentalContractResponses = rentalContracts.getContent()
                 .stream()

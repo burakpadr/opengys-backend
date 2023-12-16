@@ -7,13 +7,13 @@ import com.padr.gys.domain.advert.entity.Advert;
 
 public interface AdvertServicePort {
     
-    Page<Advert> findByRealEstateIdAndIsActive(Long realEstateId, Boolean isActive, Pageable pageable);
+    Page<Advert> findByRealEstateId(Long realEstateId, Pageable pageable);
 
-    Advert findByIdAndIsActive(Long id, Boolean isActive);
+    Advert findById(Long id);
 
     Advert create(Advert advert);
 
-    Advert update(Long id, Advert advert);
+    Advert update(Advert oldAdvert, Advert newAdvert);
 
     void delete(Long id);
 }

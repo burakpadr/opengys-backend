@@ -9,11 +9,13 @@ import java.util.Optional;
 
 public interface RentalContractPersistencePort {
 
-    Page<RentalContract> findByRealEstateIdAndIsActive(Long realEstateId, Boolean isActive, Pageable pageable);
+    Page<RentalContract> findByRealEstateId(Long realEstateId, Pageable pageable);
 
-    List<RentalContract> findByRealEstateIdAndIsActive(Long realEstateId, Boolean isActive);
+    List<RentalContract> findByRealEstateId(Long realEstateId);
 
-    Optional<RentalContract> findByIdAndIsActive(Long id, Boolean isActive);
+    List<RentalContract> findByRealEstateIdAndIsPublished(Long realEstateId, Boolean isPublished);
+
+    Optional<RentalContract> findById(Long id);
 
     RentalContract save(RentalContract rentalContract);
 }

@@ -12,6 +12,6 @@ public class FindRentalContractByIdUseCase {
     private final RentalContractServicePort rentalContractServicePort;
 
     public RentalContractResponse execute(Long id) {
-        return RentalContractResponse.of(rentalContractServicePort.findByIdAndIsActive(id, true));
+        return RentalContractResponse.of(rentalContractServicePort.findById(id));
     }
 }

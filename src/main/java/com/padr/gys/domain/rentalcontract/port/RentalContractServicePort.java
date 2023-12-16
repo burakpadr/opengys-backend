@@ -1,14 +1,19 @@
 package com.padr.gys.domain.rentalcontract.port;
 
 import com.padr.gys.domain.rentalcontract.entity.RentalContract;
+
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface RentalContractServicePort {
 
-    Page<RentalContract> findByRealEstateIdAndIsActive(Long realEstateId, Boolean isActive, Pageable pageable);
+    Page<RentalContract> findByRealEstateId(Long realEstateId, Pageable pageable);
 
-    RentalContract findByIdAndIsActive(Long id, Boolean isActive);
+    List<RentalContract> findByRealEstateIdAndIsPublished(Long realEstateId, Boolean isPublished);
+
+    RentalContract findById(Long id);
 
     RentalContract create(RentalContract rentalContract);
 

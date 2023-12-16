@@ -3,8 +3,6 @@ package com.padr.gys.infra.inbound.advert.model.request;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import com.padr.gys.domain.advert.entity.Advert;
-
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
@@ -33,13 +31,4 @@ public class CreateAdvertRequest {
     @NotNull
     @Positive
     private Long realEstateId;
-
-    public Advert to() {
-        return Advert.builder()
-                .startDate(startDate)
-                .endDate(endDate)
-                .price(price)
-                .isPublished(isPublished)
-                .build();
-    }
 }
