@@ -23,7 +23,7 @@ public class UserService implements UserServicePort {
     @Override
     public User create(User user) {
         throwExceptionIfEmailIsDuplicated(user.getEmail());
-        throwExceptionIfIdentityNumberIsDuplicated(user.getIdentityNumber());
+        throwExceptionIfPhoneNumberIsDuplicated(user.getPhoneNumber());
 
         user.setIsActive(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -50,11 +50,10 @@ public class UserService implements UserServicePort {
         if (!oldUser.getEmail().equals(user.getEmail()))
             throwExceptionIfEmailIsDuplicated(user.getEmail());
 
-        if (!oldUser.getIdentityNumber().equals(user.getIdentityNumber()))
-            throwExceptionIfIdentityNumberIsDuplicated(user.getIdentityNumber());
+        if (!oldUser.getPhoneNumber().equals(user.getPhoneNumber()))
+            throwExceptionIfPhoneNumberIsDuplicated(user.getPhoneNumber());
 
-        oldUser.setTitle(user.getTitle());
-        oldUser.setIdentityNumber(user.getIdentityNumber());
+        oldUser.setPhoneNumber(user.getPhoneNumber());
         oldUser.setEmail(user.getEmail());
         oldUser.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -78,11 +77,11 @@ public class UserService implements UserServicePort {
 
     }
 
-    private void throwExceptionIfIdentityNumberIsDuplicated(String identityNumber) {
-        userPersistencePort.findByIdentityNumberAndIsActive(identityNumber,
-                        true)
+    private void throwExceptionIfPhoneNumberIsDuplicated(String phoneNumber) {
+        userPersistencePort.findByEmailAndIsActive(phoneNumber, true)
                 .ifPresent(u -> {
                     throw new EntityExistsException(UserExceptionMessage.USER_ALREADY_EXIST);
                 });
+
     }
 }

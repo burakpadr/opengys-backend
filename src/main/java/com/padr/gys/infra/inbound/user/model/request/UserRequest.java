@@ -1,8 +1,10 @@
 package com.padr.gys.infra.inbound.user.model.request;
 
 import com.padr.gys.domain.user.entity.User;
+
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,26 +14,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserRequest {
 
-    @NotNull
     @NotEmpty
-    private String title;
+    @Size(min = 12, max = 12)
+    private String phoneNumber;
 
-    @NotNull
     @NotEmpty
-    private String identityNumber;
-
-    @NotNull
-    @NotEmpty
+    @Email
     private String email;
 
-    @NotNull
     @NotEmpty
+    @Size(min = 8, max = 16)
     private String password;
 
     public User to() {
         return User.builder()
-                .title(title)
-                .identityNumber(identityNumber)
+                .phoneNumber(phoneNumber)
                 .email(email)
                 .password(password)
                 .build();

@@ -25,13 +25,10 @@ public class User extends BaseEntity {
     private Long id;
 
     @Column
-    private String title;
-
-    @Column
-    private String identityNumber;
-
-    @Column
     private String email;
+
+    @Column
+    private String phoneNumber;
 
     @Column
     private String password;

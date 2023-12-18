@@ -42,7 +42,7 @@ public class BaseEntity {
     private String ip;
 
     @Column
-    private Boolean isActive;
+    private Boolean isActive = true;
 
     @PrePersist
     private void prePersist() {
