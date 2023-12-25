@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements UserServicePort {
+class UserService implements UserServicePort {
 
     private final UserPersistencePort userPersistencePort;
     private final PasswordEncoder passwordEncoder;
@@ -23,7 +23,6 @@ public class UserService implements UserServicePort {
     @Override
     public User create(User user) {
         throwExceptionIfEmailIsDuplicated(user.getEmail());
-        throwExceptionIfPhoneNumberIsDuplicated(user.getPhoneNumber());
 
         user.setIsActive(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -50,10 +49,6 @@ public class UserService implements UserServicePort {
         if (!oldUser.getEmail().equals(user.getEmail()))
             throwExceptionIfEmailIsDuplicated(user.getEmail());
 
-        if (!oldUser.getPhoneNumber().equals(user.getPhoneNumber()))
-            throwExceptionIfPhoneNumberIsDuplicated(user.getPhoneNumber());
-
-        oldUser.setPhoneNumber(user.getPhoneNumber());
         oldUser.setEmail(user.getEmail());
         oldUser.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -71,14 +66,6 @@ public class UserService implements UserServicePort {
 
     private void throwExceptionIfEmailIsDuplicated(String email) {
         userPersistencePort.findByEmailAndIsActive(email, true)
-                .ifPresent(u -> {
-                    throw new EntityExistsException(UserExceptionMessage.USER_ALREADY_EXIST);
-                });
-
-    }
-
-    private void throwExceptionIfPhoneNumberIsDuplicated(String phoneNumber) {
-        userPersistencePort.findByEmailAndIsActive(phoneNumber, true)
                 .ifPresent(u -> {
                     throw new EntityExistsException(UserExceptionMessage.USER_ALREADY_EXIST);
                 });

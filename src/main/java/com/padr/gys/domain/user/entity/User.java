@@ -1,12 +1,15 @@
 package com.padr.gys.domain.user.entity;
 
 import com.padr.gys.domain.common.model.entity.BaseEntity;
+import com.padr.gys.domain.rbac.entity.Role;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+
 import org.hibernate.envers.Audited;
 
 @Entity
@@ -25,11 +28,17 @@ public class User extends BaseEntity {
     private Long id;
 
     @Column
+    private String name;
+
+    @Column
+    private String surname;
+
+    @Column
     private String email;
 
     @Column
-    private String phoneNumber;
-
-    @Column
     private String password;
+
+    @ManyToOne
+    private Role role;
 }

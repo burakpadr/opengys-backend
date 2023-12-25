@@ -9,6 +9,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.padr.gys.domain.common.util.IpUtil;
+import com.padr.gys.infra.inbound.common.context.UserContext;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
@@ -47,12 +48,14 @@ public class BaseEntity {
     @PrePersist
     private void prePersist() {
         createDate = lastModifiedDate = LocalDateTime.now();
+        createdBy = lastModifiedBy = UserContext.getUser().getId();
         ip = IpUtil.getClientIp();
     }
 
     @PreUpdate
     private void preUpdate() {
         createDate = lastModifiedDate = LocalDateTime.now();
+        createdBy = lastModifiedBy = UserContext.getUser().getId();
         ip = IpUtil.getClientIp();
     }
 }

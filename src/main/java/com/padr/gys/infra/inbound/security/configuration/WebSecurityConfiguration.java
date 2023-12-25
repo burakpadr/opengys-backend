@@ -1,6 +1,7 @@
 package com.padr.gys.infra.inbound.security.configuration;
 
 import com.padr.gys.domain.common.property.AppProperty;
+import com.padr.gys.domain.user.port.UserServicePort;
 import com.padr.gys.infra.inbound.security.filter.JwtAuthorizationFilter;
 
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,8 @@ public class WebSecurityConfiguration {
     private final SecurityProperty securityProperty;
     private final AppProperty appProperty;
 
+    private final UserServicePort userServicePort;
+
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
@@ -39,7 +42,7 @@ public class WebSecurityConfiguration {
                 })
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(Customizer.withDefaults())
-                .addFilterBefore(new JwtAuthorizationFilter(securityProperty),
+                .addFilterBefore(new JwtAuthorizationFilter(securityProperty, userServicePort),
                         UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

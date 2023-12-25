@@ -15,8 +15,9 @@ import lombok.NoArgsConstructor;
 public class UserRequest {
 
     @NotEmpty
-    @Size(min = 12, max = 12)
-    private String phoneNumber;
+    private String name;
+
+    private String surname;
 
     @NotEmpty
     @Email
@@ -28,7 +29,8 @@ public class UserRequest {
 
     public User to() {
         return User.builder()
-                .phoneNumber(phoneNumber)
+                .name(name)
+                .surname(surname)
                 .email(email)
                 .password(password)
                 .build();

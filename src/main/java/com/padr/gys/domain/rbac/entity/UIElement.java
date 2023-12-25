@@ -1,4 +1,4 @@
-package com.padr.gys.domain.deedowner.entity;
+package com.padr.gys.domain.rbac.entity;
 
 import org.hibernate.envers.Audited;
 
@@ -19,28 +19,22 @@ import lombok.experimental.SuperBuilder;
 
 @Entity
 @Audited
-@Table(name = "deed_owners")
+@Table(name = "ui_elements")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
-public class DeedOwner extends BaseEntity {
+public class UIElement extends BaseEntity {
     
     @Id
-    @SequenceGenerator(name = "deed_owner_id_seq", sequenceName = "deed_owner_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "deed_owner_id_seq")
+    @SequenceGenerator(name = "ui_element_id_seq", sequenceName = "ui_element_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ui_element_id_seq")
     private Long id;
 
     @Column
-    private String title;
+    private String componentName;
 
     @Column
-    private String email;
-
-    @Column
-    private String phoneNumber;
-
-    @Column
-    private String address;
+    private String label;
 }

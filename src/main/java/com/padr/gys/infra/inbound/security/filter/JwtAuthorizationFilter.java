@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
+import com.padr.gys.domain.user.entity.User;
+import com.padr.gys.domain.user.port.UserServicePort;
+import com.padr.gys.infra.inbound.common.context.UserContext;
 import com.padr.gys.infra.inbound.security.configuration.SecurityProperty;
 import com.padr.gys.infra.inbound.security.constant.SecurityConstant;
 import jakarta.servlet.FilterChain;
@@ -29,32 +32,42 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private final SecurityProperty securityProperty;
 
+    private final UserServicePort userServicePort;
+
     private final static List<String> EXCLUDED_ENDPOINTS = List.of(
-        "/gys/api/v1/auth"
-    );
+            "/gys/api/v1/auth");
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-        if (Objects.nonNull(authHeader) && authHeader.startsWith("Bearer ")) {
-            String jwtToken = authHeader.split("Bearer ")[1];
-            Algorithm algorithm = Algorithm.HMAC256(securityProperty.getJwtSecret());
-            JWTVerifier jwtVerifier = JWT.require(algorithm).build();
-            DecodedJWT decodedJWT = jwtVerifier.verify(jwtToken);
+        try {
+            String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-            Long userId = Long.valueOf(decodedJWT.getSubject());
+            if (Objects.nonNull(authHeader) && authHeader.startsWith("Bearer ")) {
+                String jwtToken = authHeader.split("Bearer ")[1];
+                Algorithm algorithm = Algorithm.HMAC256(securityProperty.getJwtSecret());
+                JWTVerifier jwtVerifier = JWT.require(algorithm).build();
+                DecodedJWT decodedJWT = jwtVerifier.verify(jwtToken);
 
-            request.setAttribute(SecurityConstant.LOGIN_USER_ID, userId);
+                Long userId = Long.valueOf(decodedJWT.getSubject());
 
-            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                    decodedJWT.getSubject(), null, null);
+                User user = userServicePort.findById(userId);
 
-            SecurityContextHolder.getContext().setAuthentication(token);
+                UserContext.setUser(user);
+
+                request.setAttribute(SecurityConstant.LOGIN_USER_ID, userId);
+
+                UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+                        decodedJWT.getSubject(), null, null);
+
+                SecurityContextHolder.getContext().setAuthentication(token);
+            }
+
+            filterChain.doFilter(request, response);
+        } finally {
+            UserContext.removeUser();
         }
-
-        filterChain.doFilter(request, response);
 
     }
 
