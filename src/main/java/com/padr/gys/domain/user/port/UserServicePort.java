@@ -10,7 +10,7 @@ public interface UserServicePort {
 
     User findByEmailAndIsActive(String email, Boolean isActive);
 
-    User update(Long id, User user);
+    User update(User oldUser, User updateUser);
 
     void delete(Long id);
 }

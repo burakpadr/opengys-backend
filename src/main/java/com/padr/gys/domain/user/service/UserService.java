@@ -43,14 +43,12 @@ class UserService implements UserServicePort {
     }
 
     @Override
-    public User update(Long id, User user) {
-        User oldUser = findById(id);
+    public User update(User oldUser, User updateUser) {
+        if (!oldUser.getEmail().equals(updateUser.getEmail()))
+            throwExceptionIfEmailIsDuplicated(updateUser.getEmail());
 
-        if (!oldUser.getEmail().equals(user.getEmail()))
-            throwExceptionIfEmailIsDuplicated(user.getEmail());
-
-        oldUser.setEmail(user.getEmail());
-        oldUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        oldUser.setEmail(oldUser.getEmail());
+        oldUser.setPassword(passwordEncoder.encode(oldUser.getPassword()));
 
         return userPersistencePort.save(oldUser);
     }

@@ -16,6 +16,7 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -43,6 +44,7 @@ public class BaseEntity {
     private String ip;
 
     @Column
+    @Builder.Default
     private Boolean isActive = true;
 
     @PrePersist

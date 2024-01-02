@@ -26,11 +26,6 @@ public class UserPersistencePortImpl implements UserPersistencePort {
     }
 
     @Override
-    public Optional<User> findByPhoneNumberAndIsActive(String phoneNumber, Boolean isActive) {
-        return userRepository.findByPhoneNumberAndIsActive(phoneNumber, isActive);
-    }
-
-    @Override
     public User save(User user) {
         return userRepository.save(user);
     }

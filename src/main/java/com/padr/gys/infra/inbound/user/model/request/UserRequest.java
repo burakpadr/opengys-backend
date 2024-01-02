@@ -1,5 +1,6 @@
 package com.padr.gys.infra.inbound.user.model.request;
 
+import com.padr.gys.domain.rbac.entity.Role;
 import com.padr.gys.domain.user.entity.User;
 
 import jakarta.validation.constraints.Email;
@@ -27,12 +28,15 @@ public class UserRequest {
     @Size(min = 8, max = 16)
     private String password;
 
-    public User to() {
+    private Long roleId;
+
+    public User to(Role role) {
         return User.builder()
                 .name(name)
                 .surname(surname)
                 .email(email)
                 .password(password)
+                .role(role)
                 .build();
     }
 }

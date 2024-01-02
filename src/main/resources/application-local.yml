@@ -22,3 +22,7 @@ app:
 
     real-estate-images-path: ${app.storage.images-base-path}/real-estates
     real-estate-images-relative-url: ${app.storage.base-url}/images/real-estates
+
+  image:
+    width: 500
+    height: 333
