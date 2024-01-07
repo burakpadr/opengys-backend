@@ -6,11 +6,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.padr.gys.infra.inbound.rbac.model.response.RoleResponse;
 import com.padr.gys.infra.inbound.rbac.usecase.DeleteRoleUseCase;
 import com.padr.gys.infra.inbound.rbac.usecase.FindAllRolesAsPageUseCase;
+import com.padr.gys.infra.inbound.rbac.usecase.FindRoleByIdUseCase;
+import com.padr.gys.infra.inbound.rbac.usecase.SearchRoleUseCase;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,11 +23,23 @@ import lombok.RequiredArgsConstructor;
 public class RoleAdapter {
     
     private final FindAllRolesAsPageUseCase findAllRolesAsPageUseCase;
+    private final SearchRoleUseCase searchRoleUseCase;
+    private final FindRoleByIdUseCase findRoleByIdUseCase;
     private final DeleteRoleUseCase deleteRoleUseCase;
 
     @GetMapping
     public Page<RoleResponse> findAll(Pageable pageable) {
         return findAllRolesAsPageUseCase.execute(pageable);
+    }
+
+    @GetMapping("/search")
+    public Page<RoleResponse> search(@RequestParam String searchTerm, Pageable pageable) {
+        return searchRoleUseCase.execute(searchTerm, pageable);
+    }
+
+    @GetMapping("/{id}")
+    public RoleResponse findById(@PathVariable Long id) {
+        return findRoleByIdUseCase.execute(id);
     }
 
     @DeleteMapping("/{id}")

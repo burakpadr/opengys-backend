@@ -24,7 +24,9 @@ public class UpdateRoleUIElementUseCase {
     private final RoleUIElementServicePort roleUIElementServicePort;
 
     public List<RoleUIElementResponse> execute(Long roleId, RoleUIElementRequest request) {
-        final Role role = roleServicePort.findById(roleId);
+        Role role = roleServicePort.findById(roleId);
+
+        roleServicePort.update(role, request.getRoleRequest().to());
 
         List<RoleUIElement> oldRoleUIElements = roleUIElementServicePort.findByRoleId(roleId);
 
@@ -37,7 +39,7 @@ public class UpdateRoleUIElementUseCase {
 
         List<Long> newUIElementIds = request.getUiElementIds().stream()
                 .filter(uiElementId -> oldRoleUIElements.stream()
-                        .anyMatch(oldRoleUIElement -> !oldRoleUIElement.getUiElement().getId().equals(uiElementId)))
+                        .noneMatch(oldRoleUIElement -> oldRoleUIElement.getUiElement().getId().equals(uiElementId)))
                 .toList();
 
         List<RoleUIElement> newRoleUIElements = newUIElementIds

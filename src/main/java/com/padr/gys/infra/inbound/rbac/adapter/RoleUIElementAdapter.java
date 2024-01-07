@@ -2,6 +2,7 @@ package com.padr.gys.infra.inbound.rbac.adapter;
 
 import java.util.List;
 
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -39,7 +40,7 @@ public class RoleUIElementAdapter {
     }
 
     @PutMapping
-    public List<RoleUIElementResponse> update(@RequestParam Long roleId, @Valid @RequestBody RoleUIElementRequest request) {
+    public List<RoleUIElementResponse> update(@RequestParam Long roleId, @Validated @RequestBody RoleUIElementRequest request) {
         return updateRoleUIElementUseCase.execute(roleId, request);
     }
 }

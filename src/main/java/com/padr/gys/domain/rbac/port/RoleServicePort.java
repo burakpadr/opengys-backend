@@ -9,6 +9,8 @@ public interface RoleServicePort {
     
     Page<Role> findAll(Pageable pageable);
 
+    Page<Role> search(String searchTerm, Pageable pageable);
+
     Role findById(Long id);
 
     Role save(Role role);

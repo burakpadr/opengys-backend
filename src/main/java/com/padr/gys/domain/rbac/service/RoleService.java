@@ -25,6 +25,11 @@ class RoleService implements RoleServicePort {
     }
 
     @Override
+    public Page<Role> search(String searchTerm, Pageable pageable) {
+        return rolePersistencePort.findBySearchTerm(searchTerm, pageable);
+    }
+
+    @Override
     public Role findById(Long id) {
         return rolePersistencePort.findById(id)
                 .orElseThrow(() -> new NoSuchElementException(RbacExceptionMessage.ROLE_NOT_FOUND));

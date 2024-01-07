@@ -1,5 +1,8 @@
 package com.padr.gys.infra.inbound.rbac.usecase;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Component;
 
 import com.padr.gys.domain.rbac.entity.UIElement;
@@ -15,12 +18,14 @@ public class CreateUIElementUseCase {
 
     private final UIElementServicePort uiElementServicePort;
 
-    public UIElementResponse execute(UIElementRequest request) {
-        UIElement uiElement = UIElement.builder()
-                .componentName(request.getComponentName())
-                .label(request.getLabel())
-                .build();
+    public List<UIElementResponse> execute(List<UIElementRequest> request) {
+        List<UIElement> uiElements = request.stream().map(element -> {
+            return UIElement.builder()
+                    .componentName(element.getComponentName())
+                    .label(element.getLabel())
+                    .build();
+        }).collect(Collectors.toList());
 
-        return UIElementResponse.of(uiElementServicePort.create(uiElement));
+        return uiElementServicePort.createAll(uiElements).stream().map(UIElementResponse::of).toList();
     }
 }

@@ -31,4 +31,9 @@ class RolePersistencePortImpl implements RolePersistencePort {
     public Role save(Role role) {
         return roleRepository.save(role);
     }
+
+    @Override
+    public Page<Role> findBySearchTerm(String searchTerm, Pageable pageable) {
+        return roleRepository.findBySearchTerm(searchTerm, pageable);
+    }
 }

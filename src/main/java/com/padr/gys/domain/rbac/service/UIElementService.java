@@ -1,9 +1,10 @@
 package com.padr.gys.domain.rbac.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.padr.gys.domain.rbac.constant.RbacExceptionMessage;
@@ -11,7 +12,6 @@ import com.padr.gys.domain.rbac.entity.UIElement;
 import com.padr.gys.domain.rbac.port.UIElementServicePort;
 import com.padr.gys.infra.outbound.persistence.rbac.port.UIElementPersistencePort;
 
-import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -21,8 +21,8 @@ class UIElementService implements UIElementServicePort {
     private final UIElementPersistencePort uiElementPersistencePort;
 
     @Override
-    public Page<UIElement> findAll(Pageable pageable) {
-        return uiElementPersistencePort.findAll(pageable);
+    public List<UIElement> findAll() {
+        return uiElementPersistencePort.findAll();
     }
 
     @Override
@@ -32,13 +32,18 @@ class UIElementService implements UIElementServicePort {
     }
 
     @Override
-    public UIElement create(UIElement uiElement) {
-        uiElementPersistencePort
-                .findByComponentName(uiElement.getComponentName()).ifPresent((ue) -> {
-                    throw new EntityExistsException(RbacExceptionMessage.UI_ELEMENT_ALREADY_EXIST_ASSOCIATED_WITH_NAME);
-                });
+    public List<UIElement> createAll(List<UIElement> uiElements) {
+        List<UIElement> uiElementsWillBeCreated = new ArrayList<>();
 
-        return uiElementPersistencePort.save(uiElement);
+        uiElements.stream().forEach(uiElement -> {
+            Optional<UIElement> isDuplicatedUIElementOptional =  uiElementPersistencePort
+                .findByComponentName(uiElement.getComponentName());
+
+            if (!isDuplicatedUIElementOptional.isPresent())
+                uiElementsWillBeCreated.add(uiElement);
+        });
+
+        return uiElementPersistencePort.saveAll(uiElementsWillBeCreated);
     }
 
     @Override

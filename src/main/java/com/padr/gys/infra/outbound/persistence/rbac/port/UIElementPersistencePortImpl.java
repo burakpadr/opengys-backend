@@ -1,9 +1,8 @@
 package com.padr.gys.infra.outbound.persistence.rbac.port;
 
+import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import com.padr.gys.domain.rbac.entity.UIElement;
@@ -18,8 +17,8 @@ class UIElementPersistencePortImpl implements UIElementPersistencePort {
     private final UIElementRepository uiElementRepository;
 
     @Override
-    public Page<UIElement> findAll(Pageable pageable) {
-        return uiElementRepository.findAll(pageable);
+    public List<UIElement> findAll() {
+        return uiElementRepository.findAll();
     }
 
     @Override
@@ -30,6 +29,11 @@ class UIElementPersistencePortImpl implements UIElementPersistencePort {
     @Override
     public Optional<UIElement> findByComponentName(String componentName) {
         return uiElementRepository.findByComponentName(componentName);
+    }
+
+    @Override
+    public List<UIElement> saveAll(List<UIElement> uiElements) {
+        return uiElementRepository.saveAll(uiElements);
     }
 
     @Override

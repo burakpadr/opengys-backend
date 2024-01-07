@@ -11,9 +11,13 @@ public interface StaffServicePort {
 
     Long countDeedOwner();
 
+    boolean isStaff(Long userId);
+
     Page<Staff> findAll(Pageable pageable);
 
     Staff findById(Long id);
+
+    Staff findByUserId(Long userId);
 
     Staff update(Staff oldStaff, Staff updateStaff);
 

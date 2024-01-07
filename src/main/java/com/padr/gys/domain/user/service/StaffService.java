@@ -30,6 +30,11 @@ class StaffService implements StaffServicePort {
     }
 
     @Override
+    public boolean isStaff(Long userId) {
+        return staffPersistencePort.findByUserId(userId).isPresent();
+    }
+
+    @Override
     public Page<Staff> findAll(Pageable pageable) {
         return staffPersistencePort.findAll(pageable);
     }
@@ -54,5 +59,11 @@ class StaffService implements StaffServicePort {
         staff.setIsActive(false);
 
         staffPersistencePort.save(staff);
+    }
+
+    @Override
+    public Staff findByUserId(Long userId) {
+        return staffPersistencePort.findByUserId(userId)
+                .orElseThrow(() -> new NoSuchElementException(UserExceptionMessage.USER_NOT_FOUND));
     }
 }

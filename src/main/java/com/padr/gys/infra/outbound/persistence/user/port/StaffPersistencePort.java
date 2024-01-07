@@ -15,5 +15,7 @@ public interface StaffPersistencePort {
 
     Optional<Staff> findById(Long id);
 
+    Optional<Staff> findByUserId(Long userId);
+
     Staff save(Staff staff);
 }

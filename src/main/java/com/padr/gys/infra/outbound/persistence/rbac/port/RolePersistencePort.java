@@ -11,6 +11,8 @@ public interface RolePersistencePort {
     
     Page<Role> findAll(Pageable pageable);
 
+    Page<Role> findBySearchTerm(String searchTerm, Pageable pageable);
+
     Optional<Role> findById(Long id);
 
     Role save(Role role);

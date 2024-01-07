@@ -1,7 +1,7 @@
 package com.padr.gys.infra.inbound.rbac.adapter;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +15,8 @@ import com.padr.gys.infra.inbound.rbac.model.request.UIElementRequest;
 import com.padr.gys.infra.inbound.rbac.model.response.UIElementResponse;
 import com.padr.gys.infra.inbound.rbac.usecase.CreateUIElementUseCase;
 import com.padr.gys.infra.inbound.rbac.usecase.DeleteUIElementUseCase;
-import com.padr.gys.infra.inbound.rbac.usecase.FindAllUIElementsAsPageUseCase;
+import com.padr.gys.infra.inbound.rbac.usecase.FindAllUIElementsUseCase;
+import com.padr.gys.infra.inbound.rbac.usecase.FindAllowedComponentsToBeSeenUseCase;
 import com.padr.gys.infra.inbound.rbac.usecase.FindUIElementByIdUseCase;
 import com.padr.gys.infra.inbound.rbac.usecase.UpdateUIElementUseCase;
 
@@ -28,19 +29,25 @@ import lombok.RequiredArgsConstructor;
 public class UIElementAdapter {
 
     private final CreateUIElementUseCase createUIElementUseCase;
-    private final FindAllUIElementsAsPageUseCase findAllUIElementsAsPageUseCase;
+    private final FindAllUIElementsUseCase findAllUIElementsAsPageUseCase;
     private final FindUIElementByIdUseCase findUIElementByIdUseCase;
+    private final FindAllowedComponentsToBeSeenUseCase findAllowedComponentsToBeSeenUseCase;
     private final UpdateUIElementUseCase updateUIElementUseCase;
     private final DeleteUIElementUseCase deleteUIElementUseCase;
     
     @PostMapping
-    public UIElementResponse create(@Valid @RequestBody UIElementRequest request) {
+    public List<UIElementResponse> createAll(@Valid @RequestBody List<UIElementRequest> request) {
         return createUIElementUseCase.execute(request);
     }
 
     @GetMapping
-    public Page<UIElementResponse> findAll(Pageable pageable) {
-        return findAllUIElementsAsPageUseCase.execute(pageable);
+    public List<UIElementResponse> findAll() {
+        return findAllUIElementsAsPageUseCase.execute();
+    }
+
+    @GetMapping("/allowed-components-to-be-seen")
+    public List<UIElementResponse> allowedComponentsToBeSeen() {
+        return findAllowedComponentsToBeSeenUseCase.execute();
     }
 
     @GetMapping("/{id}")

@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-class StaffPersistencePortImpl implements StaffPersistencePort {
+class StaffPersistencePortImpl  implements StaffPersistencePort {
     
     private final StaffRepository staffRepository;
 
@@ -27,6 +27,7 @@ class StaffPersistencePortImpl implements StaffPersistencePort {
         return staffRepository.findAll(pageable);
     }
 
+
     @Override
     public Optional<Staff> findById(Long id) {
         return staffRepository.findById(id);
@@ -35,5 +36,10 @@ class StaffPersistencePortImpl implements StaffPersistencePort {
     @Override
     public Staff save(Staff staff) {
         return staffRepository.save(staff);
+    }
+
+    @Override
+    public Optional<Staff> findByUserId(Long userId) {
+        return staffRepository.findByUserId(userId);
     }
 }

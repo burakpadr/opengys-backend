@@ -35,7 +35,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private final UserServicePort userServicePort;
 
     private final static List<String> EXCLUDED_ENDPOINTS = List.of(
-            "/gys/api/v1/auth");
+            "/gys/api/v1/auth",
+            "/gys/api/v1/ui-elements");
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -55,6 +56,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 User user = userServicePort.findById(userId);
 
                 UserContext.setUser(user);
+                UserContext.setIsStaff(decodedJWT.getClaim("isStaff").asBoolean());
 
                 request.setAttribute(SecurityConstant.LOGIN_USER_ID, userId);
 
@@ -67,6 +69,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } finally {
             UserContext.removeUser();
+            UserContext.removeIsStaff();
         }
 
     }

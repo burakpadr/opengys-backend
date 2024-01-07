@@ -1,6 +1,7 @@
 package com.padr.gys.domain.common.model.entity;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -50,14 +51,14 @@ public class BaseEntity {
     @PrePersist
     private void prePersist() {
         createDate = lastModifiedDate = LocalDateTime.now();
-        createdBy = lastModifiedBy = UserContext.getUser().getId();
+        createdBy = lastModifiedBy = Objects.nonNull(UserContext.getUser()) ? UserContext.getUser().getId() : null;
         ip = IpUtil.getClientIp();
     }
 
     @PreUpdate
     private void preUpdate() {
         createDate = lastModifiedDate = LocalDateTime.now();
-        createdBy = lastModifiedBy = UserContext.getUser().getId();
+        createdBy = lastModifiedBy = Objects.nonNull(UserContext.getUser()) ? UserContext.getUser().getId() : null;
         ip = IpUtil.getClientIp();
     }
 }

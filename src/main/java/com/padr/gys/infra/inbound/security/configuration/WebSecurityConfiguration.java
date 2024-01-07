@@ -34,7 +34,7 @@ public class WebSecurityConfiguration {
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((auth) -> {
                     auth.requestMatchers(appProperty.getStorage().getBaseUrl() + "/**").permitAll();
-                    auth.requestMatchers("/gys/api/v1/auth").permitAll()
+                    auth.requestMatchers("/gys/api/v1/auth", "/gys/api/v1/ui-elements").permitAll()
                             .requestMatchers(HttpMethod.POST, "/gys/api/v1/users").permitAll()
                             .requestMatchers(HttpMethod.OPTIONS).permitAll()
                             .anyRequest().authenticated();

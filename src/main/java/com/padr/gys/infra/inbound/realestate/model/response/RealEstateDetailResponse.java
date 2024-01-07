@@ -19,12 +19,14 @@ public class RealEstateDetailResponse {
     private AddressResponse address;
 
     public static RealEstateDetailResponse of(RealEstate realEstate) {
+        boolean categoryIsNotNull = Objects.nonNull(realEstate.getCategory());
+        boolean subCategoryIsNotNull = Objects.nonNull(realEstate.getSubCategory());
+
         return RealEstateDetailResponse.builder()
                 .id(realEstate.getId())
                 .no(realEstate.getNo())
-                .categoryId(realEstate.getCategory().getId())
-                .subCategoryId(
-                        Objects.nonNull(realEstate.getSubCategory()) ? realEstate.getSubCategory().getId() : null)
+                .categoryId(categoryIsNotNull ? realEstate.getCategory().getId() : null)
+                .subCategoryId(subCategoryIsNotNull ? realEstate.getSubCategory().getId() : null)
                 .mainStatus(realEstate.getMainStatus().name())
                 .address(AddressResponse.of(realEstate.getAddress()))
                 .build();

@@ -1,17 +1,16 @@
 package com.padr.gys.domain.rbac.port;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
 
 import com.padr.gys.domain.rbac.entity.UIElement;
 
 public interface UIElementServicePort {
     
-    Page<UIElement> findAll(Pageable pageable);
+    List<UIElement> findAll();
 
     UIElement findById(Long id);
 
-    UIElement create(UIElement uiElement);
+    List<UIElement> createAll(List<UIElement> uiElements);
 
     UIElement update(UIElement oldUIElement, UIElement newUIElement);
 
