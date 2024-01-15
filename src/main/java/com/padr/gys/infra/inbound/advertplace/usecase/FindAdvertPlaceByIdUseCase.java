@@ -14,6 +14,6 @@ public class FindAdvertPlaceByIdUseCase {
     private final AdvertPlaceServicePort advertPlaceServicePort;
 
     public AdvertPlaceResponse execute(Long id) {
-        return AdvertPlaceResponse.of(advertPlaceServicePort.findByIdAndIsActive(id, true));
+        return AdvertPlaceResponse.of(advertPlaceServicePort.findById(id));
     }
 }

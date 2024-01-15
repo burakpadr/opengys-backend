@@ -38,8 +38,6 @@ public class AdvertService implements AdvertServicePort {
 
     @Override
     public Advert create(Advert advert) {
-        advert.setIsActive(true);
-
         advertPersistencePort.save(advert);
 
         StatusChangeModel model = StatusChangeModel.builder()
@@ -79,7 +77,7 @@ public class AdvertService implements AdvertServicePort {
     public void delete(Long id) {
         Advert advert = findById(id);
 
-        advert.setIsActive(false);
+        advert.setIsDeleted(true);
 
         advertPersistencePort.save(advert);
 

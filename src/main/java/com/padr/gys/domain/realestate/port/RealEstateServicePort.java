@@ -12,11 +12,11 @@ public interface RealEstateServicePort {
     
     RealEstate create(RealEstate realEstate);
 
-    RealEstate findByIdAndIsActive(Long id, Boolean isActive);
+    RealEstate findById(Long id);
 
-    RealEstate findByNoAndIsActive(String no, Boolean isActive);
+    RealEstate findByNo(String no);
 
-    Page<RealEstate> findByIsActive(Boolean isActive, Pageable pageable);
+    Page<RealEstate> findAll(Pageable pageable);
 
     RealEstate update(Long id, RealEstate realEstate);
 

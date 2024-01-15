@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
-@Where(clause = "is_active=true")
+@Where(clause = "is_deleted=false")
 public class AttributeValue extends BaseEntity {
 
     @Id

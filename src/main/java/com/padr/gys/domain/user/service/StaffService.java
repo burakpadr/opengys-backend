@@ -35,8 +35,8 @@ class StaffService implements StaffServicePort {
     }
 
     @Override
-    public Page<Staff> findAll(Pageable pageable) {
-        return staffPersistencePort.findAll(pageable);
+    public Page<Staff> findByIsDeedOwner(Boolean isDeedOwner, Pageable pageable) {
+        return staffPersistencePort.findByIsDeedOwner(isDeedOwner, pageable);
     }
 
     @Override
@@ -56,7 +56,7 @@ class StaffService implements StaffServicePort {
     public void delete(Long id) {
         Staff staff = findById(id);
 
-        staff.setIsActive(false);
+        staff.setIsDeleted(true);
 
         staffPersistencePort.save(staff);
     }

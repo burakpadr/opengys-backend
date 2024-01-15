@@ -1,7 +1,7 @@
 package com.padr.gys.infra.inbound.auth.model.request;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,11 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AuthRequest {
 
-    @NotNull
     @NotEmpty
+    @Email
     private String username;
 
-    @NotNull
     @NotEmpty
     private String password;
 }

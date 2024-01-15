@@ -38,8 +38,6 @@ class AttributeService implements AttributeServicePort {
 
     @Override
     public Attribute create(Attribute attribute) {
-        attribute.setIsActive(true);
-
         return attributePersistencePort.save(attribute);
     }
 
@@ -57,7 +55,7 @@ class AttributeService implements AttributeServicePort {
     public void delete(Long id) {
         Attribute attribute = findById(id);
 
-        attribute.setIsActive(false);
+        attribute.setIsDeleted(true);
 
         attributePersistencePort.save(attribute);
     }
@@ -65,7 +63,7 @@ class AttributeService implements AttributeServicePort {
     @Override
     public void deleteAll(List<Attribute> attributes) {
         attributes.stream().forEach(attribute -> {
-            attribute.setIsActive(false);
+            attribute.setIsDeleted(true);
         });
 
         attributePersistencePort.saveAll(attributes);

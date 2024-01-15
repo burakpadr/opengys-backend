@@ -8,7 +8,7 @@ public interface UserServicePort {
 
     User findById(Long id);
 
-    User findByEmailAndIsActive(String email, Boolean isActive);
+    User findByEmail(String email);
 
     User update(User oldUser, User updateUser);
 

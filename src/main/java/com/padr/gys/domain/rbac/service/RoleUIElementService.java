@@ -29,7 +29,7 @@ class RoleUIElementService implements RoleUIElementServicePort {
     @Override
     public void deleteAll(List<RoleUIElement> roleUIElements) {
         roleUIElements.stream().forEach(roleUIElement -> {
-            roleUIElement.setIsActive(false);
+            roleUIElement.setIsDeleted(true);
         });
 
         roleUIElementPersistencePort.saveAll(roleUIElements);

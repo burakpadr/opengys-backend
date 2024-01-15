@@ -9,13 +9,13 @@ import com.padr.gys.domain.advertplace.entity.AdvertPlace;
 
 public interface AdvertPlaceServicePort {
 
-    Page<AdvertPlace> findByIsActive(Boolean isActive, Pageable pageable);
+    Page<AdvertPlace> findAll(Pageable pageable);
 
     Page<AdvertPlace> search(String searchTerm, Pageable pageable);
 
-    List<AdvertPlace> findByIsActive(Boolean isActive);
+    List<AdvertPlace> findAll();
 
-    AdvertPlace findByIdAndIsActive(Long id, Boolean isActive);
+    AdvertPlace findById(Long id);
 
     AdvertPlace create(AdvertPlace advertPlace);
 

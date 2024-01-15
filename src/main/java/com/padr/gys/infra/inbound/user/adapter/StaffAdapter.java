@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.padr.gys.infra.inbound.user.model.request.StaffRequest;
@@ -18,7 +19,7 @@ import com.padr.gys.infra.inbound.user.usecase.CountDeedOwnerUseCase;
 import com.padr.gys.infra.inbound.user.usecase.CreateStaffUseCase;
 import com.padr.gys.infra.inbound.user.usecase.DeleteStaffUseCase;
 import com.padr.gys.infra.inbound.user.usecase.FindAllStaffAsPageUseCase;
-import com.padr.gys.infra.inbound.user.usecase.FindStaffByIdUseCase;
+import com.padr.gys.infra.inbound.user.usecase.FindStaffByUserIdUseCase;
 import com.padr.gys.infra.inbound.user.usecase.UpdateStaffUseCase;
 
 import lombok.RequiredArgsConstructor;
@@ -29,20 +30,20 @@ import lombok.RequiredArgsConstructor;
 public class StaffAdapter {
     
     private final FindAllStaffAsPageUseCase findAllStaffAsPageUseCase;
-    private final FindStaffByIdUseCase findStaffByIdUseCase;
+    private final FindStaffByUserIdUseCase findStaffByUserIdUseCase;
     private final CountDeedOwnerUseCase countDeedOwnerUseCase;
     private final CreateStaffUseCase createStaffUseCase;
     private final UpdateStaffUseCase updateStaffUseCase;
     private final DeleteStaffUseCase deleteStaffUseCase;
 
-    @GetMapping
+    @GetMapping("/as-page")
     public Page<StaffResponse> findAll(Pageable pageable) {
         return findAllStaffAsPageUseCase.execute(pageable);
     }
 
-    @GetMapping("/{id}")
-    public StaffResponse findById(@PathVariable Long id) {
-        return findStaffByIdUseCase.execute(id);
+    @GetMapping
+    public StaffResponse findByUserId(@RequestParam Long userId) {
+        return findStaffByUserIdUseCase.execute(userId);
     }
 
     @GetMapping("/count-deed-owner")

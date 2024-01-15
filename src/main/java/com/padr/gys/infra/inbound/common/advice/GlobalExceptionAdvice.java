@@ -5,11 +5,13 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.padr.gys.domain.common.constant.IndependentExceptionMessageConstant;
 import com.padr.gys.domain.common.exception.BusinessException;
 import com.padr.gys.infra.inbound.common.response.ExceptionResponse;
 
@@ -133,5 +135,19 @@ public class GlobalExceptionAdvice {
                                 .build();
 
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(exceptionResponse);
+        }
+
+        @ExceptionHandler(BadCredentialsException.class)
+        public ResponseEntity<ExceptionResponse> handleException(BadCredentialsException exception) {
+                exception.printStackTrace();
+
+                String code = BadCredentialsException.class.getSimpleName();
+
+                ExceptionResponse exceptionResponse = ExceptionResponse.builder()
+                                .code(code)
+                                .message(IndependentExceptionMessageConstant.BAD_CREDENTIALS)
+                                .build();
+
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED.value()).body(exceptionResponse);
         }
 }

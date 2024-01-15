@@ -29,17 +29,17 @@ public class RealEstatePersistencePortImpl implements RealEstatePersistencePort 
     }
 
     @Override
-    public Optional<RealEstate> findByIdAndIsActive(Long id, Boolean isActive) {
-        return realEstateRepository.findByIdAndIsActive(id, isActive);
+    public Optional<RealEstate> findById(Long id) {
+        return realEstateRepository.findById(id);
     }
 
     @Override
-    public Page<RealEstate> findByIsActive(Boolean isActive, Pageable pageable) {
-        return realEstateRepository.findByIsActive(isActive, pageable);
+    public Page<RealEstate> findAll(Pageable pageable) {
+        return realEstateRepository.findAll(pageable);
     }
 
     @Override
-    public Optional<RealEstate> findByNoAndIsActive(String no, Boolean isActive) {
-        return realEstateRepository.findByNoAndIsActive(no, isActive);
+    public Optional<RealEstate> findByNo(String no) {
+        return realEstateRepository.findByNo(no);
     }
 }

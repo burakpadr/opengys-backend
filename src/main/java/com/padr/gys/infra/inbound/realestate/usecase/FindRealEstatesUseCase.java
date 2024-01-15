@@ -20,7 +20,7 @@ public class FindRealEstatesUseCase {
     private final RealEstateServicePort realEstateServicePort;
 
     public Page<RealEstateResponse> execute(Pageable pageable) {
-        Page<RealEstate> realEstates = realEstateServicePort.findByIsActive(true, pageable);
+        Page<RealEstate> realEstates = realEstateServicePort.findAll(pageable);
 
         List<RealEstateResponse> realEstateResponses = realEstates.getContent().stream().map(RealEstateResponse::of)
                 .toList();

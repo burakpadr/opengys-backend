@@ -7,11 +7,11 @@ import com.padr.gys.domain.categorization.entity.Category;
 
 public interface CategoryServicePort {
 
-    Page<Category> findByIsActive(Boolean isActive, Pageable Pageable);
+    Page<Category> findAll(Pageable Pageable);
 
     Page<Category> search(String searchTerm, Pageable pageable);
 
-    Category findByIdAndIsActive(Long id, Boolean isActive);
+    Category findById(Long id);
 
     Category create(Category category);
 

@@ -10,11 +10,11 @@ import com.padr.gys.domain.advertplace.entity.AdvertPlace;
 
 public interface AdvertPlacePersistencePort {
     
-    Page<AdvertPlace> findByIsActive(Boolean isActive, Pageable pageable);
+    Page<AdvertPlace> findAll(Pageable pageable);
 
-    List<AdvertPlace> findByIsActive(Boolean isActive);
+    List<AdvertPlace> findAll();
 
-    Optional<AdvertPlace> findByIdAndIsActive(Long id, Boolean isActive);
+    Optional<AdvertPlace> findById(Long id);
 
     Page<AdvertPlace> findBySearchTerm(String searchTerm, Pageable pageable);
 

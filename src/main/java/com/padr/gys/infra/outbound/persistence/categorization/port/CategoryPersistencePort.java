@@ -9,9 +9,9 @@ import com.padr.gys.domain.categorization.entity.Category;
 
 public interface CategoryPersistencePort {
 
-    Page<Category> findByIsActive(Boolean isActive, Pageable pageable);
+    Page<Category> findAll(Pageable pageable);
 
-    Optional<Category> findByIdAndIsActive(Long id, Boolean isActive);
+    Optional<Category> findById(Long id);
 
     Page<Category> findBySearchTerm(String searchTerm, Pageable pageable);
 

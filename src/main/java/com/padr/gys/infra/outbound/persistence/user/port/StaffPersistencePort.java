@@ -11,7 +11,7 @@ public interface StaffPersistencePort {
     
     Long countByIsDeedOwner(Boolean isDeedOwner);
 
-    Page<Staff> findAll(Pageable pageable);
+    Page<Staff> findByIsDeedOwner(Boolean isDeedOwner, Pageable pageable);
 
     Optional<Staff> findById(Long id);
 

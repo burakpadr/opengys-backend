@@ -1,6 +1,5 @@
 package com.padr.gys.infra.outbound.persistence.advertplace.repository;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -14,14 +13,9 @@ import com.padr.gys.domain.advertplace.entity.AdvertPlace;
 @Repository
 public interface AdvertPlaceRepository extends JpaRepository<AdvertPlace, Long> {
 
-    Page<AdvertPlace> findByIsActive(Boolean isActive, Pageable pageable);
-
-    Optional<AdvertPlace> findByIdAndIsActive(Long id, Boolean isActive);
-
-    List<AdvertPlace> findByIsActive(Boolean isActive);
+    Optional<AdvertPlace> findById(Long id);
 
     @Query("SELECT a FROM AdvertPlace a "
-            + "WHERE a.name ILIKE concat('%', :searchTerm, '%') "
-            + "AND a.isActive = true")
+            + "WHERE a.name ILIKE concat('%', :searchTerm, '%') ")
     Page<AdvertPlace> findBySearchTerm(String searchTerm, Pageable pageable);
 }

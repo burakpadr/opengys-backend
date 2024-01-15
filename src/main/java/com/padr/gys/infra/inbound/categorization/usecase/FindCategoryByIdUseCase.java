@@ -14,6 +14,6 @@ public class FindCategoryByIdUseCase {
     private final CategoryServicePort categoryServicePort;
 
     public CategoryResponse execute(Long id) {
-        return CategoryResponse.of(categoryServicePort.findByIdAndIsActive(id, true));
+        return CategoryResponse.of(categoryServicePort.findById(id));
     }
 }

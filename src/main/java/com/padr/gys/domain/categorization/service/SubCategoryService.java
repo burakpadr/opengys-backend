@@ -29,10 +29,6 @@ public class SubCategoryService implements SubCategoryServicePort {
 
     @Override
     public List<SubCategory> createAll(List<SubCategory> subCategories) {
-        subCategories.stream().forEach(subCategory -> {
-            subCategory.setIsActive(true);
-        });
-
         return subCategoryPersistencePort.saveAll(subCategories);
     }
 
@@ -45,7 +41,7 @@ public class SubCategoryService implements SubCategoryServicePort {
                     .filter(s -> Objects.nonNull(s.getId()) && s.getId().equals(oldSubCategory.getId())).findAny();
 
             if (!subCategoryOptional.isPresent())
-                oldSubCategory.setIsActive(false);
+                oldSubCategory.setIsDeleted(true);
             else
                 oldSubCategory.setName(subCategoryOptional.get().getName());
         });
@@ -70,7 +66,7 @@ public class SubCategoryService implements SubCategoryServicePort {
     @Override
     public void deleteAll(List<SubCategory> subCategories) {
         subCategories.stream().forEach(subCategory -> {
-            subCategory.setIsActive(false);
+            subCategory.setIsDeleted(true);
         });
 
         subCategoryPersistencePort.saveAll(subCategories);

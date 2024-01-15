@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class CreateUIElementUseCase {
+public class CreateOrUpdateUIElementUseCase {
 
     private final UIElementServicePort uiElementServicePort;
 

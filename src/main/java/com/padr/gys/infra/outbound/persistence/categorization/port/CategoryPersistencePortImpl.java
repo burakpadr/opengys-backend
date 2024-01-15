@@ -18,13 +18,13 @@ public class CategoryPersistencePortImpl implements CategoryPersistencePort {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public Page<Category> findByIsActive(Boolean isActive, Pageable pageable) {
-        return categoryRepository.findByIsActive(isActive, pageable);
+    public Page<Category> findAll(Pageable pageable) {
+        return categoryRepository.findAll(pageable);
     }
 
     @Override
-    public Optional<Category> findByIdAndIsActive(Long id, Boolean isActive) {
-        return categoryRepository.findByIdAndIsActive(id, isActive);
+    public Optional<Category> findById(Long id) {
+        return categoryRepository.findById(id);
     }
 
     @Override

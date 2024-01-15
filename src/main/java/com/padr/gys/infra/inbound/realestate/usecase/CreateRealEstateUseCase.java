@@ -29,7 +29,7 @@ public class CreateRealEstateUseCase {
     public RealEstateResponse execute(CreateRealEstateRequest request) {
         Address address = addressServicePort.create(request.getAddressRequest().to());
 
-        Category category = categoryServicePort.findByIdAndIsActive(request.getCategoryId(), true);
+        Category category = categoryServicePort.findById(request.getCategoryId());
         SubCategory subCategory = Objects.nonNull(request.getSubCategoryId())
                 ? subCategoryServicePort.findById(request.getSubCategoryId())
                 : null;

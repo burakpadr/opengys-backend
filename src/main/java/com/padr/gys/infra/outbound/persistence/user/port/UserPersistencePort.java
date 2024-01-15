@@ -8,7 +8,7 @@ public interface UserPersistencePort {
 
     Optional<User> findById(Long id);
 
-    Optional<User> findByEmailAndIsActive(String email, Boolean isActive);
+    Optional<User> findByEmail(String email);
 
     User save(User user);
 }

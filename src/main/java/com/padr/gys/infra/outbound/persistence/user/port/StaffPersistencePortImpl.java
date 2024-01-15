@@ -23,8 +23,8 @@ class StaffPersistencePortImpl  implements StaffPersistencePort {
     }
 
     @Override
-    public Page<Staff> findAll(Pageable pageable) {
-        return staffRepository.findAll(pageable);
+    public Page<Staff> findByIsDeedOwner(Boolean isDeedOwner, Pageable pageable) {
+        return staffRepository.findByIsDeedOwner(isDeedOwner, pageable);
     }
 
 

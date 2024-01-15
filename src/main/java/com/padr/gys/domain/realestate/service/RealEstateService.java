@@ -32,8 +32,6 @@ class RealEstateService implements RealEstateServicePort {
     public RealEstate create(RealEstate realEstate) {
         throwExceptionIfExistAssociatedWith(realEstate.getNo());
 
-        realEstate.setIsActive(true);
-
         realEstatePersistencePort.save(realEstate);
 
         StatusChangeModel model = StatusChangeModel.builder()
@@ -47,21 +45,21 @@ class RealEstateService implements RealEstateServicePort {
     }
 
     @Override
-    public RealEstate findByIdAndIsActive(Long id, Boolean isActive) {
-        return realEstatePersistencePort.findByIdAndIsActive(id, isActive)
+    public RealEstate findById(Long id) {
+        return realEstatePersistencePort.findById(id)
                 .orElseThrow(() -> new NoSuchElementException(RealEstateExceptionMessage.REAL_ESTATE_NOT_FOUND));
     }
 
     @Override
-    public Page<RealEstate> findByIsActive(Boolean isActive, Pageable pageable) {
-        return realEstatePersistencePort.findByIsActive(isActive, pageable);
+    public Page<RealEstate> findAll(Pageable pageable) {
+        return realEstatePersistencePort.findAll(pageable);
     }
 
     @Override
     public RealEstate update(Long id, RealEstate realEstate) {
         throwExceptionIfExistAssociatedWith(id, realEstate.getNo());
 
-        RealEstate oldRealEstate = findByIdAndIsActive(id, true);
+        RealEstate oldRealEstate = findById(id);
 
         oldRealEstate.setNo(realEstate.getNo());
         oldRealEstate.setCategory(realEstate.getCategory());
@@ -72,9 +70,9 @@ class RealEstateService implements RealEstateServicePort {
 
     @Override
     public void delete(Long id) {
-        RealEstate realEstate = findByIdAndIsActive(id, true);
+        RealEstate realEstate = findById(id);
 
-        realEstate.setIsActive(false);
+        realEstate.setIsDeleted(true);
 
         realEstatePersistencePort.save(realEstate);
     }
@@ -82,21 +80,21 @@ class RealEstateService implements RealEstateServicePort {
     @Override
     public void deleteAll(List<RealEstate> realEstates) {
         realEstates.stream().forEach(realEstate -> {
-            realEstate.setIsActive(false);
+            realEstate.setIsDeleted(true);
         });
 
         realEstatePersistencePort.saveAll(realEstates);
     }
 
     @Override
-    public RealEstate findByNoAndIsActive(String no, Boolean isActive) {
-        return realEstatePersistencePort.findByNoAndIsActive(no, isActive)
+    public RealEstate findByNo(String no) {
+        return realEstatePersistencePort.findByNo(no)
                 .orElseThrow(() -> new NoSuchElementException(RealEstateExceptionMessage.REAL_ESTATE_NOT_FOUND));
     }
 
     @Override
     public RealEstate changeCoverPhoto(Long realEstateId, RealEstatePhoto coverPhoto) {
-        RealEstate realEstate = findByIdAndIsActive(realEstateId, true);
+        RealEstate realEstate = findById(realEstateId);
 
         realEstate.setCoverPhoto(coverPhoto);
 
@@ -105,7 +103,7 @@ class RealEstateService implements RealEstateServicePort {
 
     @Override
     public void removeCoverPhoto(Long id) {
-        RealEstate realEstate = findByIdAndIsActive(id, true);
+        RealEstate realEstate = findById(id);
 
         realEstate.setCoverPhoto(null);
 
@@ -113,14 +111,14 @@ class RealEstateService implements RealEstateServicePort {
     }
 
     private void throwExceptionIfExistAssociatedWith(Long id, String no) {
-        realEstatePersistencePort.findByNoAndIsActive(no, true).ifPresent(r -> {
+        realEstatePersistencePort.findByNo(no).ifPresent(r -> {
             if (id != r.getId())
                 throw new EntityExistsException(RealEstateExceptionMessage.REAL_ESTATE_ALREADY_EXIST);
         });
     }
 
     private void throwExceptionIfExistAssociatedWith(String no) {
-        realEstatePersistencePort.findByNoAndIsActive(no, true).ifPresent(r -> {
+        realEstatePersistencePort.findByNo(no).ifPresent(r -> {
             throw new EntityExistsException(RealEstateExceptionMessage.REAL_ESTATE_ALREADY_EXIST);
         });
     }

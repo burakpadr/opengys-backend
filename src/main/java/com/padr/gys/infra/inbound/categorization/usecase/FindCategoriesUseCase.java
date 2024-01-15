@@ -20,7 +20,7 @@ public class FindCategoriesUseCase {
     private final CategoryServicePort categoryServicePort;
 
     public Page<CategoryResponse> execute(Pageable pageable) {
-        Page<Category> categories = categoryServicePort.findByIsActive(true, pageable);
+        Page<Category> categories = categoryServicePort.findAll(pageable);
 
         List<CategoryResponse> categorizationResponses = categories.getContent().stream()
                 .map(CategoryResponse::of).toList();

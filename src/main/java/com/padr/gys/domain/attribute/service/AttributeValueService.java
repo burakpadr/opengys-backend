@@ -22,10 +22,6 @@ class AttributeValueService implements AttributeValueServicePort {
 
     @Override
     public List<AttributeValue> createAll(List<AttributeValue> attributeValues) {
-        attributeValues.stream().parallel().forEach(attributeValue -> {
-            attributeValue.setIsActive(true);
-        });
-
         return attributeValuePersistencePort.saveAll(attributeValues);
     }
 
@@ -40,7 +36,7 @@ class AttributeValueService implements AttributeValueServicePort {
                     .filter(a -> Objects.nonNull(a.getId()) && a.getId().equals(oldAttributeValue.getId())).findAny();
 
             if (!attributeValueOptional.isPresent())
-                oldAttributeValue.setIsActive(false);
+                oldAttributeValue.setIsDeleted(true);
             else
                 oldAttributeValue.setValue(attributeValueOptional.get().getValue());
         });
@@ -67,7 +63,7 @@ class AttributeValueService implements AttributeValueServicePort {
         List<AttributeValue> attributeValues = attributeValuePersistencePort.findAllByIds(attributeValueIds);
 
         attributeValues.stream().parallel().forEach(attributeValue -> {
-            attributeValue.setIsActive(false);
+            attributeValue.setIsDeleted(true);
         });
 
         attributeValuePersistencePort.saveAll(attributeValues);

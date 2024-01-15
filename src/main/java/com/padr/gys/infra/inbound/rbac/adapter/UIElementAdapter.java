@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.padr.gys.infra.inbound.rbac.model.request.UIElementRequest;
 import com.padr.gys.infra.inbound.rbac.model.response.UIElementResponse;
-import com.padr.gys.infra.inbound.rbac.usecase.CreateUIElementUseCase;
+import com.padr.gys.infra.inbound.rbac.usecase.CreateOrUpdateUIElementUseCase;
 import com.padr.gys.infra.inbound.rbac.usecase.DeleteUIElementUseCase;
 import com.padr.gys.infra.inbound.rbac.usecase.FindAllUIElementsUseCase;
 import com.padr.gys.infra.inbound.rbac.usecase.FindAllowedComponentsToBeSeenUseCase;
@@ -28,7 +28,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UIElementAdapter {
 
-    private final CreateUIElementUseCase createUIElementUseCase;
+    private final CreateOrUpdateUIElementUseCase createUIElementUseCase;
     private final FindAllUIElementsUseCase findAllUIElementsAsPageUseCase;
     private final FindUIElementByIdUseCase findUIElementByIdUseCase;
     private final FindAllowedComponentsToBeSeenUseCase findAllowedComponentsToBeSeenUseCase;

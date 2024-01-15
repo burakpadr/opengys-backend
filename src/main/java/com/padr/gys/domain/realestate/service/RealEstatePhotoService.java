@@ -40,8 +40,6 @@ class RealEstatePhotoService implements RealEstatePhotoServicePort {
                 : null;
 
         realEstatePhotos.stream().forEach(realEstatePhoto -> {
-            realEstatePhoto.setIsActive(true);
-
             String folderPath = appProperty.getStorage().getRealEstateImagesPath() + "/" + realEstateId;
 
             FileUtil.createDirectoryIfNotExist(folderPath);
@@ -75,7 +73,7 @@ class RealEstatePhotoService implements RealEstatePhotoServicePort {
     public void deleteById(Long id) {
         RealEstatePhoto realEstatePhoto = findById(id);
 
-        realEstatePhoto.setIsActive(false);
+        realEstatePhoto.setIsDeleted(true);
 
         realEstatePhotoPersistencePort.saveAll(List.of(realEstatePhoto));
     }

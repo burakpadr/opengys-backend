@@ -46,7 +46,7 @@ public class BaseEntity {
 
     @Column
     @Builder.Default
-    private Boolean isActive = true;
+    private Boolean isDeleted = false;
 
     @PrePersist
     private void prePersist() {

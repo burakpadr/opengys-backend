@@ -2,6 +2,7 @@ package com.padr.gys.domain.address.entity;
 
 import java.math.BigDecimal;
 
+import org.hibernate.annotations.Where;
 import org.hibernate.envers.Audited;
 
 import com.padr.gys.domain.common.model.entity.BaseEntity;
@@ -27,6 +28,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
+@Where(clause = "is_deleted=false")
 public class Address extends BaseEntity {
     
     @Id

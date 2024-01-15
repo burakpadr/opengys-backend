@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.padr.gys.domain.rentalcontract.entity.RentalContract;
 import jakarta.persistence.*;
+
+import org.hibernate.annotations.Where;
 import org.hibernate.envers.Audited;
 
 import com.padr.gys.domain.address.entity.Address;
@@ -30,6 +32,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
+@Where(clause = "is_deleted=false")
 public class RealEstate extends BaseEntity {
 
     @Id

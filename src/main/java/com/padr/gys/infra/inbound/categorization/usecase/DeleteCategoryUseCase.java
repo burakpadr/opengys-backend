@@ -20,7 +20,7 @@ public class DeleteCategoryUseCase {
     private final RealEstateServicePort realEstateServicePort;
 
     public void execute(Long categoryId) {
-        Category category = categoryServicePort.findByIdAndIsActive(categoryId, true);
+        Category category = categoryServicePort.findById(categoryId);
 
         subCategoryServicePort.deleteAll(category.getSubCategories());
         realEstateServicePort.deleteAll(category.getRealEstates());

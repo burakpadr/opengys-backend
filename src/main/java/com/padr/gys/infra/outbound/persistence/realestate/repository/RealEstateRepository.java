@@ -12,9 +12,9 @@ import com.padr.gys.domain.realestate.entity.RealEstate;
 @Repository
 public interface RealEstateRepository extends JpaRepository<RealEstate, Long> {
     
-    Optional<RealEstate> findByIdAndIsActive(Long id, Boolean isActive);
+    Optional<RealEstate> findById(Long id);
 
-    Page<RealEstate> findByIsActive(Boolean isActive, Pageable pageable);
+    Page<RealEstate> findAll(Pageable pageable);
 
-    Optional<RealEstate> findByNoAndIsActive(String no, Boolean isActive);
+    Optional<RealEstate> findByNo(String no);
 }

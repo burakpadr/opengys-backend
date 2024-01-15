@@ -56,7 +56,7 @@ class UIElementService implements UIElementServicePort {
 
     @Override
     public void delete(UIElement uiElement) {
-        uiElement.setIsActive(false);
+        uiElement.setIsDeleted(true);
 
         uiElementPersistencePort.save(uiElement);
     }

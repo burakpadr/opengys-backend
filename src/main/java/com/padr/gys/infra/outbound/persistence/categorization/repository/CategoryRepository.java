@@ -14,14 +14,13 @@ import com.padr.gys.domain.categorization.entity.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
-    List<Category> findByIsActive(Boolean isActive);
+    List<Category> findAll();
 
-    Page<Category> findByIsActive(Boolean isActive, Pageable pageable);
+    Page<Category> findAll(Pageable pageable);
 
     @Query("SELECT c FROM Category c "
-            + "WHERE c.name ILIKE concat('%', :searchTerm, '%') "
-            + "AND c.isActive = true")
+            + "WHERE c.name ILIKE concat('%', :searchTerm, '%') ")
     Page<Category> findBySearchTerm(String searchTerm, Pageable pageable);
 
-    Optional<Category> findByIdAndIsActive(Long id, Boolean isActive);
+    Optional<Category> findById(Long id);
 }

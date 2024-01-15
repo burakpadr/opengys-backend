@@ -1,7 +1,7 @@
 package com.padr.gys.infra.inbound.security.filter;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import com.padr.gys.domain.user.entity.User;
@@ -14,6 +14,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -34,9 +35,11 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private final UserServicePort userServicePort;
 
-    private final static List<String> EXCLUDED_ENDPOINTS = List.of(
-            "/gys/api/v1/auth",
-            "/gys/api/v1/ui-elements");
+    private final static Map<String, String> EXCLUDED_ENDPOINTS = Map.of(
+            "/gys/api/v1/auth", HttpMethod.GET.name(),
+            "/gys/api/v1/ui-elements", HttpMethod.GET.name(),
+            "/gys/api/v1/staffs", HttpMethod.POST.name(),
+            "/gys/api/v1/staffs/count-deed-owner", HttpMethod.GET.name());
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -77,9 +80,12 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String requestedEndpoint = request.getRequestURI();
+        String httpMethod = request.getMethod();
 
         return EXCLUDED_ENDPOINTS
+                .entrySet()
                 .stream()
-                .anyMatch(excludedEndpoint -> excludedEndpoint.equals(requestedEndpoint));
+                .anyMatch(excludedEndpoint -> excludedEndpoint.getKey().equals(requestedEndpoint)
+                        && excludedEndpoint.getValue().equals(httpMethod));
     }
 }

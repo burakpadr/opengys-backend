@@ -1,5 +1,6 @@
 package com.padr.gys.domain.rbac.entity;
 
+import org.hibernate.annotations.Where;
 import org.hibernate.envers.Audited;
 
 import com.padr.gys.domain.common.model.entity.BaseEntity;
@@ -25,6 +26,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
+@Where(clause = "is_deleted=false")
 public class UIElement extends BaseEntity {
     
     @Id

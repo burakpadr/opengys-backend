@@ -1,5 +1,6 @@
 package com.padr.gys.domain.user.entity;
 
+import org.hibernate.annotations.Where;
 import org.hibernate.envers.Audited;
 
 import com.padr.gys.domain.common.model.entity.BaseEntity;
@@ -26,6 +27,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
+@Where(clause = "is_deleted=false")
 public class Staff extends BaseEntity {
     
     @Id

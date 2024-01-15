@@ -16,6 +16,6 @@ public class FindAllStaffAsPageUseCase {
     private final StaffServicePort staffServicePort;
 
     public Page<StaffResponse> execute(Pageable pageable) {
-        return staffServicePort.findAll(pageable).map(StaffResponse::of);
+        return staffServicePort.findByIsDeedOwner(false, pageable).map(StaffResponse::of);
     }
 }

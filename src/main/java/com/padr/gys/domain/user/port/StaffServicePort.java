@@ -13,7 +13,7 @@ public interface StaffServicePort {
 
     boolean isStaff(Long userId);
 
-    Page<Staff> findAll(Pageable pageable);
+    Page<Staff> findByIsDeedOwner(Boolean isDeedOwner, Pageable pageable);
 
     Staff findById(Long id);
 

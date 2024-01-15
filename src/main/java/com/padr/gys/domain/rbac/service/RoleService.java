@@ -49,7 +49,7 @@ class RoleService implements RoleServicePort {
 
     @Override
     public void delete(Role role) {
-        role.setIsActive(false);
+        role.setIsDeleted(true);
 
         rolePersistencePort.save(role);
     }

@@ -10,6 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import org.hibernate.annotations.Where;
 import org.hibernate.envers.Audited;
 
 @Entity
@@ -20,6 +21,7 @@ import org.hibernate.envers.Audited;
 @AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
+@Where(clause = "is_deleted=false")
 public class User extends BaseEntity {
 
     @Id

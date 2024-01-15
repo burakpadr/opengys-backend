@@ -19,10 +19,9 @@ public class UserPersistencePortImpl implements UserPersistencePort {
     }
 
     @Override
-    public Optional<User> findByEmailAndIsActive(String email,
-            Boolean isActive) {
+    public Optional<User> findByEmail(String email) {
                 
-        return userRepository.findByEmailAndIsActive(email, isActive);
+        return userRepository.findByEmail(email);
     }
 
     @Override

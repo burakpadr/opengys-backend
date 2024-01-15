@@ -9,6 +9,6 @@ public interface RoleUIElementServicePort {
     List<RoleUIElement> findByRoleId(Long roleId);
 
     List<RoleUIElement> saveAll(List<RoleUIElement> roleUIElements);
-
+    
     void deleteAll(List<RoleUIElement> roleUIElements);
 }

@@ -1,5 +1,7 @@
 package com.padr.gys.infra.inbound.user.model.response;
 
+import java.util.Objects;
+
 import com.padr.gys.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Data;
@@ -11,17 +13,18 @@ public class UserResponse {
     private Long id;
     private String name;
     private String surname;
-    private String phoneNumber;
     private String email;
-    private String password;
+    private String roleLabel;
 
     public static UserResponse of(User user) {
+        boolean roleIsNotNull = Objects.nonNull(user.getRole());
+
         return UserResponse.builder()
                 .id(user.getId())
                 .name(user.getName())
                 .surname(user.getSurname())
                 .email(user.getEmail())
-                .password(user.getPassword())
+                .roleLabel(roleIsNotNull ? user.getRole().getLabel() : "Tapu Sahibi")
                 .build();
     }
 }

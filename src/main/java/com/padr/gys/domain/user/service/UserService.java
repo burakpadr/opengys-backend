@@ -23,8 +23,7 @@ class UserService implements UserServicePort {
     @Override
     public User create(User user) {
         throwExceptionIfEmailIsDuplicated(user.getEmail());
-
-        user.setIsActive(true);
+        
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         return userPersistencePort.save(user);
@@ -37,8 +36,8 @@ class UserService implements UserServicePort {
     }
 
     @Override
-    public User findByEmailAndIsActive(String email, Boolean isActive) {
-        return userPersistencePort.findByEmailAndIsActive(email, isActive)
+    public User findByEmail(String email) {
+        return userPersistencePort.findByEmail(email)
                 .orElseThrow(() -> new NoSuchElementException(UserExceptionMessage.USER_NOT_FOUND));
     }
 
@@ -57,13 +56,13 @@ class UserService implements UserServicePort {
     public void delete(Long id) {
         User user = findById(id);
 
-        user.setIsActive(false);
+        user.setIsDeleted(true);
 
         userPersistencePort.save(user);
     }
 
     private void throwExceptionIfEmailIsDuplicated(String email) {
-        userPersistencePort.findByEmailAndIsActive(email, true)
+        userPersistencePort.findByEmail(email)
                 .ifPresent(u -> {
                     throw new EntityExistsException(UserExceptionMessage.USER_ALREADY_EXIST);
                 });

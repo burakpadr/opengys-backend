@@ -9,11 +9,11 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class FindStaffByIdUseCase {
+public class FindStaffByUserIdUseCase {
     
     private final StaffServicePort staffServicePort;
 
-    public StaffResponse execute(Long id) {
-        return StaffResponse.of(staffServicePort.findById(id));
+    public StaffResponse execute(Long userId) {
+        return StaffResponse.of(staffServicePort.findByUserId(userId));
     }
 }

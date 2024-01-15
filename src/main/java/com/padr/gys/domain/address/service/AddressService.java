@@ -19,8 +19,6 @@ public class AddressService implements AddressServicePort {
 
     @Override
     public Address create(Address address) {
-        address.setIsActive(true);
-
         return addressPersistencePort.save(address);
     }
 
@@ -42,7 +40,7 @@ public class AddressService implements AddressServicePort {
     @Override
     public void delete(Long id) {
         Address address = findById(id);
-        address.setIsActive(false);
+        address.setIsDeleted(true);
 
         addressPersistencePort.save(address);
     }

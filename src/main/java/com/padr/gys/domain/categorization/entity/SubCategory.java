@@ -19,12 +19,12 @@ import java.util.List;
 @Entity
 @Audited
 @Table(name = "sub_categories")
-@Where(clause = "is_active=true")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
+@Where(clause = "is_deleted=false")
 public class SubCategory extends BaseEntity {
 
     @Id

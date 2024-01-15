@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.padr.gys.infra.inbound.rbac.model.request.RoleUIElementRequest;
 import com.padr.gys.infra.inbound.rbac.model.response.RoleUIElementResponse;
+import com.padr.gys.infra.inbound.rbac.usecase.CanSeeUIElementUseCase;
 import com.padr.gys.infra.inbound.rbac.usecase.CreateRoleUIElementUseCase;
 import com.padr.gys.infra.inbound.rbac.usecase.FindRoleUIElementByRoleIdUseCase;
 import com.padr.gys.infra.inbound.rbac.usecase.UpdateRoleUIElementUseCase;
@@ -28,6 +29,7 @@ public class RoleUIElementAdapter {
     private final FindRoleUIElementByRoleIdUseCase findRoleUIElementByRoleIdUseCase;
     private final CreateRoleUIElementUseCase createRoleUIElementUseCase;
     private final UpdateRoleUIElementUseCase updateRoleUIElementUseCase;
+    private final CanSeeUIElementUseCase canSeeUIElementUseCase;
 
     @PostMapping
     public List<RoleUIElementResponse> create(@Valid @RequestBody RoleUIElementRequest request) {
@@ -37,6 +39,11 @@ public class RoleUIElementAdapter {
     @GetMapping
     public List<RoleUIElementResponse> findByRoleId(@RequestParam Long roleId) {
         return findRoleUIElementByRoleIdUseCase.execute(roleId);
+    }
+
+    @GetMapping("/can-see-component")
+    public boolean canSeeComponent(@RequestParam String componentName) {
+        return canSeeUIElementUseCase.execute(componentName);
     }
 
     @PutMapping

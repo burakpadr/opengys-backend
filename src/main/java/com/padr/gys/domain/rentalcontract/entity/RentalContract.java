@@ -23,7 +23,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
-@Where(clause = "is_active=true")
+@Where(clause = "is_deleted=false")
 public class RentalContract extends BaseEntity {
 
     public RentalContract(RentalContract rentalContract) {

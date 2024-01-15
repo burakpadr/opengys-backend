@@ -17,7 +17,7 @@ public class FindAdvertPlacesAsListUseCase {
 
     public List<AdvertPlaceResponse> execute() {
         return advertPlaceServicePort
-                .findByIsActive(true)
+                .findAll()
                 .stream()
                 .map(AdvertPlaceResponse::of)
                 .toList();

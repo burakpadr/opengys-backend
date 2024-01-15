@@ -21,7 +21,7 @@ public class UpdateCategoryAndSubCategoryUseCase {
     private final SubCategoryServicePort subCategoryServicePort;
 
     public void execute(Long categoryId, UpdateCategoryRequest request) {
-        Category oldCategory = categoryServicePort.findByIdAndIsActive(categoryId, true);
+        Category oldCategory = categoryServicePort.findById(categoryId);
 
         Category updatedCategory = request.to();
         updatedCategory.setId(categoryId);

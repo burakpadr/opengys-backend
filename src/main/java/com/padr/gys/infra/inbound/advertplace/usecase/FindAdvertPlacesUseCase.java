@@ -20,7 +20,7 @@ public class FindAdvertPlacesUseCase {
     private final AdvertPlaceServicePort advertPlaceServicePort;
 
     public Page<AdvertPlaceResponse> execute(Pageable pageable) {
-        Page<AdvertPlace> advertPlaces = advertPlaceServicePort.findByIsActive(true, pageable);
+        Page<AdvertPlace> advertPlaces = advertPlaceServicePort.findAll(pageable);
 
         List<AdvertPlaceResponse> advertPlaceResponses = advertPlaces.getContent().stream().map(AdvertPlaceResponse::of)
                 .toList();

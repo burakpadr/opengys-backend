@@ -21,7 +21,7 @@ public class CreateRealEstatePhotosUseCase {
     private final RealEstatePhotoServicePort realEstatePhotoServicePort;
 
     public void execute(Long realEstateId, List<MultipartFile> images) {
-        RealEstate realEstate = realEstateServicePort.findByIdAndIsActive(realEstateId, true);
+        RealEstate realEstate = realEstateServicePort.findById(realEstateId);
 
         List<RealEstatePhoto> realEstatePhotos = images.stream().map(image -> {
             return RealEstatePhoto.builder()

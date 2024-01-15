@@ -37,7 +37,7 @@ public class UpdateAdvertUseCase {
                         AdvertExceptionMessage.ADVERT_CANNOT_BE_PUBLISH_WHEN_RENTAL_CONTRACT_PUBLISHED);
         }
 
-        AdvertPlace advertPlace = advertPlaceServicePort.findByIdAndIsActive(request.getAdvertPlaceId(), true);
+        AdvertPlace advertPlace = advertPlaceServicePort.findById(request.getAdvertPlaceId());
 
         Advert newAdvert = Advert.builder()
                 .startDate(request.getStartDate())

@@ -24,7 +24,7 @@ public class CreateAttributeUseCase {
     private final AttributeValueServicePort attributeValueServicePort;
 
     public AttributeResponse execute(CreateAttributeRequest request) {
-        Category category = categoryServicePort.findByIdAndIsActive(request.getCategoryId(), true);
+        Category category = categoryServicePort.findById(request.getCategoryId());
 
         Attribute attribute = request.to();
         attribute.setCategory(category);

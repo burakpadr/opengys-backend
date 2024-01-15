@@ -20,8 +20,8 @@ public class CategoryService implements CategoryServicePort {
     private final CategoryPersistencePort categoryPersistencePort;
 
     @Override
-    public Page<Category> findByIsActive(Boolean isActive, Pageable Pageable) {
-        return categoryPersistencePort.findByIsActive(isActive, Pageable);
+    public Page<Category> findAll(Pageable pageable) {
+        return categoryPersistencePort.findAll(pageable);
     }
 
     @Override
@@ -30,15 +30,13 @@ public class CategoryService implements CategoryServicePort {
     }
 
     @Override
-    public Category findByIdAndIsActive(Long id, Boolean isActive) {
-        return categoryPersistencePort.findByIdAndIsActive(id, isActive)
+    public Category findById(Long id) {
+        return categoryPersistencePort.findById(id)
                 .orElseThrow(() -> new NoSuchElementException(CategorizationExceptionMessage.CATEGORY_NOT_FOUND));
     }
 
     @Override
     public Category create(Category category) {
-        category.setIsActive(true);
-
         categoryPersistencePort.save(category);
 
         return category;
@@ -46,7 +44,7 @@ public class CategoryService implements CategoryServicePort {
 
     @Override
     public Category update(Category category) {
-        Category oldCategory = findByIdAndIsActive(category.getId(), true);
+        Category oldCategory = findById(category.getId());
 
         oldCategory.setName(category.getName());
         categoryPersistencePort.save(oldCategory);
@@ -56,7 +54,7 @@ public class CategoryService implements CategoryServicePort {
 
     @Override
     public void delete(Category category) {
-        category.setIsActive(false);
+        category.setIsDeleted(true);
 
         categoryPersistencePort.save(category);
     }

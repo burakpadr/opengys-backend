@@ -22,8 +22,8 @@ public class AdvertPlaceService implements AdvertPlaceServicePort {
     private final AdvertPlacePersistencePort advertPlacePersistencePort;
 
     @Override
-    public Page<AdvertPlace> findByIsActive(Boolean isActive, Pageable pageable) {
-        return advertPlacePersistencePort.findByIsActive(isActive, pageable);
+    public Page<AdvertPlace> findAll(Pageable pageable) {
+        return advertPlacePersistencePort.findAll(pageable);
     }
 
     @Override
@@ -32,20 +32,18 @@ public class AdvertPlaceService implements AdvertPlaceServicePort {
     }
 
     @Override
-    public List<AdvertPlace> findByIsActive(Boolean isActive) {
-        return advertPlacePersistencePort.findByIsActive(isActive);
+    public List<AdvertPlace> findAll() {
+        return advertPlacePersistencePort.findAll();
     }
 
     @Override
-    public AdvertPlace findByIdAndIsActive(Long id, Boolean isActive) {
-        return advertPlacePersistencePort.findByIdAndIsActive(id, isActive)
+    public AdvertPlace findById(Long id) {
+        return advertPlacePersistencePort.findById(id)
                 .orElseThrow(() -> new NoSuchElementException(AdvertPlaceExceptionMessage.ADVERT_PLACE_NOT_FOUND));
     }
 
     @Override
     public AdvertPlace create(AdvertPlace advertPlace) {
-        advertPlace.setIsActive(true);
-
         advertPlacePersistencePort.save(advertPlace);
 
         return advertPlace;
@@ -53,7 +51,7 @@ public class AdvertPlaceService implements AdvertPlaceServicePort {
 
     @Override
     public AdvertPlace update(Long id, AdvertPlace advertPlace) {
-        AdvertPlace oldAdvertPlace = findByIdAndIsActive(id, true);
+        AdvertPlace oldAdvertPlace = findById(id);
 
         oldAdvertPlace.setName(advertPlace.getName());
         advertPlacePersistencePort.save(oldAdvertPlace);
@@ -63,9 +61,9 @@ public class AdvertPlaceService implements AdvertPlaceServicePort {
 
     @Override
     public void delete(Long id) {
-        AdvertPlace advertPlace = findByIdAndIsActive(id, true);
+        AdvertPlace advertPlace = findById(id);
 
-        advertPlace.setIsActive(false);
+        advertPlace.setIsDeleted(true);
 
         advertPlacePersistencePort.save(advertPlace);
     }

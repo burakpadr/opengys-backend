@@ -29,8 +29,8 @@ public class CreateAdvertUseCase {
     private final RentalContractServicePort rentalContractServicePort;
 
     public AdvertResponse execute(CreateAdvertRequest request) {
-        RealEstate realEstate = realEstateServicePort.findByIdAndIsActive(request.getRealEstateId(), true);
-        AdvertPlace advertPlace = advertPlaceServicePort.findByIdAndIsActive(request.getAdvertPlaceId(), true);
+        RealEstate realEstate = realEstateServicePort.findById(request.getRealEstateId());
+        AdvertPlace advertPlace = advertPlaceServicePort.findById(request.getAdvertPlaceId());
 
         if (realEstate.getMainStatus().equals(MainStatus.FOR_RENT) && request.getIsPublished()) {
             List<RentalContract> publishedRentalContracts = rentalContractServicePort

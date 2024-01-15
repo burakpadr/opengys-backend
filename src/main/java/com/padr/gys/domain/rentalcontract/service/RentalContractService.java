@@ -52,8 +52,6 @@ class RentalContractService implements RentalContractServicePort {
                     throw new EntityExistsException(RentalContractExceptionMessage.RENTAL_CONTRACT_ALREADY_EXIST);
                 });
 
-        rentalContract.setIsActive(true);
-
         rentalContractPersistencePort.save(rentalContract);
 
         StatusChangeModel model = StatusChangeModel.builder()
@@ -97,7 +95,7 @@ class RentalContractService implements RentalContractServicePort {
     public void delete(Long id) {
         RentalContract rentalContract = findById(id);
 
-        rentalContract.setIsActive(false);
+        rentalContract.setIsDeleted(true);
 
         rentalContractPersistencePort.save(rentalContract);
 

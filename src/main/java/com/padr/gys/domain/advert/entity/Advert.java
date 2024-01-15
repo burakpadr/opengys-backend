@@ -32,7 +32,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
-@Where(clause = "is_active=true")
+@Where(clause = "is_deleted=false")
 public class Advert extends BaseEntity {
 
     public Advert(Advert advert) {

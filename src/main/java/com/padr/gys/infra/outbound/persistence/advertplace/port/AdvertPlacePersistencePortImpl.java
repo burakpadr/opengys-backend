@@ -19,13 +19,13 @@ public class AdvertPlacePersistencePortImpl implements AdvertPlacePersistencePor
     private final AdvertPlaceRepository advertPlaceRepository;
 
     @Override
-    public Page<AdvertPlace> findByIsActive(Boolean isActive, Pageable pageable) {
-        return advertPlaceRepository.findByIsActive(isActive, pageable);
+    public Page<AdvertPlace> findAll(Pageable pageable) {
+        return advertPlaceRepository.findAll(pageable);
     }
 
     @Override
-    public Optional<AdvertPlace> findByIdAndIsActive(Long id, Boolean isActive) {
-        return advertPlaceRepository.findByIdAndIsActive(id, isActive);
+    public Optional<AdvertPlace> findById(Long id) {
+        return advertPlaceRepository.findById(id);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class AdvertPlacePersistencePortImpl implements AdvertPlacePersistencePor
     }
 
     @Override
-    public List<AdvertPlace> findByIsActive(Boolean isActive) {
-        return advertPlaceRepository.findByIsActive(isActive);
+    public List<AdvertPlace> findAll() {
+        return advertPlaceRepository.findAll();
     }
 }

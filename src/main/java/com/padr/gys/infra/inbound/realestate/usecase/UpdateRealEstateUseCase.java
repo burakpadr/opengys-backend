@@ -26,11 +26,11 @@ public class UpdateRealEstateUseCase {
     private final SubCategoryServicePort subCategoryServicePort;
 
     public RealEstateDetailResponse execute(Long realEstateId, UpdateRealEstateRequest request) {
-        RealEstate oldRealEstate = realEstateServicePort.findByIdAndIsActive(realEstateId, true);
+        RealEstate oldRealEstate = realEstateServicePort.findById(realEstateId);
 
         addressServicePort.update(oldRealEstate.getAddress().getId(), request.getAddressRequest().to());
 
-        Category category = categoryServicePort.findByIdAndIsActive(request.getCategoryId(), true);
+        Category category = categoryServicePort.findById(request.getCategoryId());
         SubCategory subCategory = Objects.nonNull(request.getSubCategoryId())
                 ? subCategoryServicePort.findById(request.getSubCategoryId())
                 : null;

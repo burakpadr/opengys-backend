@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.padr.gys.domain.realestate.entity.RealEstate;
 import jakarta.persistence.*;
+
+import org.hibernate.annotations.Where;
 import org.hibernate.envers.Audited;
 
 import com.padr.gys.domain.attribute.entity.Attribute;
@@ -23,6 +25,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
+@Where(clause = "is_deleted=false")
 public class Category extends BaseEntity {
     
     @Id

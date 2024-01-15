@@ -36,6 +36,8 @@ public class WebSecurityConfiguration {
                     auth.requestMatchers(appProperty.getStorage().getBaseUrl() + "/**").permitAll();
                     auth.requestMatchers("/gys/api/v1/auth", "/gys/api/v1/ui-elements").permitAll()
                             .requestMatchers(HttpMethod.POST, "/gys/api/v1/users").permitAll()
+                            .requestMatchers(HttpMethod.GET, "/gys/api/v1/staffs/count-deed-owner").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/gys/api/v1/staffs").permitAll()
                             .requestMatchers(HttpMethod.OPTIONS).permitAll()
                             .anyRequest().authenticated();
 

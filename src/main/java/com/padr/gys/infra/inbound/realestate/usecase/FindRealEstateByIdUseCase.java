@@ -14,6 +14,6 @@ public class FindRealEstateByIdUseCase {
     private final RealEstateServicePort realEstateServicePort;
 
     public RealEstateDetailResponse execute(Long id) {
-        return RealEstateDetailResponse.of(realEstateServicePort.findByIdAndIsActive(id, true));
+        return RealEstateDetailResponse.of(realEstateServicePort.findById(id));
     }
 }

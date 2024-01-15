@@ -18,7 +18,7 @@ public class CreateRentalContractUseCase {
 
     public RentalContractResponse execute(CreateRentalContractRequest request) {
         RentalContract rentalContract = request.to();
-        RealEstate realEstate = realEstateServicePort.findByIdAndIsActive(request.getRealEstateId(), true);
+        RealEstate realEstate = realEstateServicePort.findById(request.getRealEstateId());
 
         rentalContract.setRealEstate(realEstate);
 
