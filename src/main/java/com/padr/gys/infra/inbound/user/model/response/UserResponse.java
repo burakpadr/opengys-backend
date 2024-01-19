@@ -15,6 +15,7 @@ public class UserResponse {
     private String surname;
     private String email;
     private String roleLabel;
+    private Long roleId;
 
     public static UserResponse of(User user) {
         boolean roleIsNotNull = Objects.nonNull(user.getRole());
@@ -25,6 +26,7 @@ public class UserResponse {
                 .surname(user.getSurname())
                 .email(user.getEmail())
                 .roleLabel(roleIsNotNull ? user.getRole().getLabel() : "Tapu Sahibi")
+                .roleId(roleIsNotNull ? user.getRole().getId() : null)
                 .build();
     }
 }

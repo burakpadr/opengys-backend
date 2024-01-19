@@ -5,6 +5,7 @@ import org.hibernate.envers.Audited;
 
 import com.padr.gys.domain.common.model.entity.BaseEntity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -29,13 +30,16 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @Where(clause = "is_deleted=false")
 public class Staff extends BaseEntity {
-    
+
     @Id
     @SequenceGenerator(name = "staff_id_seq", sequenceName = "staff_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "staff_id_seq")
     private Long id;
 
     private Boolean isDeedOwner;
+
+    @Column
+    private Boolean isActive;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;

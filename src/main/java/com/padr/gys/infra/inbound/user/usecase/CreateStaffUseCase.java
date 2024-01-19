@@ -12,7 +12,7 @@ import com.padr.gys.domain.user.entity.Staff;
 import com.padr.gys.domain.user.entity.User;
 import com.padr.gys.domain.user.port.StaffServicePort;
 import com.padr.gys.domain.user.port.UserServicePort;
-import com.padr.gys.infra.inbound.user.model.request.StaffRequest;
+import com.padr.gys.infra.inbound.user.model.request.CreateStaffRequest;
 import com.padr.gys.infra.inbound.user.model.response.StaffResponse;
 
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class CreateStaffUseCase {
     private final StaffServicePort staffServicePort;
     private final RoleServicePort roleServicePort;
 
-    public StaffResponse execute(StaffRequest request) {
+    public StaffResponse execute(CreateStaffRequest request) {
         Role role = null;
 
         if (!request.getIsDeedOwner()) {

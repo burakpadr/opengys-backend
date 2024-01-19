@@ -1,5 +1,6 @@
 package com.padr.gys.infra.outbound.persistence.rbac.port;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -20,6 +21,11 @@ class RolePersistencePortImpl implements RolePersistencePort {
     @Override
     public Page<Role> findAll(Pageable pageable) {
         return roleRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Role> findAll() {
+        return roleRepository.findAll();
     }
 
     @Override

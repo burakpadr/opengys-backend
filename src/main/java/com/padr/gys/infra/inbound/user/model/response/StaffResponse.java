@@ -12,12 +12,14 @@ public class StaffResponse {
     private Long id;
     private UserResponse user;
     private Boolean isDeedOwner;
+    private Boolean isActive;
 
     public static StaffResponse of(Staff staff) {
         return StaffResponse.builder()
                 .id(staff.getId())
                 .user(UserResponse.of(staff.getUser()))
                 .isDeedOwner(staff.getIsDeedOwner())
+                .isActive(staff.getIsActive())
                 .build();
     }
 }

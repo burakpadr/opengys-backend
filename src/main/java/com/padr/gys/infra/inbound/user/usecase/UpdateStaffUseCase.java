@@ -11,7 +11,7 @@ import com.padr.gys.domain.user.constant.UserExceptionMessage;
 import com.padr.gys.domain.user.entity.Staff;
 import com.padr.gys.domain.user.port.StaffServicePort;
 import com.padr.gys.domain.user.port.UserServicePort;
-import com.padr.gys.infra.inbound.user.model.request.StaffRequest;
+import com.padr.gys.infra.inbound.user.model.request.UpdateStaffRequest;
 import com.padr.gys.infra.inbound.user.model.response.StaffResponse;
 
 import lombok.RequiredArgsConstructor;
@@ -20,11 +20,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UpdateStaffUseCase {
     
-    private UserServicePort userServicePort;
-    private StaffServicePort staffServicePort;
-    private RoleServicePort roleServicePort;
+    private final UserServicePort userServicePort;
+    private final StaffServicePort staffServicePort;
+    private final RoleServicePort roleServicePort;
 
-    public StaffResponse execute(Long id, StaffRequest request) {
+    public StaffResponse execute(Long id, UpdateStaffRequest request) {
         Staff oldStaff = staffServicePort.findById(id);
 
         Role role = null;

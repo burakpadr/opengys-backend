@@ -15,11 +15,15 @@ public interface StaffServicePort {
 
     Page<Staff> findByIsDeedOwner(Boolean isDeedOwner, Pageable pageable);
 
+    Page<Staff> findBySearchTerm(String searchTerm, Pageable pageable);
+
     Staff findById(Long id);
 
     Staff findByUserId(Long userId);
 
+    Staff changeActivity(Long staffId, Boolean isActive);
+
     Staff update(Staff oldStaff, Staff updateStaff);
 
-    void delete(Long id);
+    void delete(Staff staff);
 }

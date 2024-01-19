@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class StaffRequest {
+public class UpdateStaffRequest {
     
     @NotNull
     @Valid
-    private UserRequest user;
+    private UpdateUserRequest user;
 
     @NotNull
     private Boolean isDeedOwner;
@@ -26,5 +26,5 @@ public class StaffRequest {
             .user(user)
             .isDeedOwner(isDeedOwner)
             .build();
-    }   
+    } 
 }

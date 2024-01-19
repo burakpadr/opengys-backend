@@ -1,5 +1,7 @@
 package com.padr.gys.infra.inbound.rbac.adapter;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.padr.gys.infra.inbound.rbac.model.response.RoleResponse;
 import com.padr.gys.infra.inbound.rbac.usecase.DeleteRoleUseCase;
+import com.padr.gys.infra.inbound.rbac.usecase.FindAllRolesAsListUseCase;
 import com.padr.gys.infra.inbound.rbac.usecase.FindAllRolesAsPageUseCase;
 import com.padr.gys.infra.inbound.rbac.usecase.FindRoleByIdUseCase;
 import com.padr.gys.infra.inbound.rbac.usecase.SearchRoleUseCase;
@@ -23,13 +26,19 @@ import lombok.RequiredArgsConstructor;
 public class RoleAdapter {
     
     private final FindAllRolesAsPageUseCase findAllRolesAsPageUseCase;
+    private final FindAllRolesAsListUseCase findAllRolesAsListUseCase;
     private final SearchRoleUseCase searchRoleUseCase;
     private final FindRoleByIdUseCase findRoleByIdUseCase;
     private final DeleteRoleUseCase deleteRoleUseCase;
 
-    @GetMapping
+    @GetMapping("/as-page")
     public Page<RoleResponse> findAll(Pageable pageable) {
         return findAllRolesAsPageUseCase.execute(pageable);
+    }
+
+    @GetMapping("/as-list")
+    public List<RoleResponse> findAll() {
+        return findAllRolesAsListUseCase.execute();
     }
 
     @GetMapping("/search")

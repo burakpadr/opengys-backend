@@ -17,5 +17,7 @@ public interface StaffPersistencePort {
 
     Optional<Staff> findByUserId(Long userId);
 
+    Page<Staff> findBySearchTerm(String searchTerm, Pageable pageable);
+
     Staff save(Staff staff);
 }

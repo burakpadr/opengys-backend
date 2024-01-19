@@ -21,6 +21,8 @@ class StaffService implements StaffServicePort {
 
     @Override
     public Staff create(Staff staff) {
+        staff.setIsActive(true);
+
         return staffPersistencePort.save(staff);
     }
 
@@ -53,9 +55,7 @@ class StaffService implements StaffServicePort {
     }
 
     @Override
-    public void delete(Long id) {
-        Staff staff = findById(id);
-
+    public void delete(Staff staff) {
         staff.setIsDeleted(true);
 
         staffPersistencePort.save(staff);
@@ -65,5 +65,19 @@ class StaffService implements StaffServicePort {
     public Staff findByUserId(Long userId) {
         return staffPersistencePort.findByUserId(userId)
                 .orElseThrow(() -> new NoSuchElementException(UserExceptionMessage.USER_NOT_FOUND));
+    }
+
+    @Override
+    public Staff changeActivity(Long staffId, Boolean isActive) {
+        Staff staff = findById(staffId);
+
+        staff.setIsActive(isActive);
+
+        return staffPersistencePort.save(staff);
+    }
+
+    @Override
+    public Page<Staff> findBySearchTerm(String searchTerm, Pageable pageable) {
+        return staffPersistencePort.findBySearchTerm(searchTerm, pageable);
     }
 }

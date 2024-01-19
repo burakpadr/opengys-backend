@@ -46,8 +46,10 @@ class UserService implements UserServicePort {
         if (!oldUser.getEmail().equals(updateUser.getEmail()))
             throwExceptionIfEmailIsDuplicated(updateUser.getEmail());
 
-        oldUser.setEmail(oldUser.getEmail());
-        oldUser.setPassword(passwordEncoder.encode(oldUser.getPassword()));
+        oldUser.setName(updateUser.getName());
+        oldUser.setSurname(updateUser.getSurname());
+        oldUser.setRole(updateUser.getRole());
+        oldUser.setEmail(updateUser.getEmail());
 
         return userPersistencePort.save(oldUser);
     }

@@ -1,5 +1,6 @@
 package com.padr.gys.domain.rbac.service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.data.domain.Page;
@@ -22,6 +23,11 @@ class RoleService implements RoleServicePort {
     @Override
     public Page<Role> findAll(Pageable pageable) {
         return rolePersistencePort.findAll(pageable);
+    }
+
+    @Override
+    public List<Role> findAll() {
+        return rolePersistencePort.findAll();
     }
 
     @Override

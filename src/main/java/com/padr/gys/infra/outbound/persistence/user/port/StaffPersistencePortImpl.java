@@ -42,4 +42,9 @@ class StaffPersistencePortImpl  implements StaffPersistencePort {
     public Optional<Staff> findByUserId(Long userId) {
         return staffRepository.findByUserId(userId);
     }
+
+    @Override
+    public Page<Staff> findBySearchTerm(String searchTerm, Pageable pageable) {
+        return staffRepository.findBySearchTerm(searchTerm, pageable);
+    }
 }

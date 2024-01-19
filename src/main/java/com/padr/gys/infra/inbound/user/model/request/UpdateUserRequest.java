@@ -5,7 +5,6 @@ import com.padr.gys.domain.user.entity.User;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRequest {
+public class UpdateUserRequest {
 
     @NotEmpty
     private String name;
@@ -23,11 +22,6 @@ public class UserRequest {
     @NotEmpty
     @Email
     private String email;
-
-    @NotEmpty
-    @Size(min = 8, max = 16)
-    private String password;
-
     private Long roleId;
 
     public User to(Role role) {
@@ -35,7 +29,6 @@ public class UserRequest {
                 .name(name)
                 .surname(surname)
                 .email(email)
-                .password(password)
                 .role(role)
                 .build();
     }
