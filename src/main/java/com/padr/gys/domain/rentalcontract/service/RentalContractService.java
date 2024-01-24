@@ -1,6 +1,5 @@
 package com.padr.gys.domain.rentalcontract.service;
 
-import com.padr.gys.domain.rentalcontract.constant.RentalContractExceptionMessage;
 import com.padr.gys.domain.rentalcontract.entity.RentalContract;
 import com.padr.gys.domain.rentalcontract.port.RentalContractServicePort;
 import com.padr.gys.domain.statusmanager.constant.StatusChangeOperationType;
@@ -14,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,8 @@ class RentalContractService implements RentalContractServicePort {
     private final RentalContractPersistencePort rentalContractPersistencePort;
 
     private final StatusChangeHandlerContext statusChangeHandlerContext;
+
+    private final MessageSource messageSource;
 
     @Override
     public Page<RentalContract> findByRealEstateId(Long realEstateId, Pageable pageable) {
@@ -39,7 +42,7 @@ class RentalContractService implements RentalContractServicePort {
     @Override
     public RentalContract findById(Long id) {
         return rentalContractPersistencePort.findById(id)
-                .orElseThrow(() -> new NoSuchElementException(RentalContractExceptionMessage.RENTAL_CONTRACT_NOT_FOUND));
+                .orElseThrow(() -> new NoSuchElementException(messageSource.getMessage("rentalcontract.not-found", null, LocaleContextHolder.getLocale())));
     }
 
     @Override
@@ -49,7 +52,7 @@ class RentalContractService implements RentalContractServicePort {
                 .filter(RentalContract::getIsPublished)
                 .findAny()
                 .ifPresent(rc -> {
-                    throw new EntityExistsException(RentalContractExceptionMessage.RENTAL_CONTRACT_ALREADY_EXIST);
+                    throw new EntityExistsException(messageSource.getMessage("rentalcontract.already-exist", null, LocaleContextHolder.getLocale()));
                 });
 
         rentalContractPersistencePort.save(rentalContract);

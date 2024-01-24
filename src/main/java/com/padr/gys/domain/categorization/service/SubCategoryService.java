@@ -6,9 +6,10 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.padr.gys.domain.categorization.constant.CategorizationExceptionMessage;
 import com.padr.gys.domain.categorization.entity.Category;
 import com.padr.gys.domain.categorization.entity.SubCategory;
 import com.padr.gys.domain.categorization.port.SubCategoryServicePort;
@@ -21,6 +22,8 @@ import lombok.RequiredArgsConstructor;
 public class SubCategoryService implements SubCategoryServicePort {
 
     private final SubCategoryPersistencePort subCategoryPersistencePort;
+
+    private final MessageSource messageSource;
 
     @Override
     public List<SubCategory> findByCategoryId(Long categoryId) {
@@ -75,6 +78,7 @@ public class SubCategoryService implements SubCategoryServicePort {
     @Override
     public SubCategory findById(Long id) {
         return subCategoryPersistencePort.findById(id)
-                .orElseThrow(() -> new NoSuchElementException(CategorizationExceptionMessage.SUBCATEGORY_NOT_FOUND));
+                .orElseThrow(() -> new NoSuchElementException(messageSource
+                        .getMessage("categorization.subcategory.not-found", null, LocaleContextHolder.getLocale())));
     }
 }

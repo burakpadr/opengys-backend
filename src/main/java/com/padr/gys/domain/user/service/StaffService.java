@@ -2,11 +2,12 @@ package com.padr.gys.domain.user.service;
 
 import java.util.NoSuchElementException;
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.padr.gys.domain.user.constant.UserExceptionMessage;
 import com.padr.gys.domain.user.entity.Staff;
 import com.padr.gys.domain.user.port.StaffServicePort;
 import com.padr.gys.infra.outbound.persistence.user.port.StaffPersistencePort;
@@ -18,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 class StaffService implements StaffServicePort {
 
     private final StaffPersistencePort staffPersistencePort;
+
+    private final MessageSource messageSource;
 
     @Override
     public Staff create(Staff staff) {
@@ -44,7 +47,8 @@ class StaffService implements StaffServicePort {
     @Override
     public Staff findById(Long id) {
         return staffPersistencePort.findById(id)
-                .orElseThrow(() -> new NoSuchElementException(UserExceptionMessage.USER_NOT_FOUND));
+                .orElseThrow(() -> new NoSuchElementException(
+                        messageSource.getMessage("user.not-found", null, LocaleContextHolder.getLocale())));
     }
 
     @Override
@@ -64,7 +68,8 @@ class StaffService implements StaffServicePort {
     @Override
     public Staff findByUserId(Long userId) {
         return staffPersistencePort.findByUserId(userId)
-                .orElseThrow(() -> new NoSuchElementException(UserExceptionMessage.USER_NOT_FOUND));
+                .orElseThrow(() -> new NoSuchElementException(
+                        messageSource.getMessage("user.not-found", null, LocaleContextHolder.getLocale())));
     }
 
     @Override

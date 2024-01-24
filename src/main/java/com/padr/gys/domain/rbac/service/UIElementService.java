@@ -5,9 +5,10 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.padr.gys.domain.rbac.constant.RbacExceptionMessage;
 import com.padr.gys.domain.rbac.entity.UIElement;
 import com.padr.gys.domain.rbac.port.UIElementServicePort;
 import com.padr.gys.infra.outbound.persistence.rbac.port.UIElementPersistencePort;
@@ -20,6 +21,8 @@ class UIElementService implements UIElementServicePort {
 
     private final UIElementPersistencePort uiElementPersistencePort;
 
+    private final MessageSource messageSource;
+
     @Override
     public List<UIElement> findAll() {
         return uiElementPersistencePort.findAll();
@@ -28,7 +31,8 @@ class UIElementService implements UIElementServicePort {
     @Override
     public UIElement findById(Long id) {
         return uiElementPersistencePort.findById(id)
-                .orElseThrow(() -> new NoSuchElementException(RbacExceptionMessage.UI_ELEMENT_NOT_FOUND));
+                .orElseThrow(() -> new NoSuchElementException(
+                        messageSource.getMessage("rbac.ui-element.not-found", null, LocaleContextHolder.getLocale())));
     }
 
     @Override
@@ -36,8 +40,8 @@ class UIElementService implements UIElementServicePort {
         List<UIElement> uiElementsWillBeCreated = new ArrayList<>();
 
         uiElements.stream().forEach(uiElement -> {
-            Optional<UIElement> isDuplicatedUIElementOptional =  uiElementPersistencePort
-                .findByComponentName(uiElement.getComponentName());
+            Optional<UIElement> isDuplicatedUIElementOptional = uiElementPersistencePort
+                    .findByComponentName(uiElement.getComponentName());
 
             if (!isDuplicatedUIElementOptional.isPresent())
                 uiElementsWillBeCreated.add(uiElement);

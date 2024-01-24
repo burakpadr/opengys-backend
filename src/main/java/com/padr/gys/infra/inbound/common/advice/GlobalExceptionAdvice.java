@@ -3,6 +3,8 @@ package com.padr.gys.infra.inbound.common.advice;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -11,16 +13,19 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.padr.gys.domain.common.constant.IndependentExceptionMessageConstant;
 import com.padr.gys.domain.common.exception.BusinessException;
 import com.padr.gys.infra.inbound.common.response.ExceptionResponse;
 
 import jakarta.persistence.EntityExistsException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import lombok.RequiredArgsConstructor;
 
 @ControllerAdvice
+@RequiredArgsConstructor
 public class GlobalExceptionAdvice {
+
+        private final MessageSource messageSource;
 
         @ExceptionHandler(BusinessException.class)
         public ResponseEntity<ExceptionResponse> handleException(BusinessException exception) {
@@ -145,7 +150,8 @@ public class GlobalExceptionAdvice {
 
                 ExceptionResponse exceptionResponse = ExceptionResponse.builder()
                                 .code(code)
-                                .message(IndependentExceptionMessageConstant.BAD_CREDENTIALS)
+                                .message(messageSource.getMessage("independent.bad-credentials", null,
+                                                LocaleContextHolder.getLocale()))
                                 .build();
 
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED.value()).body(exceptionResponse);

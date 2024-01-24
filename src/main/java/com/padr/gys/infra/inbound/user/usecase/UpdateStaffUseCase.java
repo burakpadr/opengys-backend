@@ -2,12 +2,13 @@ package com.padr.gys.infra.inbound.user.usecase;
 
 import java.util.Objects;
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
 import com.padr.gys.domain.common.exception.BusinessException;
 import com.padr.gys.domain.rbac.entity.Role;
 import com.padr.gys.domain.rbac.port.RoleServicePort;
-import com.padr.gys.domain.user.constant.UserExceptionMessage;
 import com.padr.gys.domain.user.entity.Staff;
 import com.padr.gys.domain.user.port.StaffServicePort;
 import com.padr.gys.domain.user.port.UserServicePort;
@@ -19,10 +20,12 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 public class UpdateStaffUseCase {
-    
+
     private final UserServicePort userServicePort;
     private final StaffServicePort staffServicePort;
     private final RoleServicePort roleServicePort;
+
+    private final MessageSource messageSource;
 
     public StaffResponse execute(Long id, UpdateStaffRequest request) {
         Staff oldStaff = staffServicePort.findById(id);
@@ -31,8 +34,9 @@ public class UpdateStaffUseCase {
 
         if (!request.getIsDeedOwner()) {
             if (Objects.isNull(request.getUser().getRoleId()))
-                throw new BusinessException(UserExceptionMessage.ROLE_ID_CANNOT_BE_EMPTY);
-            
+                throw new BusinessException(messageSource.getMessage("user.role-id-cannot-be-empty", null,
+                        LocaleContextHolder.getLocale()));
+
             role = roleServicePort.findById(request.getUser().getRoleId());
         }
 

@@ -6,11 +6,12 @@ import com.padr.gys.domain.statusmanager.model.StatusChangeModel;
 
 import java.util.NoSuchElementException;
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.padr.gys.domain.advert.constant.AdvertExceptionMessage;
 import com.padr.gys.domain.advert.entity.Advert;
 import com.padr.gys.domain.advert.port.AdvertServicePort;
 import com.padr.gys.infra.outbound.persistence.advert.port.AdvertPersistencePort;
@@ -23,6 +24,8 @@ public class AdvertService implements AdvertServicePort {
 
     private final AdvertPersistencePort advertPersistencePort;
 
+    private final MessageSource messageSource;
+
     private final StatusChangeHandlerContext statusChangeHandlerContext;
 
     @Override
@@ -33,7 +36,8 @@ public class AdvertService implements AdvertServicePort {
     @Override
     public Advert findById(Long id) {
         return advertPersistencePort.findById(id)
-                .orElseThrow(() -> new NoSuchElementException(AdvertExceptionMessage.ADVERT_NOT_FOUND));
+                .orElseThrow(() -> new NoSuchElementException(
+                        messageSource.getMessage("advert.not-found", null, LocaleContextHolder.getLocale())));
     }
 
     @Override

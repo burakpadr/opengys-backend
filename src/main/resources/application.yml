@@ -7,6 +7,11 @@ spring:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     generate-ddl: true
+  messages:
+    basename: 
+      - messages
+  main:
+    allow-bean-definition-overriding: true
 
 server:
   port: 8080

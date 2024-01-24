@@ -1,6 +1,5 @@
 package com.padr.gys.domain.user.service;
 
-import com.padr.gys.domain.user.constant.UserExceptionMessage;
 import com.padr.gys.domain.user.entity.User;
 import com.padr.gys.domain.user.port.UserServicePort;
 import com.padr.gys.infra.outbound.persistence.user.port.UserPersistencePort;
@@ -10,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.NoSuchElementException;
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +21,12 @@ class UserService implements UserServicePort {
     private final UserPersistencePort userPersistencePort;
     private final PasswordEncoder passwordEncoder;
 
+    private final MessageSource messageSource;
+
     @Override
     public User create(User user) {
         throwExceptionIfEmailIsDuplicated(user.getEmail());
-        
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         return userPersistencePort.save(user);
@@ -32,13 +35,15 @@ class UserService implements UserServicePort {
     @Override
     public User findById(Long id) {
         return userPersistencePort.findById(id)
-                .orElseThrow(() -> new NoSuchElementException(UserExceptionMessage.USER_NOT_FOUND));
+                .orElseThrow(() -> new NoSuchElementException(
+                        messageSource.getMessage("user.not-found", null, LocaleContextHolder.getLocale())));
     }
 
     @Override
     public User findByEmail(String email) {
         return userPersistencePort.findByEmail(email)
-                .orElseThrow(() -> new NoSuchElementException(UserExceptionMessage.USER_NOT_FOUND));
+                .orElseThrow(() -> new NoSuchElementException(
+                        messageSource.getMessage("user.not-found", null, LocaleContextHolder.getLocale())));
     }
 
     @Override
@@ -66,7 +71,8 @@ class UserService implements UserServicePort {
     private void throwExceptionIfEmailIsDuplicated(String email) {
         userPersistencePort.findByEmail(email)
                 .ifPresent(u -> {
-                    throw new EntityExistsException(UserExceptionMessage.USER_ALREADY_EXIST);
+                    throw new EntityExistsException(
+                            messageSource.getMessage("user.already-exist", null, LocaleContextHolder.getLocale()));
                 });
 
     }

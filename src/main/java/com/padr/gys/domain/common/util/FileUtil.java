@@ -3,34 +3,45 @@ package com.padr.gys.domain.common.util;
 import java.io.File;
 import java.util.List;
 
-import com.padr.gys.domain.common.constant.IndependentExceptionMessageConstant;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.stereotype.Component;
 
+import lombok.RequiredArgsConstructor;
+
+@Component
+@RequiredArgsConstructor
 public class FileUtil {
 
-    public static void createDirectoryIfNotExist(String path) {
+    private final MessageSource messageSource;
+
+    public void createDirectoryIfNotExist(String path) {
         File file = new File(path);
 
         if (!file.isDirectory())
             if (!file.mkdirs())
-                throw new RuntimeException(IndependentExceptionMessageConstant.COULD_NOT_BE_CREATED_FOLDER);
+                throw new RuntimeException(messageSource.getMessage("independent.could-not-be-created-folder", null,
+                        LocaleContextHolder.getLocale()));
 
     }
 
-    public static String getFileExtension(String fileName) {
+    public String getFileExtension(String fileName) {
         String[] splittedFileName = fileName.split("\\.");
 
         if (splittedFileName.length != 2)
-            throw new RuntimeException(IndependentExceptionMessageConstant.WRONG_FILE_NAME_FORMAT);
+            throw new RuntimeException(messageSource.getMessage("independent.wrong-file-name-format", null,
+                    LocaleContextHolder.getLocale()));
 
         return fileName.split("\\.")[1];
     }
 
-    public static void deleteFiles(List<String> filePaths) {
+    public void deleteFiles(List<String> filePaths) {
         filePaths.stream().forEach(filePath -> {
             File file = new File(filePath);
 
             if (!file.delete())
-                throw new RuntimeException(IndependentExceptionMessageConstant.COULD_NOT_BE_DELETED_FILE_OR_FOLDER);
+                throw new RuntimeException(messageSource.getMessage("independent.could-not-be-deleted-file-or-folder",
+                        null, LocaleContextHolder.getLocale()));
         });
     }
 }

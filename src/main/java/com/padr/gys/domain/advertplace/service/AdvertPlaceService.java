@@ -3,12 +3,13 @@ package com.padr.gys.domain.advertplace.service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import org.springframework.stereotype.Service;
 
-import com.padr.gys.domain.advertplace.constant.AdvertPlaceExceptionMessage;
 import com.padr.gys.domain.advertplace.entity.AdvertPlace;
 import com.padr.gys.domain.advertplace.port.AdvertPlaceServicePort;
 import com.padr.gys.infra.outbound.persistence.advertplace.port.AdvertPlacePersistencePort;
@@ -20,6 +21,8 @@ import lombok.RequiredArgsConstructor;
 public class AdvertPlaceService implements AdvertPlaceServicePort {
 
     private final AdvertPlacePersistencePort advertPlacePersistencePort;
+
+    private final MessageSource messageSource;
 
     @Override
     public Page<AdvertPlace> findAll(Pageable pageable) {
@@ -39,7 +42,8 @@ public class AdvertPlaceService implements AdvertPlaceServicePort {
     @Override
     public AdvertPlace findById(Long id) {
         return advertPlacePersistencePort.findById(id)
-                .orElseThrow(() -> new NoSuchElementException(AdvertPlaceExceptionMessage.ADVERT_PLACE_NOT_FOUND));
+                .orElseThrow(() -> new NoSuchElementException(
+                        messageSource.getMessage("advertplace.not-found", null, LocaleContextHolder.getLocale())));
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.padr.gys.infra.inbound.advert.usecase;
 
-import com.padr.gys.domain.advert.constant.AdvertExceptionMessage;
 import com.padr.gys.domain.advert.entity.Advert;
 import com.padr.gys.domain.advert.port.AdvertServicePort;
 import com.padr.gys.domain.advertplace.entity.AdvertPlace;
@@ -17,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -28,6 +29,8 @@ public class CreateAdvertUseCase {
     private final AdvertPlaceServicePort advertPlaceServicePort;
     private final RentalContractServicePort rentalContractServicePort;
 
+    private final MessageSource messageSource;
+
     public AdvertResponse execute(CreateAdvertRequest request) {
         RealEstate realEstate = realEstateServicePort.findById(request.getRealEstateId());
         AdvertPlace advertPlace = advertPlaceServicePort.findById(request.getAdvertPlaceId());
@@ -38,7 +41,8 @@ public class CreateAdvertUseCase {
 
             if (publishedRentalContracts.size() > 0)
                 throw new BusinessException(
-                        AdvertExceptionMessage.ADVERT_CANNOT_BE_PUBLISH_WHEN_RENTAL_CONTRACT_PUBLISHED);
+                        messageSource.getMessage("advert.cannot-be-published-when-rental-contract-published", null,
+                                LocaleContextHolder.getLocale()));
         }
 
         Advert advert = Advert.builder()

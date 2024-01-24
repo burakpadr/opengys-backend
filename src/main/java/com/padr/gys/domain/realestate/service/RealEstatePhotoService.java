@@ -7,13 +7,14 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.UUID;
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.padr.gys.domain.common.constant.AllowedFileType;
 import com.padr.gys.domain.common.property.AppProperty;
 import com.padr.gys.domain.common.util.FileUtil;
 import com.padr.gys.domain.common.util.ImageUtil;
-import com.padr.gys.domain.realestate.constant.RealEstateExceptionMessage;
 import com.padr.gys.domain.realestate.entity.RealEstatePhoto;
 import com.padr.gys.domain.realestate.port.RealEstatePhotoServicePort;
 import com.padr.gys.infra.outbound.persistence.realestate.port.RealEstatePhotoPersistencePort;
@@ -26,7 +27,11 @@ class RealEstatePhotoService implements RealEstatePhotoServicePort {
 
     private final RealEstatePhotoPersistencePort realEstatePhotoPersistencePort;
 
+    private final MessageSource messageSource;
+
     private final AppProperty appProperty;
+    private final FileUtil fileUtil;
+    private final ImageUtil imageUtil;
 
     @Override
     public List<RealEstatePhoto> findByRealEstateId(Long realEstateId) {
@@ -42,10 +47,10 @@ class RealEstatePhotoService implements RealEstatePhotoServicePort {
         realEstatePhotos.stream().forEach(realEstatePhoto -> {
             String folderPath = appProperty.getStorage().getRealEstateImagesPath() + "/" + realEstateId;
 
-            FileUtil.createDirectoryIfNotExist(folderPath);
+            fileUtil.createDirectoryIfNotExist(folderPath);
 
             String extension = Objects.nonNull(realEstatePhoto.getImage().getOriginalFilename())
-                    ? FileUtil.getFileExtension(realEstatePhoto.getImage().getOriginalFilename())
+                    ? fileUtil.getFileExtension(realEstatePhoto.getImage().getOriginalFilename())
                     : AllowedFileType.IMAGE_JPG.getExtension();
 
             String fileName = UUID.randomUUID().toString() + "." + extension;
@@ -58,7 +63,7 @@ class RealEstatePhotoService implements RealEstatePhotoServicePort {
                 throw new RuntimeException(e);
             }
 
-            ImageUtil.resizeImages(image, appProperty.getImage().getWidth(), appProperty.getImage().getHeight());
+            imageUtil.resizeImages(image, appProperty.getImage().getWidth(), appProperty.getImage().getHeight());
 
             realEstatePhoto.setPath(appProperty.getStorage().getRealEstateImagesRelativeUrl() + "/"
                     + realEstateId + "/" + fileName);
@@ -80,6 +85,7 @@ class RealEstatePhotoService implements RealEstatePhotoServicePort {
 
     public RealEstatePhoto findById(Long id) {
         return realEstatePhotoPersistencePort.findById(id)
-                .orElseThrow(() -> new NoSuchElementException(RealEstateExceptionMessage.REAL_ESTATE_PHOTO_NOT_FOUND));
+                .orElseThrow(() -> new NoSuchElementException(
+                        messageSource.getMessage("realestate.photo.not-found", null, LocaleContextHolder.getLocale())));
     }
 }

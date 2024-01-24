@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -11,7 +13,6 @@ import org.springframework.web.client.HttpClientErrorException.BadRequest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.padr.gys.domain.common.constant.AllowedFileType;
-import com.padr.gys.domain.common.constant.IndependentExceptionMessageConstant;
 import com.padr.gys.infra.inbound.common.response.ExceptionResponse;
 
 import jakarta.servlet.Filter;
@@ -22,9 +23,13 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import lombok.RequiredArgsConstructor;
 
 @Component
+@RequiredArgsConstructor
 public class MultipartFileFilter implements Filter {
+
+    private final MessageSource messageSource;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -63,7 +68,8 @@ public class MultipartFileFilter implements Filter {
         try {
             ExceptionResponse exceptionResponse = ExceptionResponse.builder()
                     .code(BadRequest.class.getName())
-                    .message(IndependentExceptionMessageConstant.FILE_CANNOT_BE_EMPTY)
+                    .message(messageSource.getMessage("independent.file-cannot-be-empty", null,
+                            LocaleContextHolder.getLocale()))
                     .build();
 
             httpServletResponse.setStatus(HttpStatus.BAD_REQUEST.value());
@@ -79,7 +85,8 @@ public class MultipartFileFilter implements Filter {
         try {
             ExceptionResponse exceptionResponse = ExceptionResponse.builder()
                     .code(BadRequest.class.getName())
-                    .message(IndependentExceptionMessageConstant.UNSUPPORTED_FILE_TYPE)
+                    .message(messageSource.getMessage("independent.unsupported-file-type", null,
+                            LocaleContextHolder.getLocale()))
                     .build();
 
             httpServletResponse.setStatus(HttpStatus.BAD_REQUEST.value());

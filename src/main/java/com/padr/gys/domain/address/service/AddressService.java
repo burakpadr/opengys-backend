@@ -2,9 +2,10 @@ package com.padr.gys.domain.address.service;
 
 import java.util.NoSuchElementException;
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.padr.gys.domain.address.constant.AddressExceptionMessage;
 import com.padr.gys.domain.address.entity.Address;
 import com.padr.gys.domain.address.port.AddressServicePort;
 import com.padr.gys.infra.outbound.persistence.address.port.AddressPersistencePort;
@@ -16,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 public class AddressService implements AddressServicePort {
 
     private final AddressPersistencePort addressPersistencePort;
+
+    private final MessageSource messageSource;
 
     @Override
     public Address create(Address address) {
@@ -47,6 +50,7 @@ public class AddressService implements AddressServicePort {
 
     private Address findById(Long id) {
         return addressPersistencePort.findById(id)
-                .orElseThrow(() -> new NoSuchElementException(AddressExceptionMessage.ADDRESS_NOT_FOUND));
+                .orElseThrow(() -> new NoSuchElementException(
+                        messageSource.getMessage("address.not-found", null, LocaleContextHolder.getLocale())));
     }
 }
