@@ -19,5 +19,15 @@ services:
     ports:
       - 18000:6379
 
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - rabbitmq-gys:/var/lib/rabbitmq
+    restart: always
+
 volumes:
   pgdata-gys:
+  rabbitmq-gys:
