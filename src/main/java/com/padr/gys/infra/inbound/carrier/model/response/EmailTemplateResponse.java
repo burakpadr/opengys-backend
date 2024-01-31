@@ -13,6 +13,7 @@ public class EmailTemplateResponse {
     private Long id;
     private EmailTemplateCode code;
     private String label;
+    private String subject;
     private String content;
 
     public static EmailTemplateResponse of(EmailTemplate emailTemplate) {
@@ -20,6 +21,7 @@ public class EmailTemplateResponse {
                 .id(emailTemplate.getId())
                 .code(emailTemplate.getCode())
                 .label(emailTemplate.getLabel())
+                .subject(emailTemplate.getSubject())
                 .content(emailTemplate.getContent())
                 .build();
     }

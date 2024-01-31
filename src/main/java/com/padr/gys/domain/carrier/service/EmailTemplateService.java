@@ -58,6 +58,7 @@ class EmailTemplateService implements EmailTemplateServicePort {
 
         emailTemplate.setCode(updateEmailTemplate.getCode());
         emailTemplate.setLabel(updateEmailTemplate.getLabel());
+        emailTemplate.setSubject(updateEmailTemplate.getSubject());
         emailTemplate.setContent(updateEmailTemplate.getContent());
 
         return emailTemplatePersistencePort.save(emailTemplate);

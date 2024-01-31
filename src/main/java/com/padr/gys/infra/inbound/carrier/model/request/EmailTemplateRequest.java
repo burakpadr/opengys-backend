@@ -19,5 +19,8 @@ public class EmailTemplateRequest {
     private String label;
 
     @NotEmpty
+    private String subject;
+
+    @NotEmpty
     private String content;
 }

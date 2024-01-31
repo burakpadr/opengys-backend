@@ -44,6 +44,9 @@ public class EmailTemplate extends BaseEntity {
     @Column
     private String label;
 
+    @Column
+    private String subject;
+
     @Column(length = 5000)
     private String content;
 }

@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,7 +37,9 @@ public class EmailTemplateAdapter {
     private final FindEmailTemplateUseCase findEmailTemplateUseCase;
     private final UpdateEmailTemplateUseCase updateEmailTemplateUseCase;
     private final DeleteEmailTemplateUseCase deleteEmailTemplateUseCase;
-    
+
+    private final JavaMailSender mailSender;
+
     @PostMapping
     public EmailTemplateResponse create(@Valid @RequestBody EmailTemplateRequest request) {
         return createEmailTemplateUseCase.execute(request);
@@ -54,10 +58,21 @@ public class EmailTemplateAdapter {
     @PutMapping("/{id}")
     public EmailTemplateResponse update(@PathVariable Long id, @Valid @RequestBody EmailTemplateRequest request) {
         return updateEmailTemplateUseCase.execute(id, request);
-    } 
+    }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         deleteEmailTemplateUseCase.execute(id);
     }
+
+    @GetMapping("/deneme")
+    public void deneme() {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo("burakpadr99@gmail.com");
+        message.setSubject("subject");
+        message.setText("body2");
+
+        mailSender.send(message);
+    }
+
 }
