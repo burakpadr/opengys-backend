@@ -3,6 +3,7 @@ package com.padr.gys.domain.carrier.port;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.padr.gys.domain.carrier.constant.EmailTemplateCode;
 import com.padr.gys.domain.carrier.entity.EmailTemplate;
 
 public interface EmailTemplateServicePort {
@@ -13,7 +14,7 @@ public interface EmailTemplateServicePort {
 
     EmailTemplate findById(Long id);
 
-    EmailTemplate findByCode(String code);
+    EmailTemplate findByCode(EmailTemplateCode code);
 
     EmailTemplate update(Long id, EmailTemplate updateEmailTemplate);
 

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import com.padr.gys.domain.carrier.constant.EmailTemplateCode;
 import com.padr.gys.domain.carrier.entity.EmailTemplate;
 import com.padr.gys.infra.outbound.persistence.carrier.repository.EmailTemplateRepository;
 
@@ -28,7 +29,7 @@ class EmailTemplatePersistencePortImpl implements EmailTemplatePersistencePort {
     }
 
     @Override
-    public Optional<EmailTemplate> findByCode(String code) {
+    public Optional<EmailTemplate> findByCode(EmailTemplateCode code) {
         return emailTemplateRepository.findByCode(code);
     }
 

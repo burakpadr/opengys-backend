@@ -19,6 +19,7 @@ public class CreateEmailTemplateUseCase {
         EmailTemplate emailTemplate = EmailTemplate.builder()
                 .code(request.getCode())
                 .label(request.getLabel())
+                .subject(request.getSubject())
                 .content(request.getContent())
                 .build();
 

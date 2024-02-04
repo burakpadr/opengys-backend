@@ -3,6 +3,7 @@ package com.padr.gys.infra.inbound.rest.carrier.model.request;
 import com.padr.gys.domain.carrier.constant.EmailTemplateCode;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EmailTemplateRequest {
     
-    @NotEmpty
+    @NotNull
     private EmailTemplateCode code;
 
     @NotEmpty

@@ -38,7 +38,7 @@ public class EmailTemplate extends BaseEntity {
     private Long id;
 
     @Column
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private EmailTemplateCode code;
 
     @Column
