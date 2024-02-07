@@ -68,6 +68,13 @@ class UserService implements UserServicePort {
         userPersistencePort.save(user);
     }
 
+    @Override
+    public User changePassword(User user, String newPassword) {
+        user.setPassword(passwordEncoder.encode(newPassword));
+
+        return userPersistencePort.save(user);
+    }
+
     private void throwExceptionIfEmailIsDuplicated(String email) {
         userPersistencePort.findByEmail(email)
                 .ifPresent(u -> {

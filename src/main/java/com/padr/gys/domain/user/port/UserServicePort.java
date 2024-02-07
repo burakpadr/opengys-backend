@@ -12,5 +12,7 @@ public interface UserServicePort {
 
     User update(User oldUser, User updateUser);
 
+    User changePassword(User user, String newPassword);
+
     void delete(Long id);
 }
