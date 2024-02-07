@@ -15,10 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.padr.gys.domain.carrier.constant.EmailTemplateCode;
-import com.padr.gys.domain.carrier.entity.EmailTemplate;
-import com.padr.gys.domain.carrier.port.EmailTemplateServicePort;
-import com.padr.gys.infra.inbound.amqp.carrier.model.SendEmailTransactionModel;
 import com.padr.gys.infra.inbound.rest.advertplace.model.AdvertPlaceRequest;
 import com.padr.gys.infra.inbound.rest.advertplace.model.AdvertPlaceResponse;
 import com.padr.gys.infra.inbound.rest.advertplace.usecase.CreateAdvertPlaceUseCase;
@@ -45,8 +41,6 @@ public class AdvertPlaceAdapter {
     private final DeleteAdvertPlaceUseCase deleteAdvertPlaceUseCase;
     private final SearchAdvertPlacesUseCase searchAdvertPlacesUseCase;
 
-    private final EmailTemplateServicePort emailTemplateServicePort;
-
     private final RabbitTemplate rabbitTemplate;
 
     @GetMapping
@@ -59,20 +53,20 @@ public class AdvertPlaceAdapter {
         return searchAdvertPlacesUseCase.execute(searchTerm, pageable);
     }
 
-    @GetMapping("/deneme")
-    public void deneme() {
-        SendEmailTransactionModel sendEmailTransactionModel = new SendEmailTransactionModel();
+    // @GetMapping("/deneme")
+    // public void deneme() {
+    //     SendEmailTransactionModel sendEmailTransactionModel = new SendEmailTransactionModel();
 
-        EmailTemplate emailTemplate = emailTemplateServicePort.findByCode(EmailTemplateCode.PASSWORD_RESET_OTP);
+    //     EmailTemplate emailTemplate = emailTemplateServicePort.findByCode(EmailTemplateCode.PASSWORD_RESET_OTP);
 
-        String[] to = {"burakpadr99@gmail.com"};
+    //     String[] to = {"burakpadr99@gmail.com"};
 
-        sendEmailTransactionModel.setSubject(emailTemplate.getSubject());
-        sendEmailTransactionModel.setTo(to);
-        sendEmailTransactionModel.setContent(String.format(emailTemplate.getContent(), "-link-"));
+    //     sendEmailTransactionModel.setSubject(emailTemplate.getSubject());
+    //     sendEmailTransactionModel.setTo(to);
+    //     sendEmailTransactionModel.setContent(String.format(emailTemplate.getContent(), "-link-"));
 
-        rabbitTemplate.convertAndSend("carrier.email.send.queue", sendEmailTransactionModel);
-    }
+    //     rabbitTemplate.convertAndSend("carrier.email.send.queue", sendEmailTransactionModel);
+    // }
 
     @GetMapping("/as-list")
     public List<AdvertPlaceResponse> findAll() {
