@@ -5,7 +5,7 @@ import com.padr.gys.domain.otp.entity.Otp;
 
 public interface OtpServicePort {
 
-    Otp create(Otp timeBasedOtp);
+    Otp create(OtpType otpType, String key);
 
     Otp findByOtpTypeAndKey(OtpType otpType, String key);
 

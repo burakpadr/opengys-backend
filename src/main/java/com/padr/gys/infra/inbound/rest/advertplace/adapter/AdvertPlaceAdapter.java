@@ -2,7 +2,6 @@ package com.padr.gys.infra.inbound.rest.advertplace.adapter;
 
 import java.util.List;
 
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,8 +40,6 @@ public class AdvertPlaceAdapter {
     private final DeleteAdvertPlaceUseCase deleteAdvertPlaceUseCase;
     private final SearchAdvertPlacesUseCase searchAdvertPlacesUseCase;
 
-    private final RabbitTemplate rabbitTemplate;
-
     @GetMapping
     public Page<AdvertPlaceResponse> findAll(Pageable pageable) {
         return findAdvertPlacesUseCase.execute(pageable);
@@ -53,20 +50,6 @@ public class AdvertPlaceAdapter {
         return searchAdvertPlacesUseCase.execute(searchTerm, pageable);
     }
 
-    // @GetMapping("/deneme")
-    // public void deneme() {
-    //     SendEmailTransactionModel sendEmailTransactionModel = new SendEmailTransactionModel();
-
-    //     EmailTemplate emailTemplate = emailTemplateServicePort.findByCode(EmailTemplateCode.PASSWORD_RESET_OTP);
-
-    //     String[] to = {"burakpadr99@gmail.com"};
-
-    //     sendEmailTransactionModel.setSubject(emailTemplate.getSubject());
-    //     sendEmailTransactionModel.setTo(to);
-    //     sendEmailTransactionModel.setContent(String.format(emailTemplate.getContent(), "-link-"));
-
-    //     rabbitTemplate.convertAndSend("carrier.email.send.queue", sendEmailTransactionModel);
-    // }
 
     @GetMapping("/as-list")
     public List<AdvertPlaceResponse> findAll() {

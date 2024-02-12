@@ -31,9 +31,6 @@ public class Otp {
     private String otp;
 
     @Builder.Default
-    private Boolean verifiedByUser = false;
-
-    @Builder.Default
     private Integer numberOfFailures = 0;
 
     @TimeToLive(unit = TimeUnit.SECONDS)

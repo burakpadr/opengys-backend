@@ -4,10 +4,11 @@ spring:
     url: jdbc:postgresql://localhost:25000/gys
     username: postgres
     password: postgres
-
-  redis:
-    host: localhost
-    port: 18000
+    
+  data:
+    redis:
+      host: localhost
+      port: 18000
 
   rabbitmq:
     host: localhost
