@@ -40,7 +40,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             "/gys/api/v1/auth", HttpMethod.GET.name(),
             "/gys/api/v1/ui-elements", HttpMethod.GET.name(),
             "/gys/api/v1/staffs", HttpMethod.POST.name(),
-            "/gys/api/v1/staffs/count-deed-owner", HttpMethod.GET.name());
+            "/gys/api/v1/staffs/count-deed-owner", HttpMethod.GET.name(),
+            "/gys/api/v1/users/create-reset-password-otp", HttpMethod.POST.name(),
+            "/gys/api/v1/users/validate-reset-password-otp", HttpMethod.POST.name(),
+            "/gys/api/v1/users/reset-password", HttpMethod.PATCH.name());
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

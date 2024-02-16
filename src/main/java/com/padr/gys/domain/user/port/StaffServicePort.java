@@ -21,8 +21,6 @@ public interface StaffServicePort {
 
     Staff findByUserId(Long userId);
 
-    Staff changeActivity(Long staffId, Boolean isActive);
-
     Staff update(Staff oldStaff, Staff updateStaff);
 
     void delete(Staff staff);

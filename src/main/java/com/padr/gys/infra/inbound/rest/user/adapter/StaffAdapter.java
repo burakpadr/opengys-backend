@@ -5,7 +5,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.padr.gys.infra.inbound.rest.user.model.request.CreateStaffRequest;
 import com.padr.gys.infra.inbound.rest.user.model.request.UpdateStaffRequest;
 import com.padr.gys.infra.inbound.rest.user.model.response.StaffResponse;
-import com.padr.gys.infra.inbound.rest.user.usecase.ChangeStaffActivityUseCase;
 import com.padr.gys.infra.inbound.rest.user.usecase.CountDeedOwnerUseCase;
 import com.padr.gys.infra.inbound.rest.user.usecase.CreateStaffUseCase;
 import com.padr.gys.infra.inbound.rest.user.usecase.DeleteStaffUseCase;
@@ -41,7 +39,6 @@ public class StaffAdapter {
     private final CountDeedOwnerUseCase countDeedOwnerUseCase;
     private final CreateStaffUseCase createStaffUseCase;
     private final UpdateStaffUseCase updateStaffUseCase;
-    private final ChangeStaffActivityUseCase changeStaffActivityUseCase;
     private final DeleteStaffUseCase deleteStaffUseCase;
 
     @GetMapping("/as-page")
@@ -77,11 +74,6 @@ public class StaffAdapter {
     @PutMapping("/{id}")
     public StaffResponse update(@PathVariable Long id, @Validated @RequestBody UpdateStaffRequest request) {
         return updateStaffUseCase.execute(id, request);
-    }
-
-    @PatchMapping(value = "/{id}/is-active")
-    public StaffResponse changeActivity(@PathVariable Long id, @RequestParam Boolean value) {
-        return changeStaffActivityUseCase.execute(id, value);
     }
 
     @DeleteMapping("/{id}")

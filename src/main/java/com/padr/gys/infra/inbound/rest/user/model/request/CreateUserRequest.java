@@ -5,7 +5,6 @@ import com.padr.gys.domain.user.entity.User;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,8 +23,6 @@ public class CreateUserRequest {
     @Email
     private String email;
 
-    @NotEmpty
-    @Size(min = 8, max = 16)
     private String password;
 
     private Long roleId;

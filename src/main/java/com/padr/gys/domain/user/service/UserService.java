@@ -8,6 +8,7 @@ import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -27,7 +28,8 @@ class UserService implements UserServicePort {
     public User create(User user) {
         throwExceptionIfEmailIsDuplicated(user.getEmail());
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (Objects.nonNull(user.getPassword()))
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         return userPersistencePort.save(user);
     }

@@ -33,6 +33,9 @@ public class Otp {
     @Builder.Default
     private Integer numberOfFailures = 0;
 
+    @Builder.Default
+    private Boolean isValidated = false;
+
     @TimeToLive(unit = TimeUnit.SECONDS)
     @Builder.Default
     private Long maxLifetime = 3600L; // 3600 seconds = 1 hours

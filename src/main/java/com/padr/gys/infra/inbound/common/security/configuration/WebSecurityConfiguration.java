@@ -38,6 +38,9 @@ public class WebSecurityConfiguration {
                             .requestMatchers(HttpMethod.POST, "/gys/api/v1/users").permitAll()
                             .requestMatchers(HttpMethod.GET, "/gys/api/v1/staffs/count-deed-owner").permitAll()
                             .requestMatchers(HttpMethod.POST, "/gys/api/v1/staffs").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/gys/api/v1/users/create-reset-password-otp").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/gys/api/v1/users/validate-reset-password-otp").permitAll()
+                            .requestMatchers(HttpMethod.PATCH, "/gys/api/v1/users/reset-password").permitAll()
                             .requestMatchers(HttpMethod.OPTIONS).permitAll()
                             .anyRequest().authenticated();
 

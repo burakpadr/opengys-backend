@@ -73,15 +73,6 @@ class StaffService implements StaffServicePort {
     }
 
     @Override
-    public Staff changeActivity(Long staffId, Boolean isActive) {
-        Staff staff = findById(staffId);
-
-        staff.setIsActive(isActive);
-
-        return staffPersistencePort.save(staff);
-    }
-
-    @Override
     public Page<Staff> findBySearchTerm(String searchTerm, Pageable pageable) {
         return staffPersistencePort.findBySearchTerm(searchTerm, pageable);
     }

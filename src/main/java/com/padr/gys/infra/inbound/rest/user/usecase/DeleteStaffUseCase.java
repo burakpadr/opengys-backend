@@ -19,6 +19,6 @@ public class DeleteStaffUseCase {
         Staff staff = staffServicePort.findById(id);
 
         staffServicePort.delete(staff);
-        userServicePort.delete(id);
+        userServicePort.delete(staff.getUser().getId());
     }
 }

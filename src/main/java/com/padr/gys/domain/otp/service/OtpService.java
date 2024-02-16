@@ -52,14 +52,14 @@ class OtpService implements OtpServicePort {
         Otp otp = findByOtpTypeAndKey(otpType, key);
 
         if (otpType.getMaxNumberOfAttemptsAllowed().equals(otp.getNumberOfFailures())) {
-            otpCachePort.delete(otp);
-
             throw new BusinessException(messageSource.getMessage("otp.reached-max-number-of-attempts-allowed", null,
                     LocaleContextHolder.getLocale()));
         }
 
         if (otp.getOtp().equals(otpValueEnteredByUser)) {
-            otpCachePort.delete(otp);
+            otp.setIsValidated(true);
+
+            otpCachePort.save(otp);
 
             return true;
         }
