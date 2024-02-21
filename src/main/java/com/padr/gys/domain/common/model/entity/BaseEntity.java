@@ -57,8 +57,8 @@ public class BaseEntity {
 
     @PreUpdate
     private void preUpdate() {
-        createDate = lastModifiedDate = LocalDateTime.now();
-        createdBy = lastModifiedBy = Objects.nonNull(UserContext.getUser()) ? UserContext.getUser().getId() : null;
+        lastModifiedDate = LocalDateTime.now();
+        lastModifiedBy = Objects.nonNull(UserContext.getUser()) ? UserContext.getUser().getId() : null;
         ip = IpUtil.getClientIp();
     }
 }

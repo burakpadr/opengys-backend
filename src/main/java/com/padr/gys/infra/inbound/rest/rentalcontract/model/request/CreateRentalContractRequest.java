@@ -17,14 +17,6 @@ import java.time.LocalDate;
 public class CreateRentalContractRequest {
 
     @NotNull
-    @NotEmpty
-    private String tenantTitle;
-
-    @NotNull
-    @NotEmpty
-    private String tenantIdentityNumber;
-
-    @NotNull
     private BigDecimal monthlyRentFee;
 
     @NotNull
@@ -49,8 +41,6 @@ public class CreateRentalContractRequest {
 
     public RentalContract to() {
         return RentalContract.builder()
-                .tenantTitle(tenantTitle)
-                .tenantIdentityNumber(tenantIdentityNumber)
                 .monthlyRentFee(monthlyRentFee)
                 .currencyCodeOfRentFee(currencyCodeOfRentFee)
                 .rentalPaymentDay(rentalPaymentDay)

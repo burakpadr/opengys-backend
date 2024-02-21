@@ -2,6 +2,8 @@ package com.padr.gys.domain.rentalcontract.entity;
 
 import com.padr.gys.domain.common.model.entity.BaseEntity;
 import com.padr.gys.domain.realestate.entity.RealEstate;
+import com.padr.gys.domain.user.entity.Tenant;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,8 +30,6 @@ public class RentalContract extends BaseEntity {
 
     public RentalContract(RentalContract rentalContract) {
         this.id = rentalContract.getId();
-        this.tenantTitle = rentalContract.getTenantTitle();
-        this.tenantIdentityNumber = rentalContract.getTenantIdentityNumber();
         this.monthlyRentFee = rentalContract.getMonthlyRentFee();
         this.currencyCodeOfRentFee = rentalContract.getCurrencyCodeOfRentFee();
         this.rentalPaymentDay = rentalContract.getRentalPaymentDay();
@@ -43,11 +43,8 @@ public class RentalContract extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rental_contract_id_seq")
     private Long id;
 
-    @Column
-    private String tenantTitle;
-
-    @Column
-    private String tenantIdentityNumber;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Tenant tenant;
 
     @Column
     private BigDecimal monthlyRentFee;

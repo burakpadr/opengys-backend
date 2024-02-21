@@ -73,8 +73,6 @@ class RentalContractService implements RentalContractServicePort {
 
         RentalContract oldRentalContractCopy = new RentalContract(oldRentalContract);
 
-        oldRentalContract.setTenantTitle(rentalContract.getTenantTitle());
-        oldRentalContract.setTenantIdentityNumber(rentalContract.getTenantIdentityNumber());
         oldRentalContract.setMonthlyRentFee(rentalContract.getMonthlyRentFee());
         oldRentalContract.setCurrencyCodeOfRentFee(rentalContract.getCurrencyCodeOfRentFee());
         oldRentalContract.setRentalPaymentDay(rentalContract.getRentalPaymentDay());

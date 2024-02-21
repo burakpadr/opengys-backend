@@ -12,8 +12,6 @@ import java.time.LocalDate;
 public class RentalContractResponse {
 
     private Long id;
-    private String tenantTitle;
-    private String tenantIdentityNumber;
     private BigDecimal monthlyRentFee;
     private String currencyCodeOfRentFee;
     private Integer rentalPaymentDay;
@@ -24,8 +22,6 @@ public class RentalContractResponse {
     public static RentalContractResponse of(RentalContract rentalContract) {
         return RentalContractResponse.builder()
                 .id(rentalContract.getId())
-                .tenantTitle(rentalContract.getTenantTitle())
-                .tenantIdentityNumber(rentalContract.getTenantIdentityNumber())
                 .monthlyRentFee(rentalContract.getMonthlyRentFee())
                 .currencyCodeOfRentFee(rentalContract.getCurrencyCodeOfRentFee())
                 .rentalPaymentDay(rentalContract.getRentalPaymentDay())

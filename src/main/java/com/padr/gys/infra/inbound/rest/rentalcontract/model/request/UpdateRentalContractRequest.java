@@ -16,14 +16,6 @@ import java.time.LocalDate;
 public class UpdateRentalContractRequest {
 
     @NotNull
-    @NotEmpty
-    private String tenantTitle;
-
-    @NotNull
-    @NotEmpty
-    private String tenantIdentityNumber;
-
-    @NotNull
     private BigDecimal monthlyRentFee;
 
     @NotNull
@@ -44,8 +36,6 @@ public class UpdateRentalContractRequest {
 
     public RentalContract to() {
         return RentalContract.builder()
-                .tenantTitle(tenantTitle)
-                .tenantIdentityNumber(tenantIdentityNumber)
                 .monthlyRentFee(monthlyRentFee)
                 .currencyCodeOfRentFee(currencyCodeOfRentFee)
                 .rentalPaymentDay(rentalPaymentDay)
