@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.padr.gys.infra.inbound.rest.user.model.request.CreateTenantRequest;
@@ -22,6 +23,7 @@ import com.padr.gys.infra.inbound.rest.user.usecase.DeleteTenantUseCase;
 import com.padr.gys.infra.inbound.rest.user.usecase.FindTenantByIdUseCase;
 import com.padr.gys.infra.inbound.rest.user.usecase.FindTenantsAsPageUseCase;
 import com.padr.gys.infra.inbound.rest.user.usecase.FindTenantsWithoutRentalContractUseCase;
+import com.padr.gys.infra.inbound.rest.user.usecase.SearchTenantUseCase;
 import com.padr.gys.infra.inbound.rest.user.usecase.UpdateTenantUseCase;
 
 import lombok.RequiredArgsConstructor;
@@ -37,6 +39,7 @@ public class TenantAdapter {
     private final FindTenantByIdUseCase findTenantByIdUseCase;
     private final DeleteTenantUseCase deleteTenantUseCase;
     private final UpdateTenantUseCase updateTenantUseCase;
+    private final SearchTenantUseCase searchTenantUseCase;
 
     @PostMapping
     public TenantResponse create(@Validated @RequestBody CreateTenantRequest request) {
@@ -46,6 +49,11 @@ public class TenantAdapter {
     @GetMapping("/as-page")
     public Page<TenantResponse> findAll(Pageable pageable) {
         return findTenantsAsPageUseCase.execute(pageable);
+    }
+
+    @GetMapping("/search")
+    public Page<TenantResponse> findBySearchTerm(@RequestParam String searchTerm, Pageable pageable) {
+        return searchTenantUseCase.execute(searchTerm, pageable);
     }
 
     @GetMapping("/does-not-have-contract")

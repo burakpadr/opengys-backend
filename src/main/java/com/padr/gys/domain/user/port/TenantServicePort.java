@@ -15,6 +15,8 @@ public interface TenantServicePort {
 
     List<Tenant> findByRentalContractIsNull();
 
+    Page<Tenant> findBySearchTerm(String searchTerm, Pageable pageable);
+
     Tenant findById(Long id);
 
     Tenant update(Tenant oldTenant, Tenant updateTenant);

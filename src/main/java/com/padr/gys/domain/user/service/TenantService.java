@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.padr.gys.domain.user.entity.Staff;
 import com.padr.gys.domain.user.entity.Tenant;
 import com.padr.gys.domain.user.port.TenantServicePort;
 import com.padr.gys.infra.outbound.persistence.user.port.TenantPersistencePort;
@@ -56,5 +57,10 @@ class TenantService implements TenantServicePort {
         oldTenant.setUser(updateTenant.getUser());
 
         return tenantPersistencePort.save(oldTenant);
+    }
+
+    @Override
+    public Page<Tenant> findBySearchTerm(String searchTerm, Pageable pageable) {
+        return tenantPersistencePort.findBySearchTerm(searchTerm, pageable);
     }
 }

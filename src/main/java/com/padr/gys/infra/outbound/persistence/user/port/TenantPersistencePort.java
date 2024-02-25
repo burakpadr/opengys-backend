@@ -17,4 +17,6 @@ public interface TenantPersistencePort {
     Page<Tenant> findAll(Pageable pageable);
 
     List<Tenant> findByRentalContractIsNull();
+
+    Page<Tenant> findBySearchTerm(String searchTerm, Pageable pageable);
 }

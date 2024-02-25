@@ -25,7 +25,7 @@ public class UserResponse {
                 .name(user.getName())
                 .surname(user.getSurname())
                 .email(user.getEmail())
-                .roleLabel(roleIsNotNull ? user.getRole().getLabel() : "Tapu Sahibi")
+                .roleLabel(roleIsNotNull ? user.getRole().getLabel() : "")
                 .roleId(roleIsNotNull ? user.getRole().getId() : null)
                 .build();
     }
