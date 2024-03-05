@@ -1,13 +1,32 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://185.87.253.127:25000/gys
+    url: jdbc:postgresql://185.87.253.111:25000/gys
     username: postgres
     password: postgres
 
-  redis:
-    host: 185.87.253.127
-    port: 18000
+  data:
+    redis:
+      host: 185.87.253.111
+      port: 18000
+
+  rabbitmq:
+    host: 185.87.253.111
+    port: 5672
+    username: guest
+    password: guest
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: b.padir99@gmail.com
+    password: fqrjsxdqyshjjrkm
+    protocol: smtp
+    tls: true
+    properties.mail.smtp:
+      auth: true
+      starttls.enable: true
+      ssl.trust: smtp.gmail.com
 
 app:
   storage:
