@@ -1,7 +1,6 @@
 package com.padr.gys.domain.realestate.service;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -11,10 +10,10 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.padr.gys.domain.common.constant.AllowedFileType;
 import com.padr.gys.domain.common.property.AppProperty;
 import com.padr.gys.domain.common.util.FileUtil;
 import com.padr.gys.domain.common.util.ImageUtil;
+import com.padr.gys.domain.paperwork.port.BasicPaperworkServicePort;
 import com.padr.gys.domain.realestate.entity.RealEstatePhoto;
 import com.padr.gys.domain.realestate.port.RealEstatePhotoServicePort;
 import com.padr.gys.infra.outbound.persistence.realestate.port.RealEstatePhotoPersistencePort;
@@ -26,6 +25,8 @@ import lombok.RequiredArgsConstructor;
 class RealEstatePhotoService implements RealEstatePhotoServicePort {
 
     private final RealEstatePhotoPersistencePort realEstatePhotoPersistencePort;
+
+    private final BasicPaperworkServicePort basicPaperworkServicePort;
 
     private final MessageSource messageSource;
 
@@ -45,28 +46,18 @@ class RealEstatePhotoService implements RealEstatePhotoServicePort {
                 : null;
 
         realEstatePhotos.stream().forEach(realEstatePhoto -> {
-            String folderPath = appProperty.getStorage().getRealEstateImagesPath() + "/" + realEstateId;
+            String fileName = UUID.randomUUID().toString();
+            String extension = fileUtil.getFileExtension(realEstatePhoto.getImage().getOriginalFilename());
 
-            fileUtil.createDirectoryIfNotExist(folderPath);
+            String path = String.format("%s/%d/%s.%s", appProperty.getStorage().getRealEstateImagesPath(), realEstateId,
+                    fileName, extension);
 
-            String extension = Objects.nonNull(realEstatePhoto.getImage().getOriginalFilename())
-                    ? fileUtil.getFileExtension(realEstatePhoto.getImage().getOriginalFilename())
-                    : AllowedFileType.IMAGE_JPG.getExtension();
-
-            String fileName = UUID.randomUUID().toString() + "." + extension;
-
-            File image = new File(folderPath + "/" + fileName);
-
-            try {
-                realEstatePhoto.getImage().transferTo(image);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            File image = basicPaperworkServicePort.upload(path, realEstatePhoto.getImage());
 
             imageUtil.resizeImages(image, appProperty.getImage().getWidth(), appProperty.getImage().getHeight());
 
             realEstatePhoto.setPath(appProperty.getStorage().getRealEstateImagesRelativeUrl() + "/"
-                    + realEstateId + "/" + fileName);
+                    + realEstateId + "/" + fileName + "." + extension);
         });
 
         realEstatePhotoPersistencePort.saveAll(realEstatePhotos);

@@ -33,7 +33,7 @@ app:
     # Base properties
 
     base-url: /storage
-    base-path: /root/gys-storage
+    base-path: ${user.home}/gys-storage
     images-base-path: ${app.storage.base-path}/images
     files-base-path: ${app.storage.base-path}/files
 
