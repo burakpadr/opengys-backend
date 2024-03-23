@@ -1,6 +1,9 @@
 spring:
   profiles:
     active: test
+  datasource: 
+    hikari:
+      max-lifetime: 600000
   jpa:
     hibernate:
       ddl-auto: update

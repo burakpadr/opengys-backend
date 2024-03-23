@@ -37,7 +37,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private final UserServicePort userServicePort;
 
     private final static Map<String, String> EXCLUDED_ENDPOINTS = Map.of(
-            "/gys/api/v1/auth", HttpMethod.GET.name(),
+            "/gys/api/v1/auth", HttpMethod.POST.name(),
             "/gys/api/v1/ui-elements", HttpMethod.GET.name(),
             "/gys/api/v1/staffs", HttpMethod.POST.name(),
             "/gys/api/v1/staffs/count-deed-owner", HttpMethod.GET.name(),

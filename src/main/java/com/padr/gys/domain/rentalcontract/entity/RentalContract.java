@@ -28,16 +28,6 @@ import java.time.LocalDate;
 @Where(clause = "is_deleted=false")
 public class RentalContract extends BaseEntity {
 
-    public RentalContract(RentalContract rentalContract) {
-        this.id = rentalContract.getId();
-        this.monthlyRentFee = rentalContract.getMonthlyRentFee();
-        this.currencyCodeOfRentFee = rentalContract.getCurrencyCodeOfRentFee();
-        this.rentalPaymentDay = rentalContract.getRentalPaymentDay();
-        this.startDate = rentalContract.getStartDate();
-        this.endDate = rentalContract.getEndDate();
-        this.isPublished = rentalContract.getIsPublished();
-    }
-
     @Id
     @SequenceGenerator(name = "rental_contract_id_seq", sequenceName = "rental_contract_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rental_contract_id_seq")
