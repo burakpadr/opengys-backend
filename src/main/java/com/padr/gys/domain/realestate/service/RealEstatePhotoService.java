@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.padr.gys.domain.common.property.AppProperty;
 import com.padr.gys.domain.common.util.FileUtil;
 import com.padr.gys.domain.common.util.ImageUtil;
-import com.padr.gys.domain.paperwork.port.BasicPaperworkServicePort;
 import com.padr.gys.domain.realestate.entity.RealEstatePhoto;
 import com.padr.gys.domain.realestate.port.RealEstatePhotoServicePort;
 import com.padr.gys.infra.outbound.persistence.realestate.port.RealEstatePhotoPersistencePort;
@@ -25,8 +24,6 @@ import lombok.RequiredArgsConstructor;
 class RealEstatePhotoService implements RealEstatePhotoServicePort {
 
     private final RealEstatePhotoPersistencePort realEstatePhotoPersistencePort;
-
-    private final BasicPaperworkServicePort basicPaperworkServicePort;
 
     private final MessageSource messageSource;
 
@@ -52,7 +49,7 @@ class RealEstatePhotoService implements RealEstatePhotoServicePort {
             String path = String.format("%s/%d/%s.%s", appProperty.getStorage().getRealEstateImagesPath(), realEstateId,
                     fileName, extension);
 
-            File image = basicPaperworkServicePort.upload(path, realEstatePhoto.getImage());
+            File image = fileUtil.upload(path, realEstatePhoto.getImage());
 
             imageUtil.resizeImages(image, appProperty.getImage().getWidth(), appProperty.getImage().getHeight());
 

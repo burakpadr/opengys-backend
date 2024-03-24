@@ -3,9 +3,6 @@ package com.padr.gys.domain.categorization.entity;
 import com.padr.gys.domain.realestate.entity.RealEstate;
 import jakarta.persistence.*;
 
-import org.hibernate.annotations.Where;
-import org.hibernate.envers.Audited;
-
 import com.padr.gys.domain.common.model.entity.BaseEntity;
 
 import lombok.AllArgsConstructor;
@@ -16,15 +13,16 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
+import org.hibernate.annotations.SQLRestriction;
+
 @Entity
-@Audited
 @Table(name = "sub_categories")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
-@Where(clause = "is_deleted=false")
+@SQLRestriction("is_deleted=false")
 public class SubCategory extends BaseEntity {
 
     @Id

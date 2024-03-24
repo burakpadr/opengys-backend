@@ -1,7 +1,6 @@
 package com.padr.gys.domain.rbac.entity;
 
-import org.hibernate.annotations.Where;
-import org.hibernate.envers.Audited;
+import org.hibernate.annotations.SQLRestriction;
 
 import com.padr.gys.domain.common.model.entity.BaseEntity;
 
@@ -19,14 +18,13 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@Audited
 @Table(name = "ui_elements")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
-@Where(clause = "is_deleted=false")
+@SQLRestriction("is_deleted=false")
 public class UIElement extends BaseEntity {
     
     @Id

@@ -2,8 +2,7 @@ package com.padr.gys.domain.attribute.entity;
 
 import java.util.List;
 
-import org.hibernate.annotations.Where;
-import org.hibernate.envers.Audited;
+import org.hibernate.annotations.SQLRestriction;
 
 import com.padr.gys.domain.categorization.entity.Category;
 import com.padr.gys.domain.common.model.entity.BaseEntity;
@@ -27,14 +26,13 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@Audited
 @Table(name = "attributes")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
-@Where(clause = "is_deleted=false")
+@SQLRestriction("is_deleted=false")
 public class Attribute extends BaseEntity {
 
     @Id

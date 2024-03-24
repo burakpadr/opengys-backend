@@ -1,5 +1,7 @@
 package com.padr.gys.domain.user.entity;
 
+import org.hibernate.annotations.SQLRestriction;
+
 import com.padr.gys.domain.common.model.entity.BaseEntity;
 import com.padr.gys.domain.rbac.entity.Role;
 
@@ -10,18 +12,14 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import org.hibernate.annotations.Where;
-import org.hibernate.envers.Audited;
-
 @Entity
-@Audited
 @Table(name = "users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
-@Where(clause = "is_deleted=false")
+@SQLRestriction("is_deleted=false")
 public class User extends BaseEntity {
 
     @Id

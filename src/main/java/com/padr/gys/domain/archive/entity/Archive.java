@@ -1,13 +1,14 @@
-package com.padr.gys.domain.address.entity;
-
-import java.math.BigDecimal;
+package com.padr.gys.domain.archive.entity;
 
 import org.hibernate.annotations.SQLRestriction;
 
+import com.padr.gys.domain.archive.constant.ArchiveType;
 import com.padr.gys.domain.common.model.entity.BaseEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,38 +21,30 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@Table(name = "addresses")
+@Table(name = "archives")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 @SQLRestriction("is_deleted=false")
-public class Address extends BaseEntity {
-    
+public class Archive extends BaseEntity {
+
     @Id
-    @SequenceGenerator(name = "address_id_seq", sequenceName = "address_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_id_seq")
+    @SequenceGenerator(name = "archive_id_seq", sequenceName = "archive_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "archive_id_seq")
     private Long id;
 
     @Column
-    private BigDecimal latitude;
+    @Enumerated(EnumType.STRING)
+    private ArchiveType archiveType;
 
     @Column
-    private BigDecimal longitude;
+    private String entityName;
 
     @Column
-    private String cityName;
+    private Long entityId;
 
     @Column
-    private String districtName;
-
-    @Column
-    private String neighborhoodName;
-
-    @Column
-    private Integer postCode;
-
-    @Column
-    private String openAddress;
+    private String path;
 }

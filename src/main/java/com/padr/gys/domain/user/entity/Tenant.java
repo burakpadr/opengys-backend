@@ -1,7 +1,6 @@
 package com.padr.gys.domain.user.entity;
 
-import org.hibernate.annotations.Where;
-import org.hibernate.envers.Audited;
+import org.hibernate.annotations.SQLRestriction;
 
 import com.padr.gys.domain.common.model.entity.BaseEntity;
 import com.padr.gys.domain.rentalcontract.entity.RentalContract;
@@ -21,14 +20,13 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@Audited
 @Table(name = "tenants")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
-@Where(clause = "is_deleted=false")
+@SQLRestriction("is_deleted=false")
 public class Tenant extends BaseEntity {
     
     @Id

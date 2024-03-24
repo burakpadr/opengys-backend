@@ -2,11 +2,10 @@ package com.padr.gys.domain.realestate.entity;
 
 import java.util.List;
 
+import org.hibernate.annotations.SQLRestriction;
+
 import com.padr.gys.domain.rentalcontract.entity.RentalContract;
 import jakarta.persistence.*;
-
-import org.hibernate.annotations.Where;
-import org.hibernate.envers.Audited;
 
 import com.padr.gys.domain.address.entity.Address;
 import com.padr.gys.domain.advert.entity.Advert;
@@ -25,14 +24,13 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@Audited
 @Table(name = "real_estates")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
-@Where(clause = "is_deleted=false")
+@SQLRestriction("is_deleted=false")
 public class RealEstate extends BaseEntity {
 
     @Id

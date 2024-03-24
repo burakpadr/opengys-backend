@@ -11,21 +11,19 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import org.hibernate.annotations.Where;
-import org.hibernate.envers.Audited;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import org.hibernate.annotations.SQLRestriction;
+
 @Entity
-@Audited
 @Table(name = "rental_contracts")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
-@Where(clause = "is_deleted=false")
+@SQLRestriction("is_deleted=false")
 public class RentalContract extends BaseEntity {
 
     @Id
