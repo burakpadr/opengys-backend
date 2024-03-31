@@ -1,5 +1,6 @@
 package com.padr.gys.domain.rentalcontract.entity;
 
+import com.padr.gys.domain.archive.entity.Archive;
 import com.padr.gys.domain.common.model.entity.BaseEntity;
 import com.padr.gys.domain.realestate.entity.RealEstate;
 import com.padr.gys.domain.user.entity.Tenant;
@@ -31,7 +32,7 @@ public class RentalContract extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rental_contract_id_seq")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Tenant tenant;
 
     @Column
@@ -51,6 +52,9 @@ public class RentalContract extends BaseEntity {
 
     @Column
     private Boolean isPublished;
+
+    @ManyToOne
+    private Archive rentalContractFile;
 
     @ManyToOne
     private RealEstate realEstate;

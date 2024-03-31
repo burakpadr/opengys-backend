@@ -15,7 +15,11 @@ public interface RentalContractPersistencePort {
 
     List<RentalContract> findByRealEstateIdAndIsPublished(Long realEstateId, Boolean isPublished);
 
+    List<RentalContract> findByTenantId(Long tenantId);
+
     Optional<RentalContract> findById(Long id);
 
     RentalContract save(RentalContract rentalContract);
+
+    List<RentalContract> saveAll(List<RentalContract> rentalContracts);
 }

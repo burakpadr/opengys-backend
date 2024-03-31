@@ -2,13 +2,10 @@ package com.padr.gys.domain.archive.entity;
 
 import org.hibernate.annotations.SQLRestriction;
 
-import com.padr.gys.domain.archive.constant.ArchiveType;
 import com.padr.gys.domain.common.model.entity.BaseEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -34,16 +31,6 @@ public class Archive extends BaseEntity {
     @SequenceGenerator(name = "archive_id_seq", sequenceName = "archive_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "archive_id_seq")
     private Long id;
-
-    @Column
-    @Enumerated(EnumType.STRING)
-    private ArchiveType archiveType;
-
-    @Column
-    private String entityName;
-
-    @Column
-    private Long entityId;
 
     @Column
     private String path;

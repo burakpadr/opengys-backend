@@ -42,21 +42,23 @@ public class MultipartFileFilter implements Filter {
 
         if (Objects.nonNull(contentType) && contentType.startsWith(MediaType.MULTIPART_FORM_DATA_VALUE)) {
             for (Part part : httpServletRequest.getParts()) {
-                if (part.getSize() == 0) {
-                    prepareResponseForEmptyFile(httpServletResponse);
+                if (Objects.nonNull(part.getContentType())) {
+                    if (part.getSize() == 0) {
+                        prepareResponseForEmptyFile(httpServletResponse);
 
-                    return;
-                }
+                        return;
+                    }
 
-                boolean isAllowedType = Arrays.asList(AllowedFileType.values())
-                        .stream()
-                        .anyMatch(allowedFileType -> part.getContentType()
-                                .contains(allowedFileType.getExtension()));
+                    boolean isAllowedType = Arrays.asList(AllowedFileType.values())
+                            .stream()
+                            .anyMatch(allowedFileType -> part.getContentType()
+                                    .contains(allowedFileType.getExtension()));
 
-                if (!isAllowedType) {
-                    prepareResponseForUnsupportedFile(httpServletResponse);
+                    if (!isAllowedType) {
+                        prepareResponseForUnsupportedFile(httpServletResponse);
 
-                    return;
+                        return;
+                    }
                 }
             }
         }

@@ -13,11 +13,15 @@ public interface RentalContractServicePort {
 
     List<RentalContract> findByRealEstateIdAndIsPublished(Long realEstateId, Boolean isPublished);
 
+    List<RentalContract> findByTenantId(Long tenantId);
+
     RentalContract findById(Long id);
 
     RentalContract create(RentalContract rentalContract);
 
-    RentalContract update(Long id, RentalContract rentalContract);
+    RentalContract update(RentalContract oldRentalContract, RentalContract newRentalContract);
 
     void delete(Long id);
+
+    void deleteAll(List<RentalContract> rentalContracts);
 }

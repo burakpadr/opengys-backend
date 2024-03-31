@@ -13,6 +13,7 @@ public class UserResponse {
     private Long id;
     private String name;
     private String surname;
+    private String fullName;
     private String email;
     private String roleLabel;
     private Long roleId;
@@ -24,6 +25,7 @@ public class UserResponse {
                 .id(user.getId())
                 .name(user.getName())
                 .surname(user.getSurname())
+                .fullName(user.getFullName())
                 .email(user.getEmail())
                 .roleLabel(roleIsNotNull ? user.getRole().getLabel() : null)
                 .roleId(roleIsNotNull ? user.getRole().getId() : null)

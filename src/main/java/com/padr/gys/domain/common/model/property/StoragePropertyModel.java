@@ -14,5 +14,10 @@ public class StoragePropertyModel {
 
     private String realEstateImagesPath;
     private String realEstateImagesRelativeUrl;
+
+    // Rental Contract Properties
+
+    private String rentalContractFilesPath;
+    private String rentalContractFilesRelativeUrl;
 }
 

@@ -41,6 +41,8 @@ app:
 
     real-estate-images-path: ${app.storage.images-base-path}/real-estates
     real-estate-images-relative-url: ${app.storage.base-url}/images/real-estates
+    rental-contract-files-path: ${app.storage.files-base-path}/rental-contracts
+    rental-contract-files-relative-url: ${app.storage.base-url}/files/rental-contracts
 
   image:
     width: 500

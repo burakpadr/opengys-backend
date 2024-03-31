@@ -40,4 +40,14 @@ public class RentalContractPersistencePortImpl implements  RentalContractPersist
     public List<RentalContract> findByRealEstateIdAndIsPublished(Long realEstateId, Boolean isPublished) {
         return rentalContractRepository.findByRealEstateIdAndIsPublished(realEstateId, isPublished);
     }
+
+    @Override
+    public List<RentalContract> findByTenantId(Long tenantId) {
+        return rentalContractRepository.findByTenantId(tenantId);
+    }
+
+    @Override
+    public List<RentalContract> saveAll(List<RentalContract> rentalContracts) {
+        return rentalContractRepository.saveAll(rentalContracts);
+    }
 }

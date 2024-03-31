@@ -16,4 +16,6 @@ public interface RentalContractRepository extends JpaRepository<RentalContract, 
     List<RentalContract> findByRealEstateId(Long realEstateId);
 
     List<RentalContract> findByRealEstateIdAndIsPublished(Long realEstateId, Boolean isPublished);
+
+    List<RentalContract> findByTenantId(Long tenantId);
 }

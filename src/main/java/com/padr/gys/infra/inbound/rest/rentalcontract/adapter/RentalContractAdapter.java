@@ -2,9 +2,13 @@ package com.padr.gys.infra.inbound.rest.rentalcontract.adapter;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.padr.gys.infra.inbound.rest.rentalcontract.model.request.CreateRentalContractRequest;
 import com.padr.gys.infra.inbound.rest.rentalcontract.model.request.UpdateRentalContractRequest;
@@ -28,8 +32,9 @@ public class RentalContractAdapter {
     }
 
     @PostMapping
-    public RentalContractResponse create(@Valid @RequestBody CreateRentalContractRequest request) {
-        return createRentalContractUseCase.execute(request);
+    public RentalContractResponse create(@RequestPart Optional<MultipartFile> rentalContractFile,
+            @Valid CreateRentalContractRequest request) {
+        return createRentalContractUseCase.execute(rentalContractFile, request);
     }
 
     @GetMapping("/{rentalContractId}")
@@ -39,8 +44,9 @@ public class RentalContractAdapter {
 
     @PutMapping("/{rentalContractId}")
     public RentalContractResponse update(@PathVariable Long rentalContractId,
-                                         @Valid @RequestBody UpdateRentalContractRequest request) {
-        return updateRentalContractUseCase.execute(rentalContractId, request);
+            @RequestPart Optional<MultipartFile> rentalContractFile,
+            @Valid UpdateRentalContractRequest request) {
+        return updateRentalContractUseCase.execute(rentalContractId, rentalContractFile,request);
     }
 
     @DeleteMapping("/{rentalContractId}")

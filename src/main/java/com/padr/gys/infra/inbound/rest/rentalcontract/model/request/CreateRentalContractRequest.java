@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,6 +29,7 @@ public class CreateRentalContractRequest {
     private Integer rentalPaymentDay;
 
     @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
     @NotNull
@@ -38,6 +41,10 @@ public class CreateRentalContractRequest {
     @NotNull
     @Positive
     private Long realEstateId;
+
+    @NotNull
+    @Positive
+    private Long tenantId;
 
     public RentalContract to() {
         return RentalContract.builder()
