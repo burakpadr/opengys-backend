@@ -1,9 +1,5 @@
 package com.padr.gys.domain.realestate.service;
 
-import com.padr.gys.domain.statusmanager.constant.StatusChangeOperationType;
-import com.padr.gys.domain.statusmanager.context.StatusChangeHandlerContext;
-import com.padr.gys.domain.statusmanager.model.StatusChangeModel;
-
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -27,8 +23,6 @@ class RealEstateService implements RealEstateServicePort {
 
     private final RealEstatePersistencePort realEstatePersistencePort;
 
-    private final StatusChangeHandlerContext statusChangeHandlerContext;
-
     private final MessageSource messageSource;
 
     @Override
@@ -36,13 +30,6 @@ class RealEstateService implements RealEstateServicePort {
         throwExceptionIfExistAssociatedWith(realEstate.getNo());
 
         realEstatePersistencePort.save(realEstate);
-
-        StatusChangeModel model = StatusChangeModel.builder()
-                .type(StatusChangeOperationType.CREATE)
-                .oldEntity(realEstate)
-                .build();
-
-        statusChangeHandlerContext.getStatusChangeHandler(RealEstate.class).handle(model);
 
         return realEstate;
     }

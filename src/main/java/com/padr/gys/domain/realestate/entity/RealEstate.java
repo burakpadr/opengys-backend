@@ -12,10 +12,7 @@ import com.padr.gys.domain.advert.entity.Advert;
 import com.padr.gys.domain.categorization.entity.Category;
 import com.padr.gys.domain.categorization.entity.SubCategory;
 import com.padr.gys.domain.common.model.entity.BaseEntity;
-import com.padr.gys.domain.status.constant.ForRentSubStatus;
-import com.padr.gys.domain.status.constant.ForSaleSubStatus;
 import com.padr.gys.domain.status.constant.MainStatus;
-import com.padr.gys.domain.status.constant.SubStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -51,14 +48,6 @@ public class RealEstate extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private MainStatus mainStatus;
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    private ForSaleSubStatus forSaleSubStatus;
-
-    @Column
-    @Enumerated(EnumType.STRING)
-    private ForRentSubStatus forRentSubStatus;
-
     @OneToOne(fetch = FetchType.LAZY)
     private Address address;
 
@@ -75,11 +64,4 @@ public class RealEstate extends BaseEntity {
     @OneToMany(mappedBy = "realEstate", fetch = FetchType.LAZY)
     @Transient
     private List<RentalContract> rentalContracts;
-
-    public SubStatus getSubStatus() {
-        return switch (mainStatus) {
-            case FOR_RENT -> forRentSubStatus;
-            case FOR_SALE -> forSaleSubStatus;
-        };
-    }
 }

@@ -33,14 +33,6 @@ import lombok.experimental.SuperBuilder;
 @SQLRestriction("is_deleted=false")
 public class Advert extends BaseEntity {
 
-    public Advert(Advert advert) {
-        this.id = advert.getId();
-        this.startDate = advert.getStartDate();
-        this.endDate = advert.getEndDate();
-        this.price = advert.getPrice();
-        this.isPublished = advert.getIsPublished();
-    }
-
     @Id
     @SequenceGenerator(name = "advert_id_seq", sequenceName = "advert_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "advert_id_seq")

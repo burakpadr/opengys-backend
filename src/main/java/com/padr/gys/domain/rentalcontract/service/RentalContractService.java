@@ -2,9 +2,6 @@ package com.padr.gys.domain.rentalcontract.service;
 
 import com.padr.gys.domain.rentalcontract.entity.RentalContract;
 import com.padr.gys.domain.rentalcontract.port.RentalContractServicePort;
-import com.padr.gys.domain.statusmanager.constant.StatusChangeOperationType;
-import com.padr.gys.domain.statusmanager.context.StatusChangeHandlerContext;
-import com.padr.gys.domain.statusmanager.model.StatusChangeModel;
 import com.padr.gys.infra.outbound.persistence.rentalcontract.port.RentalContractPersistencePort;
 
 import jakarta.persistence.EntityExistsException;
@@ -26,8 +23,6 @@ import org.springframework.stereotype.Service;
 class RentalContractService implements RentalContractServicePort {
 
     private final RentalContractPersistencePort rentalContractPersistencePort;
-
-    private final StatusChangeHandlerContext statusChangeHandlerContext;
 
     private final MessageSource messageSource;
 
@@ -53,16 +48,7 @@ class RentalContractService implements RentalContractServicePort {
         if (rentalContract.getIsPublished())
             throwExceptionIfRentalContractAlreadyPusblished(rentalContract.getRealEstate().getId());
 
-        rentalContractPersistencePort.save(rentalContract);
-
-        StatusChangeModel model = StatusChangeModel.builder()
-                .type(StatusChangeOperationType.CREATE)
-                .oldEntity(rentalContract)
-                .build();
-
-        statusChangeHandlerContext.getStatusChangeHandler(RentalContract.class).handle(model);
-
-        return rentalContract;
+        return rentalContractPersistencePort.save(rentalContract);
     }
 
     @Override
@@ -97,13 +83,6 @@ class RentalContractService implements RentalContractServicePort {
         rentalContract.setIsDeleted(true);
 
         rentalContractPersistencePort.save(rentalContract);
-
-        StatusChangeModel model = StatusChangeModel.builder()
-                .type(StatusChangeOperationType.DELETE)
-                .oldEntity(rentalContract)
-                .build();
-
-        statusChangeHandlerContext.getStatusChangeHandler(RentalContract.class).handle(model);
     }
 
     private void throwExceptionIfRentalContractAlreadyPusblished(Long realEstateId) {
