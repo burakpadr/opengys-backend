@@ -8,7 +8,8 @@ import lombok.RequiredArgsConstructor;
 public enum EmailTemplate {
     
     PASSWORD_RESET_OTP("reset-password", "OpenGYS Parola Yenileme Kodu"),
-    STAFF_ACCOUNT_HAS_BEEN_CREATED("staff-account-has-been-created", "OpenGYS Hesabı");
+    STAFF_ACCOUNT_HAS_BEEN_CREATED("staff-account-has-been-created", "OpenGYS Hesabı"),
+    TENANT_ACCOUNT_HAS_BEEN_CREATED("tenant-account-has-been-created", "OpenGYS Kiracı Hesabı");
 
     private final String templateName;
     private final String subject;
