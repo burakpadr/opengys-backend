@@ -48,3 +48,9 @@ app:
   image:
     width: 500
     height: 333
+
+integration:
+  tcmb:
+    protocol: https
+    domain-name: www.tcmb.gov.tr
+    kurlar-context-path: kurlar
