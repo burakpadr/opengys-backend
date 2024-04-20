@@ -19,5 +19,10 @@ public class StoragePropertyModel {
 
     private String rentalContractFilesPath;
     private String rentalContractFilesRelativeUrl;
+
+    // Payment Declaration Properties
+
+    private String paymentDeclarationFilesPath;
+    private String paymentDeclarationFilesRelativeUrl;
 }
 

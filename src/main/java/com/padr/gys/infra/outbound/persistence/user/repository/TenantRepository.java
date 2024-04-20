@@ -1,6 +1,7 @@
 package com.padr.gys.infra.outbound.persistence.user.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,4 +21,6 @@ public interface TenantRepository extends JpaRepository<Tenant, Long> {
             "t.user.name || ' ' || t.user.surname ILIKE %:searchTerm% " +
             "OR t.user.email ILIKE %:searchTerm% ")
     Page<Tenant> findBySearchTerm(String searchTerm, Pageable pageable);
+
+    Optional<Tenant> findByUserId(Long userId);
 }

@@ -19,7 +19,11 @@ public interface TenantServicePort {
 
     Tenant findById(Long id);
 
+    Tenant findByUserId(Long userId);
+
     Tenant update(Tenant oldTenant, Tenant updateTenant);
 
     void delete(Tenant tenant);
+
+    boolean isTenant(Long userId);
 }

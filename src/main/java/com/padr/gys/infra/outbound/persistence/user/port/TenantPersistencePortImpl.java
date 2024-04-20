@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import com.padr.gys.domain.user.entity.Staff;
 import com.padr.gys.domain.user.entity.Tenant;
 import com.padr.gys.infra.outbound.persistence.user.repository.TenantRepository;
 
@@ -42,5 +41,10 @@ class TenantPersistencePortImpl implements TenantPersistencePort {
     @Override
     public Page<Tenant> findBySearchTerm(String searchTerm, Pageable pageable) {
         return tenantRepository.findBySearchTerm(searchTerm, pageable);
+    }
+
+    @Override
+    public Optional<Tenant> findByUserId(Long userId) {
+        return tenantRepository.findByUserId(userId);
     }
 }

@@ -14,6 +14,8 @@ public interface TenantPersistencePort {
     
     Optional<Tenant> findById(Long id);
 
+    Optional<Tenant> findByUserId(Long userId);
+
     Page<Tenant> findAll(Pageable pageable);
 
     List<Tenant> findByRentalContractIsNull();

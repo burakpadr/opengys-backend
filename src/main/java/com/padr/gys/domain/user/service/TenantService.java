@@ -9,7 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.padr.gys.domain.user.entity.Staff;
 import com.padr.gys.domain.user.entity.Tenant;
 import com.padr.gys.domain.user.port.TenantServicePort;
 import com.padr.gys.infra.outbound.persistence.user.port.TenantPersistencePort;
@@ -62,5 +61,16 @@ class TenantService implements TenantServicePort {
     @Override
     public Page<Tenant> findBySearchTerm(String searchTerm, Pageable pageable) {
         return tenantPersistencePort.findBySearchTerm(searchTerm, pageable);
+    }
+
+    @Override
+    public Tenant findByUserId(Long userId) {
+        return tenantPersistencePort.findByUserId(userId).orElseThrow(() -> new NoSuchElementException(
+                messageSource.getMessage("user.not-found", null, LocaleContextHolder.getLocale())));
+    }
+
+    @Override
+    public boolean isTenant(Long userId) {
+        return tenantPersistencePort.findByUserId(userId).isPresent();
     }
 }

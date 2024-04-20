@@ -8,8 +8,6 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import com.padr.gys.domain.carrier.constant.EmailTemplate;
-import com.padr.gys.domain.disposable.entity.DisposableIdentifier;
-import com.padr.gys.domain.disposable.port.DisposableIdentifierServicePort;
 import com.padr.gys.domain.user.entity.Tenant;
 import com.padr.gys.domain.user.entity.User;
 import com.padr.gys.domain.user.port.TenantServicePort;
@@ -26,7 +24,6 @@ public class CreateTenantUseCase {
 
     private final TenantServicePort tenantServicePort;
     private final UserServicePort userServicePort;
-    private final DisposableIdentifierServicePort disposableIdentifierServicePort;
 
     private final TemplateEngine templateEngine;
 
@@ -41,20 +38,9 @@ public class CreateTenantUseCase {
 
         tenantServicePort.create(tenant);
 
-        // Create disposable link identifier
-
-        DisposableIdentifier disposableIdentifier = DisposableIdentifier.builder()
-                .key(tenant.getId().toString())
-                .build();
-
-        disposableIdentifierServicePort.save(disposableIdentifier);
-
         // Create email content
 
         Context context = new Context();
-
-        context.setVariable("registrationCompletionLink",
-                request.getRegistrationCompletionLink() + "/" + disposableIdentifier.getUuid());
 
         String emailContent = templateEngine.process(EmailTemplate.TENANT_ACCOUNT_HAS_BEEN_CREATED.getTemplateName(),
                 context);

@@ -1,7 +1,11 @@
 package com.padr.gys.infra.inbound.rest.user.adapter;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
@@ -21,6 +25,7 @@ import com.padr.gys.infra.inbound.rest.user.model.response.TenantResponse;
 import com.padr.gys.infra.inbound.rest.user.usecase.CreateTenantUseCase;
 import com.padr.gys.infra.inbound.rest.user.usecase.DeleteTenantUseCase;
 import com.padr.gys.infra.inbound.rest.user.usecase.FindTenantByIdUseCase;
+import com.padr.gys.infra.inbound.rest.user.usecase.FindTenantByUserIdUseCase;
 import com.padr.gys.infra.inbound.rest.user.usecase.FindTenantsAsPageUseCase;
 import com.padr.gys.infra.inbound.rest.user.usecase.FindTenantsWithoutRentalContractUseCase;
 import com.padr.gys.infra.inbound.rest.user.usecase.SearchTenantUseCase;
@@ -37,9 +42,12 @@ public class TenantAdapter {
     private final FindTenantsAsPageUseCase findTenantsAsPageUseCase;
     private final FindTenantsWithoutRentalContractUseCase findTenantsWithoutRentalContractUseCase;
     private final FindTenantByIdUseCase findTenantByIdUseCase;
+    private final FindTenantByUserIdUseCase findTenantByUserIdUseCase;
     private final DeleteTenantUseCase deleteTenantUseCase;
     private final UpdateTenantUseCase updateTenantUseCase;
     private final SearchTenantUseCase searchTenantUseCase;
+
+    private final MessageSource messageSource;
 
     @PostMapping
     public TenantResponse create(@Validated @RequestBody CreateTenantRequest request) {
@@ -49,6 +57,15 @@ public class TenantAdapter {
     @GetMapping("/as-page")
     public Page<TenantResponse> findAll(Pageable pageable) {
         return findTenantsAsPageUseCase.execute(pageable);
+    }
+
+    @GetMapping
+    public TenantResponse find(@RequestParam("userId") Optional<Long> userIdOptional) {
+        if (userIdOptional.isPresent())
+            return findTenantByUserIdUseCase.execute(userIdOptional.get());
+        else
+            throw new NoSuchElementException(
+                    messageSource.getMessage("user.not-found", null, LocaleContextHolder.getLocale()));
     }
 
     @GetMapping("/search")
