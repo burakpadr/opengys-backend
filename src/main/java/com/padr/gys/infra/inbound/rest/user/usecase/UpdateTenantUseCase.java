@@ -20,12 +20,7 @@ public class UpdateTenantUseCase {
     public TenantResponse execute(Long id, UpdateTenantRequest request) {
         Tenant oldTenant = tenantServicePort.findById(id);
 
-        Tenant updateTenant = Tenant.builder()
-                .user(request.getUser().to(null))
-                .build();
-
         userServicePort.update(oldTenant.getUser(), request.getUser().to(null));
-        tenantServicePort.update(oldTenant, updateTenant);
 
         return TenantResponse.of(oldTenant);
     }

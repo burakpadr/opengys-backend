@@ -6,6 +6,7 @@ public class UserContext {
     
     private static ThreadLocal<User> threadLocalUser = new ThreadLocal<>();
     private static ThreadLocal<Boolean> threadLocalIsStaff = new ThreadLocal<>();
+    private static ThreadLocal<Boolean> threadLocalIsTenant = new ThreadLocal<>();
 
     public static void setUser(User user) {
         threadLocalUser.set(user);
@@ -13,6 +14,10 @@ public class UserContext {
 
     public static User getUser() {
         return threadLocalUser.get();
+    }
+
+    public static void removeUser() {
+        threadLocalUser.remove();
     }
 
     public static void setIsStaff(Boolean isStaff) {
@@ -23,11 +28,19 @@ public class UserContext {
         return threadLocalIsStaff.get();
     }
 
-    public static void removeUser() {
-        threadLocalUser.remove();
-    }
-
     public static void removeIsStaff() {
         threadLocalIsStaff.remove();
+    }
+
+    public static Boolean getIsTenant() {
+        return threadLocalIsTenant.get();
+    }
+
+    public static void setIsTenant(Boolean isTenant) {
+        threadLocalIsTenant.set(isTenant);
+    }
+
+    public static void removeIsTenant() {
+        threadLocalIsTenant.remove();
     }
 }

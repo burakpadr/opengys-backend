@@ -24,7 +24,7 @@ class PaymentDeclarationServicePortImpl implements PaymentDeclarationServicePort
     private final MessageSource messageSource;
 
     @Override
-    public PaymentDeclaration create(PaymentDeclaration paymentDeclaration) {
+    public PaymentDeclaration save(PaymentDeclaration paymentDeclaration) {
         return paymentDeclarationPersistencePort.save(paymentDeclaration);
     }
 
@@ -36,16 +36,9 @@ class PaymentDeclarationServicePortImpl implements PaymentDeclarationServicePort
     }
 
     @Override
-    public Page<PaymentDeclaration> findByFilterAndOwnerId(Pageable pageable, InvoiceType type,
+    public Page<PaymentDeclaration> findByFilter(Pageable pageable, InvoiceType type,
             PaymentDeclarationApprovementStatus approvementStatus, Long ownerId) {
 
-        return paymentDeclarationPersistencePort.findByFilterAndOwnerId(pageable, type, approvementStatus, ownerId);
-    }
-
-    @Override
-    public Page<PaymentDeclaration> findByFilter(Pageable pageable, InvoiceType type,
-            PaymentDeclarationApprovementStatus approvementStatus) {
-            
-        return paymentDeclarationPersistencePort.findByFilter(pageable, type, approvementStatus);
+        return paymentDeclarationPersistencePort.findByFilter(pageable, type, approvementStatus, ownerId);
     }
 }

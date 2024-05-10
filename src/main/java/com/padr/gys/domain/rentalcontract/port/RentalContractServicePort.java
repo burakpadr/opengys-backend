@@ -17,7 +17,7 @@ public interface RentalContractServicePort {
 
     RentalContract findById(Long id);
 
-    RentalContract create(RentalContract rentalContract);
+    RentalContract save(RentalContract rentalContract);
 
     RentalContract update(RentalContract oldRentalContract, RentalContract newRentalContract);
 

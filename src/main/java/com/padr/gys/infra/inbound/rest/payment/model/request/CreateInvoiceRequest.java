@@ -5,7 +5,6 @@ import java.time.LocalDate;
 
 import com.padr.gys.domain.payment.constant.InvoiceType;
 import com.padr.gys.domain.payment.entity.Invoice;
-import com.padr.gys.domain.realestate.entity.RealEstate;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -33,15 +32,15 @@ public class CreateInvoiceRequest {
 
     @NotNull
     @Positive
-    private Long realEstateId;
+    private Long entityId;
 
-    public Invoice to(RealEstate realEstate) {
+    public Invoice to() {
         return Invoice.builder()
                 .type(type)
                 .dateOfInvoice(dateOfInvoice)
                 .currencyCode(currencyCode)
                 .amount(amount)
-                .realEstate(realEstate)
+                .entityId(entityId)
                 .build();
     }
 }

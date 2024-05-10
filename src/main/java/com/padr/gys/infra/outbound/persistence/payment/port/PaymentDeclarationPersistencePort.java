@@ -11,11 +11,8 @@ import com.padr.gys.domain.payment.entity.PaymentDeclaration;
 
 public interface PaymentDeclarationPersistencePort {
 
-    Page<PaymentDeclaration> findByFilterAndOwnerId(Pageable pageable, InvoiceType type,
-            PaymentDeclarationApprovementStatus approvementStatus, Long ownerId);
-
     Page<PaymentDeclaration> findByFilter(Pageable pageable, InvoiceType type,
-            PaymentDeclarationApprovementStatus approvementStatus);
+            PaymentDeclarationApprovementStatus approvementStatus, Long ownerId);
 
     PaymentDeclaration save(PaymentDeclaration paymentDeclaration);
 

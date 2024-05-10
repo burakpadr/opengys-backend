@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class FindPaymentDeclarationRequest {
 
-    private InvoiceType type;
+    private InvoiceType invoiceType;
     private PaymentDeclarationApprovementStatus approvementStatus;
 }

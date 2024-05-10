@@ -24,7 +24,6 @@ public class RentalContractAdapter {
     private final FindRentalContractUseCase findRentalContractUseCase;
     private final FindRentalContractByIdUseCase findRentalContractByIdUseCase;
     private final UpdateRentalContractUseCase updateRentalContractUseCase;
-    private final DeleteRentalContractUseCase deleteRentalContractUseCase;
 
     @GetMapping
     public Page<RentalContractResponse> find(@RequestParam Long realEstateId, Pageable pageable) {
@@ -47,10 +46,5 @@ public class RentalContractAdapter {
             @RequestPart Optional<MultipartFile> rentalContractFile,
             @Valid UpdateRentalContractRequest request) {
         return updateRentalContractUseCase.execute(rentalContractId, rentalContractFile,request);
-    }
-
-    @DeleteMapping("/{rentalContractId}")
-    public void delete(@PathVariable long rentalContractId) {
-        deleteRentalContractUseCase.execute(rentalContractId);
     }
 }

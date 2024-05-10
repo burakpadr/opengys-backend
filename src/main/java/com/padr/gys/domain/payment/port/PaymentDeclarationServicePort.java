@@ -9,13 +9,10 @@ import com.padr.gys.domain.payment.entity.PaymentDeclaration;
 
 public interface PaymentDeclarationServicePort {
 
-    PaymentDeclaration create(PaymentDeclaration paymentDeclaration);
+    PaymentDeclaration save(PaymentDeclaration paymentDeclaration);
 
     PaymentDeclaration findById(Long id);
 
-    Page<PaymentDeclaration> findByFilterAndOwnerId(Pageable pageable, InvoiceType type,
-            PaymentDeclarationApprovementStatus approvementStatus, Long ownerId);
-
     Page<PaymentDeclaration> findByFilter(Pageable pageable, InvoiceType type,
-            PaymentDeclarationApprovementStatus approvementStatus);
+            PaymentDeclarationApprovementStatus approvementStatus, Long ownerId);
 }

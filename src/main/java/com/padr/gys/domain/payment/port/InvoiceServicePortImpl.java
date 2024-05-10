@@ -5,8 +5,6 @@ import java.util.NoSuchElementException;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.padr.gys.domain.payment.constant.InvoiceType;
@@ -24,7 +22,7 @@ class InvoiceServicePortImpl implements InvoiceServicePort {
     private final MessageSource messageSource;
 
     @Override
-    public Invoice create(Invoice invoice) {
+    public Invoice save(Invoice invoice) {
         return invoicePersistencePort.save(invoice);
     }
 
@@ -36,12 +34,17 @@ class InvoiceServicePortImpl implements InvoiceServicePort {
     }
 
     @Override
-    public Page<Invoice> findByFilterAndRealEstateId(Pageable pageable, InvoiceType type, Long realEstateId) {
-        return invoicePersistencePort.findByFilterAndRealEstateId(pageable, type, realEstateId);
+    public List<Invoice> saveAll(List<Invoice> invoices) {
+        return invoicePersistencePort.saveAll(invoices);
     }
 
     @Override
-    public List<Invoice> creatAll(List<Invoice> invoices) {
-        return invoicePersistencePort.saveAll(invoices);
+    public List<Invoice> findByFilterAsList(InvoiceType type, Long entityId) {
+        return invoicePersistencePort.findByFilterAsList(type, entityId);
+    }
+
+    @Override
+    public List<Invoice> findMatchableInvoices(InvoiceType type, Long entityId) {
+        return  invoicePersistencePort.findMatchableInvoices(type, entityId);
     }
 }

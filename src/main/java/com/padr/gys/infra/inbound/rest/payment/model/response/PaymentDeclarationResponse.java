@@ -7,8 +7,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.padr.gys.domain.archive.entity.Archive;
 import com.padr.gys.domain.payment.constant.PaymentDeclarationApprovementStatus;
 import com.padr.gys.domain.payment.constant.InvoiceType;
+import com.padr.gys.domain.payment.entity.Invoice;
 import com.padr.gys.domain.payment.entity.PaymentDeclaration;
-import com.padr.gys.domain.user.entity.User;
+import com.padr.gys.domain.user.entity.Tenant;
 
 import lombok.Builder;
 import lombok.Data;
@@ -18,29 +19,48 @@ import lombok.Data;
 public class PaymentDeclarationResponse {
 
     private Long id;
-    private InvoiceType type;
-    private PaymentDeclarationApprovementStatus approvementStatus;
+    private String realEstateNo;
+    private InvoiceType invoiceTypeAlias;
+    private String invoiceTypeValue;
+    private PaymentDeclarationApprovementStatus approvementStatusAlias;
+    private String approvementStatusValue;
 
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate dateOfInvoicePaid;
 
     private String receiptRelativeUrl;
     private String declarationOwnerFullName;
-    private String realEstateNo;
 
     public static PaymentDeclarationResponse of(PaymentDeclaration paymentDeclaration) {
         Optional<Archive> receiptOptional = Optional.ofNullable(paymentDeclaration.getReceipt());
-        Optional<User> declarationOwnerOptional = Optional.ofNullable(paymentDeclaration.getDeclarationOwner());
+        Optional<Tenant> declarationOwnerOptional = Optional.ofNullable(paymentDeclaration.getDeclarationOwner());
+        Optional<Invoice> invoiceOptional = Optional.ofNullable(paymentDeclaration.getInvoice());
+
+        String realEstateNo = "";
+        String declarationOwnerFullName = "";
+        LocalDate dateOfInvoicePaid = null;
+
+        if (declarationOwnerOptional.isPresent()) {
+            realEstateNo = declarationOwnerOptional.get().getRentalContract().getRealEstate().getNo();
+            declarationOwnerFullName = declarationOwnerOptional.get().getUser().getFullName();
+        }
+
+        if (invoiceOptional.isPresent()) {
+            dateOfInvoicePaid = invoiceOptional.get().getDateOfInvoice();
+        } else {
+            dateOfInvoicePaid = paymentDeclaration.getDateOfInvoicePaid();
+        }
 
         return PaymentDeclarationResponse.builder()
                 .id(paymentDeclaration.getId())
-                .type(paymentDeclaration.getType())
-                .approvementStatus(paymentDeclaration.getApprovementStatus())
-                .dateOfInvoicePaid(paymentDeclaration.getDateOfInvoicePaid())
+                .realEstateNo(realEstateNo)
+                .invoiceTypeAlias(paymentDeclaration.getType())
+                .invoiceTypeValue(paymentDeclaration.getType().getValue())
+                .approvementStatusAlias(paymentDeclaration.getApprovementStatus())
+                .approvementStatusValue(paymentDeclaration.getApprovementStatus().getValue())
+                .dateOfInvoicePaid(dateOfInvoicePaid)
                 .receiptRelativeUrl(receiptOptional.isPresent() ? receiptOptional.get().getPath() : null)
-                .declarationOwnerFullName(
-                        declarationOwnerOptional.isPresent() ? declarationOwnerOptional.get().getFullName() : null)
-                .realEstateNo(paymentDeclaration.getRealEstate().getNo())
+                .declarationOwnerFullName(declarationOwnerFullName)
                 .build();
     }
 }

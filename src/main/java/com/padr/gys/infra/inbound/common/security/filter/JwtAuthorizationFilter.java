@@ -64,6 +64,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
                 UserContext.setUser(user);
                 UserContext.setIsStaff(decodedJWT.getClaim("isStaff").asBoolean());
+                UserContext.setIsTenant(decodedJWT.getClaim("isTenant").asBoolean());
 
                 request.setAttribute(SecurityConstant.LOGIN_USER_ID, userId);
 
@@ -77,6 +78,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         } finally {
             UserContext.removeUser();
             UserContext.removeIsStaff();
+            UserContext.removeIsTenant();
         }
 
     }

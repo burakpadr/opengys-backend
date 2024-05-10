@@ -48,6 +48,10 @@ public class BaseEntity {
     @Builder.Default
     private Boolean isDeleted = false;
 
+    @Column
+    @Builder.Default
+    private Boolean isUpdatable = true;
+
     @PrePersist
     private void prePersist() {
         createDate = lastModifiedDate = LocalDateTime.now();

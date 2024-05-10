@@ -52,13 +52,6 @@ class TenantService implements TenantServicePort {
     }
 
     @Override
-    public Tenant update(Tenant oldTenant, Tenant updateTenant) {
-        oldTenant.setUser(updateTenant.getUser());
-
-        return tenantPersistencePort.save(oldTenant);
-    }
-
-    @Override
     public Page<Tenant> findBySearchTerm(String searchTerm, Pageable pageable) {
         return tenantPersistencePort.findBySearchTerm(searchTerm, pageable);
     }
@@ -72,5 +65,10 @@ class TenantService implements TenantServicePort {
     @Override
     public boolean isTenant(Long userId) {
         return tenantPersistencePort.findByUserId(userId).isPresent();
+    }
+
+    @Override
+    public Tenant update(Tenant oldTenant, Tenant updateTenant) {
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 }

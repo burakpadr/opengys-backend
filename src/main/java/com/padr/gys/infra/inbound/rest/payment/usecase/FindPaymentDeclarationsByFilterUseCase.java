@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import com.padr.gys.domain.payment.port.PaymentDeclarationServicePort;
+import com.padr.gys.domain.user.port.TenantServicePort;
 import com.padr.gys.infra.inbound.common.context.UserContext;
 import com.padr.gys.infra.inbound.rest.payment.model.request.FindPaymentDeclarationRequest;
 import com.padr.gys.infra.inbound.rest.payment.model.response.PaymentDeclarationResponse;
@@ -13,15 +14,22 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class FindPaymentDeclarationsWithFilterAndOwnerIdUseCase {
+public class FindPaymentDeclarationsByFilterUseCase {
 
     private final PaymentDeclarationServicePort paymentDeclarationServicePort;
+    private final TenantServicePort tenantServicePort;
 
     public Page<PaymentDeclarationResponse> execute(Pageable pageable, FindPaymentDeclarationRequest request) {
-        Long ownerId = UserContext.getUser().getId();
+        if (UserContext.getIsStaff())
+            return paymentDeclarationServicePort
+                    .findByFilter(pageable, request.getInvoiceType(), request.getApprovementStatus(), null)
+                    .map(PaymentDeclarationResponse::of);
+        else {
+            Long ownerId = tenantServicePort.findByUserId(UserContext.getUser().getId()).getId();
 
-        return paymentDeclarationServicePort
-                .findByFilterAndOwnerId(pageable, request.getType(), request.getApprovementStatus(), ownerId)
-                .map(PaymentDeclarationResponse::of);
+            return paymentDeclarationServicePort
+                    .findByFilter(pageable, request.getInvoiceType(), request.getApprovementStatus(), ownerId)
+                    .map(PaymentDeclarationResponse::of);
+        }
     }
 }

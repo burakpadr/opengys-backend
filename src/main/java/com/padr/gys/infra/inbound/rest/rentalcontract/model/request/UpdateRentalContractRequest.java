@@ -1,6 +1,7 @@
 package com.padr.gys.infra.inbound.rest.rentalcontract.model.request;
 
 import com.padr.gys.domain.rentalcontract.entity.RentalContract;
+
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

@@ -20,10 +20,10 @@ class PaymentDeclarationPersistencePortImpl implements PaymentDeclarationPersist
     private final PaymentDeclarationRepository paymentDeclarationRepository;
 
     @Override
-    public Page<PaymentDeclaration> findByFilterAndOwnerId(Pageable pageable, InvoiceType type,
+    public Page<PaymentDeclaration> findByFilter(Pageable pageable, InvoiceType type,
             PaymentDeclarationApprovementStatus approvementStatus, Long ownerId) {
 
-        return paymentDeclarationRepository.findByFilterAndOwnerId(pageable, type, approvementStatus, ownerId);
+        return paymentDeclarationRepository.findByFilter(pageable, type, approvementStatus, ownerId);
     }
 
     @Override
@@ -34,12 +34,5 @@ class PaymentDeclarationPersistencePortImpl implements PaymentDeclarationPersist
     @Override
     public Optional<PaymentDeclaration> findById(Long id) {
         return paymentDeclarationRepository.findById(id);
-    }
-
-    @Override
-    public Page<PaymentDeclaration> findByFilter(Pageable pageable, InvoiceType type,
-            PaymentDeclarationApprovementStatus approvementStatus) {
-        
-        return paymentDeclarationRepository.findByFilter(pageable, type, approvementStatus);
     }
 }

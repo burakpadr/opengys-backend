@@ -3,7 +3,7 @@ package com.padr.gys.infra.inbound.rest.rentalcontract.model.response;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.padr.gys.domain.archive.entity.Archive;
 import com.padr.gys.domain.rentalcontract.entity.RentalContract;
-import com.padr.gys.domain.user.entity.User;
+import com.padr.gys.domain.user.entity.Tenant;
 
 import lombok.Builder;
 import lombok.Data;
@@ -30,16 +30,17 @@ public class RentalContractResponse {
 
     private String rentalContractFileRelativeUrl;
     private Boolean isPublished;
+    private Boolean isUpdatable;
 
     public static RentalContractResponse of(RentalContract rentalContract) {
-        User tenantUser = rentalContract.getTenant().getUser();
+        Optional<Tenant> tenantOptional = Optional.ofNullable(rentalContract.getTenant());
 
         Optional<Archive> rentalContractFileOptional = Optional
                 .ofNullable(rentalContract.getRentalContractFile());
 
         return RentalContractResponse.builder()
                 .id(rentalContract.getId())
-                .tenantFullName(tenantUser.getFullName())
+                .tenantFullName(tenantOptional.isPresent() ? tenantOptional.get().getUser().getFullName() : null)
                 .monthlyRentFee(rentalContract.getMonthlyRentFee())
                 .currencyCodeOfRentFee(rentalContract.getCurrencyCodeOfRentFee())
                 .rentalPaymentDay(rentalContract.getRentalPaymentDay())
@@ -49,6 +50,7 @@ public class RentalContractResponse {
                         rentalContractFileOptional.isPresent() ? rentalContract.getRentalContractFile().getPath()
                                 : null)
                 .isPublished(rentalContract.getIsPublished())
+                .isUpdatable(rentalContract.getIsUpdatable())
                 .build();
     }
 }

@@ -26,6 +26,7 @@ public class UpdateRentalContractUseCase {
 
     public RentalContractResponse execute(Long id, Optional<MultipartFile> rentalContractFile,
             UpdateRentalContractRequest request) {
+        
         RentalContract oldRentalContract = rentalContractService.findById(id);
         RentalContract newRentalContract = request.to();
 

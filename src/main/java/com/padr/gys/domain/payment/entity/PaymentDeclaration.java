@@ -7,9 +7,8 @@ import org.hibernate.annotations.SQLRestriction;
 import com.padr.gys.domain.archive.entity.Archive;
 import com.padr.gys.domain.common.model.entity.BaseEntity;
 import com.padr.gys.domain.payment.constant.PaymentDeclarationApprovementStatus;
-import com.padr.gys.domain.realestate.entity.RealEstate;
 import com.padr.gys.domain.payment.constant.InvoiceType;
-import com.padr.gys.domain.user.entity.User;
+import com.padr.gys.domain.user.entity.Tenant;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,6 +18,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -51,14 +51,19 @@ public class PaymentDeclaration extends BaseEntity {
     private PaymentDeclarationApprovementStatus approvementStatus;
 
     @Column
+    private Long entityId;
+
+    // This column for history after cancellation process
+
+    @Column
     private LocalDate dateOfInvoicePaid;
+
+    @OneToOne
+    private Invoice invoice;
 
     @ManyToOne
     private Archive receipt;
 
     @ManyToOne
-    private User declarationOwner;
-
-    @ManyToOne
-    private RealEstate realEstate;
+    private Tenant declarationOwner;
 }

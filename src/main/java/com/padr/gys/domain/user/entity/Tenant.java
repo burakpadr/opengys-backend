@@ -6,11 +6,10 @@ import com.padr.gys.domain.common.model.entity.BaseEntity;
 import com.padr.gys.domain.rentalcontract.entity.RentalContract;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -34,9 +33,9 @@ public class Tenant extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tenant_id_seq")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "tenant")
     private RentalContract rentalContract;
 }

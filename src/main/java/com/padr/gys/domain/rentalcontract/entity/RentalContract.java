@@ -32,7 +32,7 @@ public class RentalContract extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rental_contract_id_seq")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     private Tenant tenant;
 
     @Column

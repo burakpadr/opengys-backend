@@ -1,7 +1,7 @@
 package com.padr.gys.infra.inbound.rest.payment.adapter;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.padr.gys.infra.inbound.rest.payment.model.request.CreateInvoiceRequest;
-import com.padr.gys.infra.inbound.rest.payment.model.request.FindInvoicesRequest;
+import com.padr.gys.infra.inbound.rest.payment.model.request.FindInvoicesByFilterRequest;
 import com.padr.gys.infra.inbound.rest.payment.model.response.InvoiceResponse;
 import com.padr.gys.infra.inbound.rest.payment.usecase.CreateInvoiceUseCase;
 import com.padr.gys.infra.inbound.rest.payment.usecase.FindInvoiceByIdUseCase;
-import com.padr.gys.infra.inbound.rest.payment.usecase.FindInvoicesUseCase;
+import com.padr.gys.infra.inbound.rest.payment.usecase.FindInvoicesByFilterAsList;
+import com.padr.gys.infra.inbound.rest.payment.usecase.FindMatchableInvoicesUseCase;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,18 +25,24 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class InvoiceAdapter {
 
-    private final FindInvoicesUseCase findInvoicesUseCase;
+    private final FindInvoicesByFilterAsList findInvoicesByFilterAsList;
     private final FindInvoiceByIdUseCase findInvoiceByIdUseCase;
     private final CreateInvoiceUseCase createInvoiceUseCase;
+    private final FindMatchableInvoicesUseCase findMatchableInvoicesUseCase;
 
     @PostMapping
     public InvoiceResponse create(@Valid @RequestBody CreateInvoiceRequest request) {
         return createInvoiceUseCase.execute(request);
     }
 
-    @PostMapping("/as-page")
-    public Page<InvoiceResponse> findWithFilter(Pageable pageable, @Valid @RequestBody FindInvoicesRequest request) {
-        return findInvoicesUseCase.execute(pageable, request);
+    @PostMapping("/find-by-filter-as-list")
+    public List<InvoiceResponse> findByFilterAsList(@Valid @RequestBody FindInvoicesByFilterRequest request) {
+        return findInvoicesByFilterAsList.execute(request);
+    }
+
+    @PostMapping("/find-matchable-invoices")
+    public List<InvoiceResponse> findMatchableInvoices(@Valid @RequestBody FindInvoicesByFilterRequest request) {
+        return findMatchableInvoicesUseCase.execute(request);
     }
 
     @GetMapping("/{id}")

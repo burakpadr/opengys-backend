@@ -44,10 +44,7 @@ class RentalContractService implements RentalContractServicePort {
     }
 
     @Override
-    public RentalContract create(RentalContract rentalContract) {
-        if (rentalContract.getIsPublished())
-            throwExceptionIfRentalContractAlreadyPusblished(rentalContract.getRealEstate().getId());
-
+    public RentalContract save(RentalContract rentalContract) {
         return rentalContractPersistencePort.save(rentalContract);
     }
 
@@ -56,10 +53,15 @@ class RentalContractService implements RentalContractServicePort {
         Optional<RentalContract> duplicatedPublishedRentalContractOptional = getDuplicatedPublishedRentalContract(
                 oldRentalContract.getRealEstate().getId());
 
-        if (newRentalContract.getIsPublished() && duplicatedPublishedRentalContractOptional.isPresent())
-            if (!duplicatedPublishedRentalContractOptional.get().getId().equals(oldRentalContract.getId()))
+        if (newRentalContract.getIsPublished() && duplicatedPublishedRentalContractOptional.isPresent()) {
+            if (!duplicatedPublishedRentalContractOptional.get().getId().equals(oldRentalContract.getId())) {
                 throw new EntityExistsException(messageSource.getMessage("rentalcontract.already-exist", null,
                         LocaleContextHolder.getLocale()));
+            }
+        } else {
+            oldRentalContract.setTenant(null);
+            oldRentalContract.setIsUpdatable(false);
+        }
 
         oldRentalContract.setMonthlyRentFee(newRentalContract.getMonthlyRentFee());
         oldRentalContract.setCurrencyCodeOfRentFee(newRentalContract.getCurrencyCodeOfRentFee());
@@ -85,21 +87,6 @@ class RentalContractService implements RentalContractServicePort {
         rentalContractPersistencePort.save(rentalContract);
     }
 
-    private void throwExceptionIfRentalContractAlreadyPusblished(Long realEstateId) {
-        getDuplicatedPublishedRentalContract(realEstateId)
-                .ifPresent(rc -> {
-                    throw new EntityExistsException(messageSource.getMessage("rentalcontract.already-exist", null,
-                            LocaleContextHolder.getLocale()));
-                });
-    }
-
-    private Optional<RentalContract> getDuplicatedPublishedRentalContract(Long realEstateId) {
-        return rentalContractPersistencePort.findByRealEstateId(realEstateId)
-                .stream()
-                .filter(RentalContract::getIsPublished)
-                .findAny();
-    }
-
     @Override
     public List<RentalContract> findByTenantId(Long tenantId) {
         return rentalContractPersistencePort.findByTenantId(tenantId);
@@ -112,5 +99,12 @@ class RentalContractService implements RentalContractServicePort {
         });
 
         rentalContractPersistencePort.saveAll(rentalContracts);
+    }
+
+    private Optional<RentalContract> getDuplicatedPublishedRentalContract(Long realEstateId) {
+        return rentalContractPersistencePort.findByRealEstateId(realEstateId)
+                .stream()
+                .filter(RentalContract::getIsPublished)
+                .findAny();
     }
 }

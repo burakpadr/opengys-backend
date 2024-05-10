@@ -18,17 +18,8 @@ public interface PaymentDeclarationRepository extends JpaRepository<PaymentDecla
             WHERE
                 (:type IS NULL OR pd.type = :type) AND
                 (:approvementStatus IS NULL or pd.approvementStatus =: approvementStatus) AND
-                pd.declarationOwner.id = :ownerId
-            """)
-    Page<PaymentDeclaration> findByFilterAndOwnerId(Pageable pageable, InvoiceType type,
-            PaymentDeclarationApprovementStatus approvementStatus, Long ownerId);
-
-    @Query("""
-            SELECT pd FROM PaymentDeclaration pd
-            WHERE
-                (:type IS NULL OR pd.type = :type) AND
-                (:approvementStatus IS NULL or pd.approvementStatus =: approvementStatus)
+                (:ownerId IS NULL OR pd.declarationOwner.id = :ownerId)
             """)
     Page<PaymentDeclaration> findByFilter(Pageable pageable, InvoiceType type,
-            PaymentDeclarationApprovementStatus approvementStatus);
+            PaymentDeclarationApprovementStatus approvementStatus, Long ownerId);
 }
