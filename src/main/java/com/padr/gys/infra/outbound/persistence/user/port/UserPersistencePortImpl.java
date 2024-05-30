@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class UserPersistencePortImpl implements UserPersistencePort {
+class UserPersistencePortImpl implements UserPersistencePort {
 
     private final UserRepository userRepository;
 

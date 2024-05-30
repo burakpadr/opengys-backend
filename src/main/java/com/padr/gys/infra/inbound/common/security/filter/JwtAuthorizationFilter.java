@@ -2,18 +2,21 @@ package com.padr.gys.infra.inbound.common.security.filter;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 import com.padr.gys.domain.user.entity.User;
-import com.padr.gys.domain.user.port.UserServicePort;
 import com.padr.gys.infra.inbound.common.context.UserContext;
 import com.padr.gys.infra.inbound.common.security.configuration.SecurityProperty;
 import com.padr.gys.infra.inbound.common.security.constant.SecurityConstant;
 
+import com.padr.gys.infra.outbound.persistence.user.port.UserPersistencePort;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -34,7 +37,9 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private final SecurityProperty securityProperty;
 
-    private final UserServicePort userServicePort;
+    private final UserPersistencePort userPersistencePort;
+
+    private final MessageSource messageSource;
 
     private final static Map<String, String> EXCLUDED_ENDPOINTS = Map.of(
             "/gys/api/v1/auth", HttpMethod.POST.name(),
@@ -60,7 +65,9 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
                 Long userId = Long.valueOf(decodedJWT.getSubject());
 
-                User user = userServicePort.findById(userId);
+                User user = userPersistencePort.findById(userId)
+                        .orElseThrow(() -> new NoSuchElementException(
+                                messageSource.getMessage("user.not-found", null, LocaleContextHolder.getLocale())));
 
                 UserContext.setUser(user);
                 UserContext.setIsStaff(decodedJWT.getClaim("isStaff").asBoolean());

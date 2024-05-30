@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class RealEstatePersistencePortImpl implements RealEstatePersistencePort {
+class RealEstatePersistencePortImpl implements RealEstatePersistencePort {
     
     private final RealEstateRepository realEstateRepository;
 

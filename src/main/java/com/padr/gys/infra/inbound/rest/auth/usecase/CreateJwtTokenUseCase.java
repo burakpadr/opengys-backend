@@ -2,11 +2,11 @@ package com.padr.gys.infra.inbound.rest.auth.usecase;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.padr.gys.domain.user.port.StaffServicePort;
-import com.padr.gys.domain.user.port.TenantServicePort;
 import com.padr.gys.infra.inbound.common.security.configuration.SecurityProperty;
 import com.padr.gys.infra.inbound.rest.auth.model.request.AuthRequest;
 
+import com.padr.gys.infra.outbound.persistence.user.port.StaffPersistencePort;
+import com.padr.gys.infra.outbound.persistence.user.port.TenantPersistencePort;
 import jakarta.servlet.http.HttpServletResponse;
 
 import lombok.RequiredArgsConstructor;
@@ -30,8 +30,8 @@ public class CreateJwtTokenUseCase {
 
     private final AuthenticationManager authenticationManager;
 
-    private final StaffServicePort staffServicePort;
-    private final TenantServicePort tenantServicePort;
+    private final StaffPersistencePort staffPersistencePort;
+    private final TenantPersistencePort tenantPersistencePort;
 
     public void execute(HttpServletResponse response, AuthRequest request) {
         Authentication authentication = authenticationManager
@@ -45,8 +45,8 @@ public class CreateJwtTokenUseCase {
     private String generateJwtToken(Authentication authentication) {
         Algorithm algorithm = Algorithm.HMAC256(securityProperty.getJwtSecret());
 
-        boolean isStaff = staffServicePort.isStaff(Long.parseLong(authentication.getName()));
-        boolean isTenant = tenantServicePort.isTenant(Long.parseLong(authentication.getName()));
+        boolean isStaff = staffPersistencePort.findByUserId(Long.parseLong(authentication.getName())).isPresent();
+        boolean isTenant = tenantPersistencePort.findByUserId(Long.parseLong(authentication.getName())).isPresent();
 
         return JWT.create()
                 .withSubject(authentication.getName())

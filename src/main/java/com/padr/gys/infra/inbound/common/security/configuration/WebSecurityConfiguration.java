@@ -1,10 +1,11 @@
 package com.padr.gys.infra.inbound.common.security.configuration;
 
 import com.padr.gys.domain.common.property.AppProperty;
-import com.padr.gys.domain.user.port.UserServicePort;
 import com.padr.gys.infra.inbound.common.security.filter.JwtAuthorizationFilter;
 
+import com.padr.gys.infra.outbound.persistence.user.port.UserPersistencePort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -25,8 +26,9 @@ public class WebSecurityConfiguration {
 
     private final SecurityProperty securityProperty;
     private final AppProperty appProperty;
+    private final MessageSource messageSource;
 
-    private final UserServicePort userServicePort;
+    private final UserPersistencePort userPersistencePort;
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
@@ -47,7 +49,7 @@ public class WebSecurityConfiguration {
                 })
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(Customizer.withDefaults())
-                .addFilterBefore(new JwtAuthorizationFilter(securityProperty, userServicePort),
+                .addFilterBefore(new JwtAuthorizationFilter(securityProperty, userPersistencePort, messageSource),
                         UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

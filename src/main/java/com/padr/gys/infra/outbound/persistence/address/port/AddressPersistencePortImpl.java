@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class AddressPersistencePortImpl implements AddressPersistencePort {
+class AddressPersistencePortImpl implements AddressPersistencePort {
     
     private final AddressRepository addressRepository;
 

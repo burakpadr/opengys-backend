@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class AdvertPersistencePortImpl implements AdvertPersistencePort {
+class AdvertPersistencePortImpl implements AdvertPersistencePort {
     
     private final AdvertRepository advertRepository;
 

@@ -2,9 +2,9 @@ package com.padr.gys.infra.inbound.rest.payment.usecase;
 
 import java.util.List;
 
+import com.padr.gys.infra.outbound.persistence.payment.port.InvoicePersistencePort;
 import org.springframework.stereotype.Component;
 
-import com.padr.gys.domain.payment.port.InvoiceServicePort;
 import com.padr.gys.infra.inbound.rest.payment.model.request.FindInvoicesByFilterRequest;
 import com.padr.gys.infra.inbound.rest.payment.model.response.InvoiceResponse;
 
@@ -14,10 +14,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FindInvoicesByFilterAsList {
 
-    private final InvoiceServicePort invoiceServicePort;
+    private final InvoicePersistencePort invoicePersistencePort;
 
     public List<InvoiceResponse> execute(FindInvoicesByFilterRequest request) {
-        return invoiceServicePort
+        return invoicePersistencePort
                 .findByFilterAsList(request.getType(), request.getEntityId())
                 .stream()
                 .map(InvoiceResponse::of)

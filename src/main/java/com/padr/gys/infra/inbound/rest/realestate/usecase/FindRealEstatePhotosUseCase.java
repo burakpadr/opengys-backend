@@ -2,9 +2,9 @@ package com.padr.gys.infra.inbound.rest.realestate.usecase;
 
 import java.util.List;
 
+import com.padr.gys.infra.outbound.persistence.realestate.port.RealEstatePhotoPersistencePort;
 import org.springframework.stereotype.Component;
 
-import com.padr.gys.domain.realestate.port.RealEstatePhotoServicePort;
 import com.padr.gys.infra.inbound.rest.realestate.model.response.RealEstatePhotoResponse;
 
 import lombok.RequiredArgsConstructor;
@@ -13,10 +13,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FindRealEstatePhotosUseCase {
 
-    private final RealEstatePhotoServicePort realEstatePhotoServicePort;
+    private final RealEstatePhotoPersistencePort realEstatePhotoPersistencePort;
 
     public List<RealEstatePhotoResponse> execute(Long realEstateId) {
-        return realEstatePhotoServicePort.findByRealEstateId(realEstateId)
+        return realEstatePhotoPersistencePort.findByRealEstateId(realEstateId)
                 .stream()
                 .map(RealEstatePhotoResponse::of)
                 .toList();

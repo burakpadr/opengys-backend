@@ -1,11 +1,17 @@
 package com.padr.gys.infra.inbound.rest.user.usecase;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
+import com.padr.gys.infra.outbound.persistence.rbac.port.RolePersistencePort;
+import com.padr.gys.infra.outbound.persistence.user.port.StaffPersistencePort;
+import com.padr.gys.infra.outbound.persistence.user.port.UserPersistencePort;
+import jakarta.persistence.EntityExistsException;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -13,11 +19,8 @@ import org.thymeleaf.context.Context;
 import com.padr.gys.domain.carrier.constant.EmailTemplate;
 import com.padr.gys.domain.common.exception.BusinessException;
 import com.padr.gys.domain.rbac.entity.Role;
-import com.padr.gys.domain.rbac.port.RoleServicePort;
 import com.padr.gys.domain.user.entity.Staff;
 import com.padr.gys.domain.user.entity.User;
-import com.padr.gys.domain.user.port.StaffServicePort;
-import com.padr.gys.domain.user.port.UserServicePort;
 import com.padr.gys.infra.inbound.amqp.carrier.model.SendEmailTransactionModel;
 import com.padr.gys.infra.inbound.rest.user.model.request.CreateStaffRequest;
 import com.padr.gys.infra.inbound.rest.user.model.response.StaffResponse;
@@ -28,15 +31,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CreateStaffUseCase {
 
-    private final UserServicePort userServicePort;
-    private final StaffServicePort staffServicePort;
-    private final RoleServicePort roleServicePort;
+    private final RolePersistencePort rolePersistencePort;
+    private final UserPersistencePort userPersistencePort;
+    private final StaffPersistencePort staffPersistencePort;
 
     private final TemplateEngine templateEngine;
-
     private final RabbitTemplate rabbitTemplate;
-
     private final MessageSource messageSource;
+    private final PasswordEncoder passwordEncoder;
 
     public StaffResponse execute(CreateStaffRequest request) {
         Role role = null;
@@ -46,11 +48,42 @@ public class CreateStaffUseCase {
                 throw new BusinessException(messageSource.getMessage("user.role-id-cannot-be-empty", null,
                         LocaleContextHolder.getLocale()));
 
-            role = roleServicePort.findById(request.getUser().getRoleId());
+            role = rolePersistencePort.findById(request.getUser().getRoleId())
+                    .orElseThrow(() -> new NoSuchElementException(
+                            messageSource.getMessage("rbac.role.not-found", null, LocaleContextHolder.getLocale())));
         }
 
-        User user = userServicePort.create(request.getUser().to(role));
-        Staff staff = staffServicePort.create(request.to(user));
+        // Create user
+
+        userPersistencePort.findByEmail(request.getUser().getEmail())
+                .ifPresent(u -> {
+                    throw new EntityExistsException(
+                            messageSource.getMessage("user.already-exist", null, LocaleContextHolder.getLocale()));
+                });
+
+        User user = User.builder()
+                .name(request.getUser().getName())
+                .surname(request.getUser().getSurname())
+                .email(request.getUser().getEmail())
+                .role(role)
+                .build();
+
+        if (Objects.nonNull(request.getUser().getPassword())) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
+        userPersistencePort.save(user);
+
+        // Create staff
+
+        Staff staff = Staff.builder()
+                .user(user)
+                .isDeedOwner(request.getIsDeedOwner())
+                .build();
+
+        staffPersistencePort.save(staff);
+
+        // Send email to the staff
 
         Context context = new Context();
 

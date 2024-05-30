@@ -1,10 +1,10 @@
 package com.padr.gys.infra.inbound.rest.user.usecase;
 
+import com.padr.gys.infra.outbound.persistence.user.port.TenantPersistencePort;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import com.padr.gys.domain.user.port.TenantServicePort;
 import com.padr.gys.infra.inbound.rest.user.model.response.TenantResponse;
 
 import lombok.RequiredArgsConstructor;
@@ -13,9 +13,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FindTenantsAsPageUseCase {
     
-    private final TenantServicePort tenantServicePort;
+    private final TenantPersistencePort tenantPersistencePort;
 
     public Page<TenantResponse> execute(Pageable pageable) {
-        return tenantServicePort.findAll(pageable).map(TenantResponse::of);
+        return tenantPersistencePort.findAll(pageable).map(TenantResponse::of);
     }
 }

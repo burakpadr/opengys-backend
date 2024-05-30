@@ -1,10 +1,11 @@
 package com.padr.gys.infra.inbound.rest.status.usecase;
 
+import java.util.Arrays;
 import java.util.List;
 
+import com.padr.gys.domain.status.constant.MainStatus;
 import org.springframework.stereotype.Component;
 
-import com.padr.gys.domain.status.port.MainStatusServicePort;
 import com.padr.gys.infra.inbound.rest.status.model.response.StatusResponse;
 
 import lombok.RequiredArgsConstructor;
@@ -13,9 +14,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FindStatusUseCase {
 
-    private final MainStatusServicePort mainStatusServicePort;
-
     public List<StatusResponse> execute() {
-        return mainStatusServicePort.getMainStatus().stream().map(StatusResponse::of).toList();
+        return Arrays.stream(MainStatus.values()).map(StatusResponse::of).toList();
     }
 }

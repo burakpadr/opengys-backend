@@ -8,8 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import com.padr.gys.domain.advertplace.entity.AdvertPlace;
-import com.padr.gys.domain.advertplace.port.AdvertPlaceServicePort;
 import com.padr.gys.infra.inbound.rest.advertplace.model.AdvertPlaceResponse;
+import com.padr.gys.infra.outbound.persistence.advertplace.port.AdvertPlacePersistencePort;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,10 +17,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FindAdvertPlacesUseCase {
 
-    private final AdvertPlaceServicePort advertPlaceServicePort;
+    private final AdvertPlacePersistencePort advertPlacePersistencePort;
 
     public Page<AdvertPlaceResponse> execute(Pageable pageable) {
-        Page<AdvertPlace> advertPlaces = advertPlaceServicePort.findAll(pageable);
+        Page<AdvertPlace> advertPlaces = advertPlacePersistencePort.findAll(pageable);
 
         List<AdvertPlaceResponse> advertPlaceResponses = advertPlaces.getContent().stream().map(AdvertPlaceResponse::of)
                 .toList();

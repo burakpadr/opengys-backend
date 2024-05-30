@@ -1,17 +1,20 @@
 package com.padr.gys.infra.inbound.rest.user.usecase;
 
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
+import com.padr.gys.domain.user.entity.User;
+import com.padr.gys.infra.outbound.persistence.rbac.port.RolePersistencePort;
+import com.padr.gys.infra.outbound.persistence.user.port.StaffPersistencePort;
+import com.padr.gys.infra.outbound.persistence.user.port.UserPersistencePort;
+import jakarta.persistence.EntityExistsException;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
 import com.padr.gys.domain.common.exception.BusinessException;
 import com.padr.gys.domain.rbac.entity.Role;
-import com.padr.gys.domain.rbac.port.RoleServicePort;
 import com.padr.gys.domain.user.entity.Staff;
-import com.padr.gys.domain.user.port.StaffServicePort;
-import com.padr.gys.domain.user.port.UserServicePort;
 import com.padr.gys.infra.inbound.rest.user.model.request.UpdateStaffRequest;
 import com.padr.gys.infra.inbound.rest.user.model.response.StaffResponse;
 
@@ -21,14 +24,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UpdateStaffUseCase {
 
-    private final UserServicePort userServicePort;
-    private final StaffServicePort staffServicePort;
-    private final RoleServicePort roleServicePort;
+    private final StaffPersistencePort staffPersistencePort;
+    private UserPersistencePort userPersistencePort;
+    private final RolePersistencePort rolePersistencePort;
 
     private final MessageSource messageSource;
 
     public StaffResponse execute(Long id, UpdateStaffRequest request) {
-        Staff oldStaff = staffServicePort.findById(id);
+        Staff oldStaff = staffPersistencePort.findById(id)
+                .orElseThrow(() -> new NoSuchElementException(
+                        messageSource.getMessage("user.not-found", null, LocaleContextHolder.getLocale())));
 
         Role role = null;
 
@@ -37,11 +42,35 @@ public class UpdateStaffUseCase {
                 throw new BusinessException(messageSource.getMessage("user.role-id-cannot-be-empty", null,
                         LocaleContextHolder.getLocale()));
 
-            role = roleServicePort.findById(request.getUser().getRoleId());
+            role = rolePersistencePort.findById(request.getUser().getRoleId())
+                    .orElseThrow(() -> new NoSuchElementException(
+                            messageSource.getMessage("rbac.role.not-found", null, LocaleContextHolder.getLocale())));
         }
 
-        userServicePort.update(oldStaff.getUser(), request.getUser().to(role));
-        staffServicePort.update(oldStaff, request.to(oldStaff.getUser()));
+        // Update user
+
+        User user = oldStaff.getUser();
+
+        if (!user.getEmail().equals(request.getUser().getEmail())) {
+            userPersistencePort.findByEmail(request.getUser().getEmail())
+                    .ifPresent(u -> {
+                        throw new EntityExistsException(
+                                messageSource.getMessage("user.already-exist", null, LocaleContextHolder.getLocale()));
+                    });
+        }
+
+        user.setName(request.getUser().getName());
+        user.setSurname(request.getUser().getSurname());
+        user.setRole(role);
+        user.setEmail(request.getUser().getEmail());
+
+        userPersistencePort.save(user);
+
+        // Update staff
+
+        oldStaff.setIsDeedOwner(request.getIsDeedOwner());
+
+        staffPersistencePort.save(oldStaff);
 
         return StaffResponse.of(oldStaff);
     }

@@ -2,20 +2,21 @@ package com.padr.gys.infra.inbound.rest.rentalcontract.usecase;
 
 import com.padr.gys.common.util.DateUtil;
 import com.padr.gys.domain.archive.entity.Archive;
-import com.padr.gys.domain.archive.port.ArchiveServicePort;
 import com.padr.gys.domain.common.property.AppProperty;
+import com.padr.gys.domain.common.util.ArchiveUtil;
 import com.padr.gys.domain.payment.constant.InvoiceType;
 import com.padr.gys.domain.payment.entity.Invoice;
-import com.padr.gys.domain.payment.port.InvoiceServicePort;
 import com.padr.gys.domain.realestate.entity.RealEstate;
-import com.padr.gys.domain.realestate.port.RealEstateServicePort;
 import com.padr.gys.domain.rentalcontract.entity.RentalContract;
-import com.padr.gys.domain.rentalcontract.port.RentalContractServicePort;
 import com.padr.gys.domain.user.entity.Tenant;
-import com.padr.gys.domain.user.port.TenantServicePort;
 import com.padr.gys.infra.inbound.rest.rentalcontract.model.request.CreateRentalContractRequest;
 import com.padr.gys.infra.inbound.rest.rentalcontract.model.response.RentalContractResponse;
+import com.padr.gys.infra.outbound.persistence.archive.port.ArchivePersistencePort;
+import com.padr.gys.infra.outbound.persistence.payment.port.InvoicePersistencePort;
 
+import com.padr.gys.infra.outbound.persistence.realestate.port.RealEstatePersistencePort;
+import com.padr.gys.infra.outbound.persistence.rentalcontract.port.RentalContractPersistencePort;
+import com.padr.gys.infra.outbound.persistence.user.port.TenantPersistencePort;
 import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 
@@ -25,6 +26,7 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
@@ -38,15 +40,15 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class CreateRentalContractUseCase {
 
-    private final RentalContractServicePort rentalContractServicePort;
-    private final RealEstateServicePort realEstateServicePort;
-    private final ArchiveServicePort archiveServicePort;
-    private final TenantServicePort tenantServicePort;
-    private final InvoiceServicePort invoiceServicePort;
+    private final RentalContractPersistencePort rentalContractPersistencePort;
+    private final ArchivePersistencePort archivePersistencePort;
+    private final InvoicePersistencePort invoicePersistencePort;
+    private final RealEstatePersistencePort realEstatePersistencePort;
+    private final TenantPersistencePort tenantPersistencePort;
 
     private final MessageSource messageSource;
-
     private final AppProperty appProperty;
+    private final ArchiveUtil archiveUtil;
 
     public RentalContractResponse execute(Optional<MultipartFile> rentalContractFile,
             CreateRentalContractRequest request) {
@@ -54,15 +56,22 @@ public class CreateRentalContractUseCase {
         throwExceptionIfRentalContractAlreadyPusblished(request.getRealEstateId());
 
         RentalContract rentalContract = request.to();
-        RealEstate realEstate = realEstateServicePort.findById(request.getRealEstateId());
-        Tenant tenant = tenantServicePort.findById(request.getTenantId());
+
+        RealEstate realEstate = realEstatePersistencePort.findById(request.getRealEstateId())
+                .orElseThrow(() -> new NoSuchElementException(
+                        messageSource.getMessage("realestate.not-found", null, LocaleContextHolder.getLocale())));
+
+        Tenant tenant = tenantPersistencePort.findById(request.getTenantId()).orElseThrow(() -> new NoSuchElementException(
+                messageSource.getMessage("user.not-found", null, LocaleContextHolder.getLocale())));
 
         // Upload rental contract file
 
         if (rentalContractFile.isPresent()) {
-            Archive rentalContractFileArchive = archiveServicePort.create(rentalContractFile.get(), realEstate.getId(),
+            Archive rentalContractFileArchive = archiveUtil.prepareArchive(rentalContractFile.get(), realEstate.getId(),
                     appProperty.getStorage().getRentalContractFilesPath(),
                     appProperty.getStorage().getRentalContractFilesRelativeUrl());
+
+            archivePersistencePort.save(rentalContractFileArchive);
 
             rentalContract.setRentalContractFile(rentalContractFileArchive);
         }
@@ -71,17 +80,17 @@ public class CreateRentalContractUseCase {
 
         rentalContract.setRealEstate(realEstate);
         rentalContract.setTenant(tenant);
-        rentalContractServicePort.save(rentalContract);
+        rentalContractPersistencePort.save(rentalContract);
 
         // Create rent invoices
 
-        invoiceServicePort.saveAll(prepareRentInvoices(rentalContract));
+        invoicePersistencePort.saveAll(prepareRentInvoices(rentalContract));
 
         return RentalContractResponse.of(rentalContract);
     }
 
     private void throwExceptionIfRentalContractAlreadyPusblished(Long realEstateId) {
-        if (!rentalContractServicePort.findByRealEstateIdAndIsPublished(realEstateId, true).isEmpty()) {
+        if (!rentalContractPersistencePort.findByRealEstateIdAndIsPublished(realEstateId, true).isEmpty()) {
             throw new EntityExistsException(messageSource.getMessage("rentalcontract.already-exist", null,
                     LocaleContextHolder.getLocale()));
         }
@@ -138,9 +147,9 @@ public class CreateRentalContractUseCase {
             } else if (index == rentalContractValidityPeriodAsMonths - 1) {
                 dateOfInvoice = rentalContract.getEndDate()
                         .getDayOfMonth() > rentalContract
-                                .getRentalPaymentDay().intValue() ? rentalContract.getEndDate()
-                                        : LocalDate.of(invoiceYear, invoiceMonth,
-                                                rentalContract.getEndDate().getDayOfMonth());
+                                .getRentalPaymentDay().intValue() ? LocalDate.of(invoiceYear, invoiceMonth,
+                                        rentalContract.getRentalPaymentDay())
+                                        : rentalContract.getEndDate();
 
                 invoiceFeePaid = rentalContract.getMonthlyRentFee()
                         .divide(new BigDecimal(daysInMonth), 2, RoundingMode.HALF_UP)
@@ -156,6 +165,7 @@ public class CreateRentalContractUseCase {
                     .currencyCode(rentalContract.getCurrencyCodeOfRentFee())
                     .amount(invoiceFeePaid)
                     .entityId(rentalContract.getId())
+                    .realEstate(rentalContract.getRealEstate())
                     .build();
         }).collect(Collectors.toList());
     }

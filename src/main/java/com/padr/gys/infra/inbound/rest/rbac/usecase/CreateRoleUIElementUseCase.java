@@ -1,15 +1,18 @@
 package com.padr.gys.infra.inbound.rest.rbac.usecase;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+import com.padr.gys.infra.outbound.persistence.rbac.port.RolePersistencePort;
+import com.padr.gys.infra.outbound.persistence.rbac.port.RoleUIElementPersistencePort;
+import com.padr.gys.infra.outbound.persistence.rbac.port.UIElementPersistencePort;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
 import com.padr.gys.domain.rbac.entity.Role;
 import com.padr.gys.domain.rbac.entity.RoleUIElement;
-import com.padr.gys.domain.rbac.port.RoleServicePort;
-import com.padr.gys.domain.rbac.port.RoleUIElementServicePort;
-import com.padr.gys.domain.rbac.port.UIElementServicePort;
 import com.padr.gys.infra.inbound.rest.rbac.model.request.RoleUIElementRequest;
 import com.padr.gys.infra.inbound.rest.rbac.model.response.RoleUIElementResponse;
 
@@ -19,21 +22,25 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CreateRoleUIElementUseCase {
 
-    private final RoleServicePort roleServicePort;
-    private final UIElementServicePort uiElementServicePort;
-    private final RoleUIElementServicePort roleUIElementServicePort;
+    private final RolePersistencePort rolePersistencePort;
+    private UIElementPersistencePort uiElementPersistencePort;
+    private RoleUIElementPersistencePort roleUIElementPersistencePort;
+
+    private final MessageSource messageSource;
 
     public List<RoleUIElementResponse> execute(RoleUIElementRequest request) {
         final Role role = Role.builder()
                 .label(request.getRoleRequest().getLabel())
                 .build();
 
-        roleServicePort.save(role);
+        rolePersistencePort.save(role);
 
         List<RoleUIElement> roleUIElements = request.getUiElementIds()
                 .stream()
                 .map(uiElementId -> {
-                    return uiElementServicePort.findById(uiElementId);
+                    return uiElementPersistencePort.findById(uiElementId)
+                            .orElseThrow(() -> new NoSuchElementException(
+                                    messageSource.getMessage("rbac.ui-element.not-found", null, LocaleContextHolder.getLocale())));
                 })
                 .toList()
                 .stream()
@@ -44,7 +51,7 @@ public class CreateRoleUIElementUseCase {
                             .build();
                 }).collect(Collectors.toList());
 
-        return roleUIElementServicePort.saveAll(roleUIElements)
+        return roleUIElementPersistencePort.saveAll(roleUIElements)
                 .stream()
                 .map(RoleUIElementResponse::of)
                 .toList();

@@ -3,10 +3,10 @@ package com.padr.gys.infra.inbound.rest.rbac.usecase;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.padr.gys.infra.outbound.persistence.rbac.port.UIElementPersistencePort;
 import org.springframework.stereotype.Component;
 
 import com.padr.gys.domain.rbac.entity.UIElement;
-import com.padr.gys.domain.rbac.port.UIElementServicePort;
 import com.padr.gys.infra.inbound.rest.rbac.model.request.UIElementRequest;
 import com.padr.gys.infra.inbound.rest.rbac.model.response.UIElementResponse;
 
@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CreateOrUpdateUIElementUseCase {
 
-    private final UIElementServicePort uiElementServicePort;
+    private final UIElementPersistencePort uiElementPersistencePort;
 
     public List<UIElementResponse> execute(List<UIElementRequest> request) {
         List<UIElement> uiElements = request.stream().map(element -> {
@@ -26,6 +26,6 @@ public class CreateOrUpdateUIElementUseCase {
                     .build();
         }).collect(Collectors.toList());
 
-        return uiElementServicePort.createAll(uiElements).stream().map(UIElementResponse::of).toList();
+        return uiElementPersistencePort.saveAll(uiElements).stream().map(UIElementResponse::of).toList();
     }
 }

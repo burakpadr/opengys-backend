@@ -6,10 +6,10 @@ import org.springframework.stereotype.Component;
 
 import com.padr.gys.domain.categorization.entity.Category;
 import com.padr.gys.domain.categorization.entity.SubCategory;
-import com.padr.gys.domain.categorization.port.CategoryServicePort;
-import com.padr.gys.domain.categorization.port.SubCategoryServicePort;
 import com.padr.gys.infra.inbound.rest.categorization.model.request.CreateCategoryRequest;
 import com.padr.gys.infra.inbound.rest.categorization.model.response.CategoryResponse;
+import com.padr.gys.infra.outbound.persistence.categorization.port.CategoryPersistencePort;
+import com.padr.gys.infra.outbound.persistence.categorization.port.SubCategoryPersistencePort;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,11 +17,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CreateCategoryAndSubCategoryUseCase {
 
-    private final CategoryServicePort categoryServicePort;
-    private final SubCategoryServicePort subCategoryServicePort;
+    private final CategoryPersistencePort categoryPersistencePort;
+    private final SubCategoryPersistencePort subCategoryPersistencePort;
 
     public CategoryResponse execute(CreateCategoryRequest request) {
-        Category category = categoryServicePort.create(request.to());
+        Category category = categoryPersistencePort.save(request.to());
 
         List<SubCategory> subCategories = request.getSubCategoryRequests().stream().map(subCategoryRequest -> {
             SubCategory subCategory = subCategoryRequest.to();
@@ -31,7 +31,7 @@ public class CreateCategoryAndSubCategoryUseCase {
             return subCategory;
         }).toList();
 
-        category.setSubCategories(subCategoryServicePort.createAll(subCategories));
+        category.setSubCategories(subCategoryPersistencePort.saveAll(subCategories));
 
         return CategoryResponse.of(category);
     }

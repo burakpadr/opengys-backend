@@ -1,18 +1,23 @@
 package com.padr.gys.infra.inbound.rest.realestate.usecase;
 
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
+import com.padr.gys.infra.outbound.persistence.realestate.port.RealEstatePersistencePort;
+import jakarta.persistence.EntityExistsException;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
-import com.padr.gys.domain.address.port.AddressServicePort;
+import com.padr.gys.domain.address.entity.Address;
 import com.padr.gys.domain.categorization.entity.Category;
 import com.padr.gys.domain.categorization.entity.SubCategory;
-import com.padr.gys.domain.categorization.port.CategoryServicePort;
-import com.padr.gys.domain.categorization.port.SubCategoryServicePort;
 import com.padr.gys.domain.realestate.entity.RealEstate;
-import com.padr.gys.domain.realestate.port.RealEstateServicePort;
 import com.padr.gys.infra.inbound.rest.realestate.model.request.UpdateRealEstateRequest;
 import com.padr.gys.infra.inbound.rest.realestate.model.response.RealEstateDetailResponse;
+import com.padr.gys.infra.outbound.persistence.address.port.AddressPersistencePort;
+import com.padr.gys.infra.outbound.persistence.categorization.port.CategoryPersistencePort;
+import com.padr.gys.infra.outbound.persistence.categorization.port.SubCategoryPersistencePort;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,25 +25,61 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UpdateRealEstateUseCase {
 
-    private final RealEstateServicePort realEstateServicePort;
-    private final AddressServicePort addressServicePort;
-    private final CategoryServicePort categoryServicePort;
-    private final SubCategoryServicePort subCategoryServicePort;
+    private final AddressPersistencePort addressPersistencePort;
+    private final CategoryPersistencePort categoryPersistencePort;
+    private final SubCategoryPersistencePort subCategoryPersistencePort;
+    private final RealEstatePersistencePort realEstatePersistencePort;
+
+    private final MessageSource messageSource;
 
     public RealEstateDetailResponse execute(Long realEstateId, UpdateRealEstateRequest request) {
-        RealEstate oldRealEstate = realEstateServicePort.findById(realEstateId);
+        RealEstate oldRealEstate = realEstatePersistencePort.findById(realEstateId)
+                .orElseThrow(() -> new NoSuchElementException(
+                        messageSource.getMessage("realestate.not-found", null, LocaleContextHolder.getLocale())));
 
-        addressServicePort.update(oldRealEstate.getAddress().getId(), request.getAddressRequest().to());
+        updateAddress(oldRealEstate.getAddress().getId(), request.getAddressRequest().to());
 
-        Category category = categoryServicePort.findById(request.getCategoryId());
-        SubCategory subCategory = Objects.nonNull(request.getSubCategoryId())
-                ? subCategoryServicePort.findById(request.getSubCategoryId())
-                : null;
+        Category category = categoryPersistencePort.findById(request.getCategoryId())
+                .orElseThrow(() -> new NoSuchElementException(messageSource
+                        .getMessage("categorization.category.not-found", null, LocaleContextHolder.getLocale())));
 
-        RealEstate updatedRealEstate = request.to();
-        updatedRealEstate.setCategory(category);
-        updatedRealEstate.setSubCategory(subCategory);
+        SubCategory subCategory = null;
 
-        return RealEstateDetailResponse.of(realEstateServicePort.update(realEstateId, updatedRealEstate));
+        if (Objects.nonNull(request.getSubCategoryId())) {
+            subCategory = subCategoryPersistencePort.findById(request.getSubCategoryId())
+                    .orElseThrow(() -> new NoSuchElementException(messageSource
+                            .getMessage("categorization.subcategory.not-found", null,
+                                    LocaleContextHolder.getLocale())));
+        }
+
+        // Update real estate
+
+        realEstatePersistencePort.findByNo(request.getNo()).ifPresent(r -> {
+            if (!realEstateId.equals(r.getId()))
+                throw new EntityExistsException(
+                        messageSource.getMessage("realestate.already-exist", null, LocaleContextHolder.getLocale()));
+        });
+
+        oldRealEstate.setNo(request.getNo());
+        oldRealEstate.setCategory(category);
+        oldRealEstate.setSubCategory(subCategory);
+
+        return RealEstateDetailResponse.of(realEstatePersistencePort.save(oldRealEstate));
+    }
+
+    private void updateAddress(Long addressId, Address updateAddress) {
+        Address oldAddress = addressPersistencePort.findById(addressId)
+                .orElseThrow(() -> new NoSuchElementException(
+                        messageSource.getMessage("address.not-found", null, LocaleContextHolder.getLocale())));
+
+        oldAddress.setLatitude(updateAddress.getLatitude());
+        oldAddress.setLongitude(updateAddress.getLongitude());
+        oldAddress.setCityName(updateAddress.getCityName());
+        oldAddress.setDistrictName(updateAddress.getDistrictName());
+        oldAddress.setNeighborhoodName(updateAddress.getNeighborhoodName());
+        oldAddress.setPostCode(updateAddress.getPostCode());
+        oldAddress.setOpenAddress(updateAddress.getOpenAddress());
+
+        addressPersistencePort.save(oldAddress);
     }
 }

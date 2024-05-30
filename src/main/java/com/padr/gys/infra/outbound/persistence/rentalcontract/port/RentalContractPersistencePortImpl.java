@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class RentalContractPersistencePortImpl implements  RentalContractPersistencePort {
+class RentalContractPersistencePortImpl implements  RentalContractPersistencePort {
 
     private final RentalContractRepository rentalContractRepository;
 

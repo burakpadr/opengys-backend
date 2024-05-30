@@ -1,21 +1,22 @@
 package com.padr.gys.infra.inbound.rest.advert.usecase;
 
 import com.padr.gys.domain.advert.entity.Advert;
-import com.padr.gys.domain.advert.port.AdvertServicePort;
 import com.padr.gys.domain.advertplace.entity.AdvertPlace;
-import com.padr.gys.domain.advertplace.port.AdvertPlaceServicePort;
 import com.padr.gys.domain.common.exception.BusinessException;
 import com.padr.gys.domain.realestate.entity.RealEstate;
-import com.padr.gys.domain.realestate.port.RealEstateServicePort;
 import com.padr.gys.domain.rentalcontract.entity.RentalContract;
-import com.padr.gys.domain.rentalcontract.port.RentalContractServicePort;
 import com.padr.gys.domain.status.constant.MainStatus;
 import com.padr.gys.infra.inbound.rest.advert.model.request.CreateAdvertRequest;
 import com.padr.gys.infra.inbound.rest.advert.model.response.AdvertResponse;
+import com.padr.gys.infra.outbound.persistence.advert.port.AdvertPersistencePort;
+import com.padr.gys.infra.outbound.persistence.advertplace.port.AdvertPlacePersistencePort;
 
+import com.padr.gys.infra.outbound.persistence.realestate.port.RealEstatePersistencePort;
+import com.padr.gys.infra.outbound.persistence.rentalcontract.port.RentalContractPersistencePort;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -25,19 +26,24 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class CreateAdvertUseCase {
 
-    private final AdvertServicePort advertServicePort;
-    private final RealEstateServicePort realEstateServicePort;
-    private final AdvertPlaceServicePort advertPlaceServicePort;
-    private final RentalContractServicePort rentalContractServicePort;
+    private final AdvertPersistencePort advertPersistencePort;
+    private final AdvertPlacePersistencePort advertPlacePersistencePort;
+    private final RealEstatePersistencePort realEstatePersistencePort;
+    private final RentalContractPersistencePort rentalContractPersistencePort;
 
     private final MessageSource messageSource;
 
     public AdvertResponse execute(CreateAdvertRequest request) {
-        RealEstate realEstate = realEstateServicePort.findById(request.getRealEstateId());
-        AdvertPlace advertPlace = advertPlaceServicePort.findById(request.getAdvertPlaceId());
+        RealEstate realEstate = realEstatePersistencePort.findById(request.getRealEstateId())
+                .orElseThrow(() -> new NoSuchElementException(
+                        messageSource.getMessage("realestate.not-found", null, LocaleContextHolder.getLocale())));
+
+        AdvertPlace advertPlace = advertPlacePersistencePort.findById(request.getAdvertPlaceId())
+                .orElseThrow(() -> new NoSuchElementException(
+                        messageSource.getMessage("advertplace.not-found", null, LocaleContextHolder.getLocale())));
 
         if (realEstate.getMainStatus().equals(MainStatus.FOR_RENT) && request.getIsPublished()) {
-            List<RentalContract> publishedRentalContracts = rentalContractServicePort
+            List<RentalContract> publishedRentalContracts = rentalContractPersistencePort
                     .findByRealEstateIdAndIsPublished(realEstate.getId(), true);
 
             if (publishedRentalContracts.size() > 0)
@@ -55,6 +61,6 @@ public class CreateAdvertUseCase {
                 .advertPlace(advertPlace)
                 .build();
 
-        return AdvertResponse.of(advertServicePort.create(advert));
+        return AdvertResponse.of(advertPersistencePort.save(advert));
     }
 }

@@ -8,8 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import com.padr.gys.domain.categorization.entity.Category;
-import com.padr.gys.domain.categorization.port.CategoryServicePort;
 import com.padr.gys.infra.inbound.rest.categorization.model.response.CategoryResponse;
+import com.padr.gys.infra.outbound.persistence.categorization.port.CategoryPersistencePort;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,10 +17,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FindCategoriesUseCase {
 
-    private final CategoryServicePort categoryServicePort;
+    private final CategoryPersistencePort categoryPersistencePort;
 
     public Page<CategoryResponse> execute(Pageable pageable) {
-        Page<Category> categories = categoryServicePort.findAll(pageable);
+        Page<Category> categories = categoryPersistencePort.findAll(pageable);
 
         List<CategoryResponse> categorizationResponses = categories.getContent().stream()
                 .map(CategoryResponse::of).toList();

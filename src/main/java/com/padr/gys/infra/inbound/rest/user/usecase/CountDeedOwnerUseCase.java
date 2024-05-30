@@ -1,8 +1,7 @@
 package com.padr.gys.infra.inbound.rest.user.usecase;
 
+import com.padr.gys.infra.outbound.persistence.user.port.StaffPersistencePort;
 import org.springframework.stereotype.Component;
-
-import com.padr.gys.domain.user.port.StaffServicePort;
 
 import lombok.RequiredArgsConstructor;
 
@@ -10,9 +9,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CountDeedOwnerUseCase {
     
-    private final StaffServicePort staffServicePort;
+    private final StaffPersistencePort staffPersistencePort;
 
     public Long execute() {
-        return staffServicePort.countDeedOwner();
+        return staffPersistencePort.countByIsDeedOwner(true);
     }
 }

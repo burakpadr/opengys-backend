@@ -8,8 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import com.padr.gys.domain.attribute.entity.Attribute;
-import com.padr.gys.domain.attribute.port.AttributeServicePort;
 import com.padr.gys.infra.inbound.rest.attribute.model.response.AttributeResponse;
+import com.padr.gys.infra.outbound.persistence.attribute.port.AttributePersistencePort;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,10 +17,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FindAllAttributeUseCase {
 
-    private final AttributeServicePort attributeServicePort;
+    private final AttributePersistencePort attributePersistencePort;
 
     public Page<AttributeResponse> execute(Pageable pageable) {
-        Page<Attribute> attributes = attributeServicePort.find(pageable);
+        Page<Attribute> attributes = attributePersistencePort.find(pageable);
 
         List<AttributeResponse> attributeResponses = attributes.getContent().stream().map(AttributeResponse::of)
                 .toList();

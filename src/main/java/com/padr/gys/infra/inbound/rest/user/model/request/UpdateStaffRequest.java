@@ -20,11 +20,4 @@ public class UpdateStaffRequest {
 
     @NotNull
     private Boolean isDeedOwner;
-
-    public Staff to(User user) {
-        return Staff.builder()
-            .user(user)
-            .isDeedOwner(isDeedOwner)
-            .build();
-    } 
 }

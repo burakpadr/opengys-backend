@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class SubCategoryPersistencePortImpl implements SubCategoryPersistencePort {
+class SubCategoryPersistencePortImpl implements SubCategoryPersistencePort {
 
     private final SubCategoryRepository subCategoryRepository;
 

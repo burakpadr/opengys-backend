@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class CategoryPersistencePortImpl implements CategoryPersistencePort {
+class CategoryPersistencePortImpl implements CategoryPersistencePort {
 
     private final CategoryRepository categoryRepository;
 

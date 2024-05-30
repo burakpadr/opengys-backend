@@ -26,14 +26,4 @@ public class CreateUserRequest {
     private String password;
 
     private Long roleId;
-
-    public User to(Role role) {
-        return User.builder()
-                .name(name)
-                .surname(surname)
-                .email(email)
-                .password(password)
-                .role(role)
-                .build();
-    }
 }

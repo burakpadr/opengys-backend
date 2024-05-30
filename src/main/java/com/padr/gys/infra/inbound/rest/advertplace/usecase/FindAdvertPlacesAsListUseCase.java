@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.padr.gys.domain.advertplace.port.AdvertPlaceServicePort;
 import com.padr.gys.infra.inbound.rest.advertplace.model.AdvertPlaceResponse;
+import com.padr.gys.infra.outbound.persistence.advertplace.port.AdvertPlacePersistencePort;
 
 import lombok.RequiredArgsConstructor;
 
@@ -13,10 +13,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FindAdvertPlacesAsListUseCase {
 
-    private final AdvertPlaceServicePort advertPlaceServicePort;
+    private final AdvertPlacePersistencePort advertPlacePersistencePort;
 
     public List<AdvertPlaceResponse> execute() {
-        return advertPlaceServicePort
+        return advertPlacePersistencePort
                 .findAll()
                 .stream()
                 .map(AdvertPlaceResponse::of)
