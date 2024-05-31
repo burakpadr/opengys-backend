@@ -44,6 +44,7 @@ public class DashboardRepository {
                     AND i.is_published = true
                     AND i.is_deleted = false
                     AND NOT EXISTS (SELECT pd.id from payment_declarations pd where pd.invoice_id = i.id and pd.approvement_status = 'APPROVED')
+                    AND NOW() > i.date_of_invoice
                 """;
 
         Query query = entityManager.createNativeQuery(queryString, RentPaymentStatusStatistic.StatisticElement.class);
