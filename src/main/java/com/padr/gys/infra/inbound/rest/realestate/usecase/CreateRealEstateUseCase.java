@@ -3,6 +3,8 @@ package com.padr.gys.infra.inbound.rest.realestate.usecase;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+import com.padr.gys.domain.dashboard.context.DashboardHandlerContext;
+import com.padr.gys.domain.dashboard.entity.RealEstateDistributionByCategoriesStatistic;
 import com.padr.gys.infra.outbound.persistence.realestate.port.RealEstatePersistencePort;
 import jakarta.persistence.EntityExistsException;
 import org.springframework.context.MessageSource;
@@ -58,6 +60,13 @@ public class CreateRealEstateUseCase {
         realEstate.setSubCategory(subCategory);
         realEstate.setAddress(address);
 
-        return RealEstateResponse.of(realEstatePersistencePort.save(realEstate));
+        realEstatePersistencePort.save(realEstate);
+
+        // Upload cache
+
+        DashboardHandlerContext.getDashboardHandler(RealEstateDistributionByCategoriesStatistic.class)
+                .updateAllStatisticElements();
+
+        return RealEstateResponse.of(realEstate);
     }
 }
