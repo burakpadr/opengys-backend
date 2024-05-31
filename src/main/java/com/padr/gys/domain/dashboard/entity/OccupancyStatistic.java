@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.redis.core.RedisHash;
 
-@RedisHash("RentalIncomeStatistic")
+@RedisHash("OccupancyStatistic")
 @Builder
 @Data
 @NoArgsConstructor
