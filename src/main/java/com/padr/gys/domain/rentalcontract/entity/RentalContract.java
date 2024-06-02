@@ -39,9 +39,6 @@ public class RentalContract extends BaseEntity {
     private BigDecimal monthlyRentFee;
 
     @Column
-    private String currencyCodeOfRentFee;
-
-    @Column
     private Integer rentalPaymentDay;
 
     @Column

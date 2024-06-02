@@ -77,7 +77,6 @@ public class UpdateRentalContractUseCase {
         }
 
         oldRentalContract.setMonthlyRentFee(newRentalContract.getMonthlyRentFee());
-        oldRentalContract.setCurrencyCodeOfRentFee(newRentalContract.getCurrencyCodeOfRentFee());
         oldRentalContract.setRentalPaymentDay(newRentalContract.getRentalPaymentDay());
         oldRentalContract.setStartDate(newRentalContract.getStartDate());
         oldRentalContract.setEndDate(newRentalContract.getEndDate());

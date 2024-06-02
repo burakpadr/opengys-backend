@@ -19,7 +19,6 @@ public class RentalContractResponse {
     private Long id;
     private String tenantFullName;
     private BigDecimal monthlyRentFee;
-    private String currencyCodeOfRentFee;
     private Integer rentalPaymentDay;
 
     @JsonFormat(pattern = "dd-MM-yyyy")
@@ -42,7 +41,6 @@ public class RentalContractResponse {
                 .id(rentalContract.getId())
                 .tenantFullName(tenantOptional.isPresent() ? tenantOptional.get().getUser().getFullName() : null)
                 .monthlyRentFee(rentalContract.getMonthlyRentFee())
-                .currencyCodeOfRentFee(rentalContract.getCurrencyCodeOfRentFee())
                 .rentalPaymentDay(rentalContract.getRentalPaymentDay())
                 .startDate(rentalContract.getStartDate())
                 .endDate(rentalContract.getEndDate())

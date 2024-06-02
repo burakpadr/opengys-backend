@@ -22,10 +22,6 @@ public class CreateRentalContractRequest {
     private BigDecimal monthlyRentFee;
 
     @NotNull
-    @NotEmpty
-    private String currencyCodeOfRentFee;
-
-    @NotNull
     private Integer rentalPaymentDay;
 
     @NotNull
@@ -49,7 +45,6 @@ public class CreateRentalContractRequest {
     public RentalContract to() {
         return RentalContract.builder()
                 .monthlyRentFee(monthlyRentFee)
-                .currencyCodeOfRentFee(currencyCodeOfRentFee)
                 .rentalPaymentDay(rentalPaymentDay)
                 .startDate(startDate)
                 .endDate(endDate)

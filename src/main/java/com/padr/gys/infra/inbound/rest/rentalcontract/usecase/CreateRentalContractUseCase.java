@@ -175,7 +175,6 @@ public class CreateRentalContractUseCase {
             return Invoice.builder()
                     .type(InvoiceType.RENT_PAYMENT)
                     .dateOfInvoice(dateOfInvoice)
-                    .currencyCode(rentalContract.getCurrencyCodeOfRentFee())
                     .amount(invoiceFeePaid)
                     .entityId(rentalContract.getId())
                     .realEstate(rentalContract.getRealEstate())
