@@ -9,8 +9,6 @@ import com.padr.gys.domain.dashboard.entity.RentalIncomeStatistic;
 
 public interface DashboardPersistencePort {
 
-    RentPaymentStatusStatistic.StatisticElement findPaidRentPaymentInvoices();
-
     RentPaymentStatusStatistic.StatisticElement findUnpaidRentPaymentInvoices();
 
     RentPaymentStatusStatistic.StatisticElement findUpcomingRentPaymentInvoices();

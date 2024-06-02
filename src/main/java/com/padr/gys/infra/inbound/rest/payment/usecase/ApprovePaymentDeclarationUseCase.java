@@ -34,9 +34,6 @@ public class ApprovePaymentDeclarationUseCase {
         paymentDeclarationPersistencePort.save(paymentDeclaration);
 
         DashboardHandlerContext.getDashboardHandler(RentPaymentStatusStatistic.class)
-                .updateStatisticElement(EnumRentPaymentStatusStatisticElementType.PAID);
-
-        DashboardHandlerContext.getDashboardHandler(RentPaymentStatusStatistic.class)
                 .updateStatisticElement(EnumRentPaymentStatusStatisticElementType.PENDING);
 
         DashboardHandlerContext.getDashboardHandler(RentalIncomeStatistic.class)

@@ -3,6 +3,10 @@ package com.padr.gys.infra.inbound.rest.rentalcontract.usecase;
 import com.padr.gys.domain.archive.entity.Archive;
 import com.padr.gys.domain.common.property.AppProperty;
 import com.padr.gys.domain.common.util.ArchiveUtil;
+import com.padr.gys.domain.dashboard.constant.EnumRentPaymentStatusStatisticElementType;
+import com.padr.gys.domain.dashboard.context.DashboardHandlerContext;
+import com.padr.gys.domain.dashboard.entity.OccupancyStatistic;
+import com.padr.gys.domain.dashboard.entity.RentPaymentStatusStatistic;
 import com.padr.gys.domain.payment.constant.InvoiceType;
 import com.padr.gys.domain.payment.entity.Invoice;
 import com.padr.gys.domain.rentalcontract.entity.RentalContract;
@@ -84,7 +88,7 @@ public class UpdateRentalContractUseCase {
 
         rentalContractPersistencePort.save(oldRentalContract);
 
-        if (oldRentalContract.getIsPublished()) {
+        if (!oldRentalContract.getIsPublished()) {
             List<Invoice> invoices = invoicePersistencePort.findByFilterAsList(InvoiceType.RENT_PAYMENT,
                     oldRentalContract.getId());
 
@@ -93,6 +97,14 @@ public class UpdateRentalContractUseCase {
             });
 
             invoicePersistencePort.saveAll(invoices);
+
+            DashboardHandlerContext.getDashboardHandler(OccupancyStatistic.class).updateAllStatisticElements();
+
+            DashboardHandlerContext.getDashboardHandler(RentPaymentStatusStatistic.class)
+                    .updateStatisticElement(EnumRentPaymentStatusStatisticElementType.UNPAID);
+
+            DashboardHandlerContext.getDashboardHandler(RentPaymentStatusStatistic.class)
+                    .updateStatisticElement(EnumRentPaymentStatusStatisticElementType.UPCOMING);
         }
 
         return RentalContractResponse.of(oldRentalContract);

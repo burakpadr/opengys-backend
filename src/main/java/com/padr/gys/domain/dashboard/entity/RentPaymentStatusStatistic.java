@@ -19,7 +19,6 @@ public class RentPaymentStatusStatistic {
     // paid, unpaid, upcoming and pending
 
     private String id;
-    private StatisticElement paidStatisticElement;
     private StatisticElement unpaidStatisticElement;
     private StatisticElement upcomingStatisticElement;
     private StatisticElement pendingStatisticsElement;

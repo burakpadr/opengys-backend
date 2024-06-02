@@ -14,7 +14,7 @@ import java.util.List;
 public class DashboardResponse {
 
     private RentPaymentStatusStatisticResponse rentPaymentStatusStatistic;
-    private RentalIncomeStatisticResponse rentalIncomeStatusStatistic;
+    private RentalIncomeStatisticResponse rentalIncomeStatistic;
     private RealEstateDistributionByCategoriesStatisticResponse realEstateDistributionByCategoriesStatistic;
     private OccupancyStatisticResponse occupancyStatistic;
 
@@ -25,7 +25,7 @@ public class DashboardResponse {
 
         return DashboardResponse.builder()
                 .rentPaymentStatusStatistic(RentPaymentStatusStatisticResponse.of(rentPaymentStatusStatistic))
-                .rentalIncomeStatusStatistic(RentalIncomeStatisticResponse.of(rentalIncomeStatistic))
+                .rentalIncomeStatistic(RentalIncomeStatisticResponse.of(rentalIncomeStatistic))
                 .realEstateDistributionByCategoriesStatistic(RealEstateDistributionByCategoriesStatisticResponse
                         .of(realEstateDistributionByCategoriesStatistic))
                 .occupancyStatistic(OccupancyStatisticResponse.of(occupancyStatistic))
@@ -43,7 +43,6 @@ public class DashboardResponse {
 
         public static RentPaymentStatusStatisticResponse of(RentPaymentStatusStatistic rentPaymentStatusStatistic) {
             return RentPaymentStatusStatisticResponse.builder()
-                    .paidStatisticElement(rentPaymentStatusStatistic.getPaidStatisticElement())
                     .unpaidStatisticElement(rentPaymentStatusStatistic.getUnpaidStatisticElement())
                     .upcomingStatisticElement(rentPaymentStatusStatistic.getUpcomingStatisticElement())
                     .pendingStatisticsElement(rentPaymentStatusStatistic.getPendingStatisticsElement())

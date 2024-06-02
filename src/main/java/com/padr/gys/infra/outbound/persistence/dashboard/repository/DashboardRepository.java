@@ -19,22 +19,6 @@ public class DashboardRepository {
 
     private final EntityManager entityManager;
 
-    public RentPaymentStatusStatistic.StatisticElement findPaidRentPaymentInvoices() {
-        String queryString = """
-                SELECT DISTINCT COALESCE(SUM(i.amount), 0)as invoiceRevenue, count(i.id) as numberOfInvoice
-                FROM invoices i
-                INNER JOIN payment_declarations pd ON pd.invoice_id = i.id
-                WHERE
-                    i.type = 'RENT_PAYMENT'
-                    AND pd.approvement_status = 'APPROVED'
-                    AND to_char(NOW(), 'MM-YY') = to_char(i.last_modified_date, 'MM-YY')
-                """;
-
-        Query query = entityManager.createNativeQuery(queryString, RentPaymentStatusStatistic.StatisticElement.class);
-
-        return (RentPaymentStatusStatistic.StatisticElement) query.getSingleResult();
-    }
-
     public RentPaymentStatusStatistic.StatisticElement findUnpaidRentPaymentInvoices() {
         String queryString = """
                 SELECT DISTINCT COALESCE(SUM(i.amount), 0) as invoiceRevenue, count(i.id) as numberOfInvoice

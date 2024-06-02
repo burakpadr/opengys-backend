@@ -19,11 +19,6 @@ class DashboardPersistencePortImpl implements DashboardPersistencePort {
     private final DashboardRepository dashboardRepository;
 
     @Override
-    public StatisticElement findPaidRentPaymentInvoices() {
-        return dashboardRepository.findPaidRentPaymentInvoices();
-    }
-
-    @Override
     public StatisticElement findUnpaidRentPaymentInvoices() {
         return dashboardRepository.findUnpaidRentPaymentInvoices();
     }

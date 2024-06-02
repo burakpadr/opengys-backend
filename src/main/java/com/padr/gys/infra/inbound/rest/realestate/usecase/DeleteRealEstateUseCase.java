@@ -1,5 +1,7 @@
 package com.padr.gys.infra.inbound.rest.realestate.usecase;
 
+import com.padr.gys.domain.dashboard.context.DashboardHandlerContext;
+import com.padr.gys.domain.dashboard.entity.RealEstateDistributionByCategoriesStatistic;
 import com.padr.gys.domain.realestate.entity.RealEstate;
 import com.padr.gys.infra.outbound.persistence.realestate.port.RealEstatePersistencePort;
 import org.springframework.context.MessageSource;
@@ -25,5 +27,8 @@ public class DeleteRealEstateUseCase {
         realEstate.setIsDeleted(true);
 
         realEstatePersistencePort.save(realEstate);
+
+        DashboardHandlerContext.getDashboardHandler(RealEstateDistributionByCategoriesStatistic.class)
+                .updateAllStatisticElements();
     } 
 }

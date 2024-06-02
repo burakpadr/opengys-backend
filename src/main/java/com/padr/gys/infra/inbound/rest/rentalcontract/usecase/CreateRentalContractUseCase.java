@@ -4,6 +4,10 @@ import com.padr.gys.common.util.DateUtil;
 import com.padr.gys.domain.archive.entity.Archive;
 import com.padr.gys.domain.common.property.AppProperty;
 import com.padr.gys.domain.common.util.ArchiveUtil;
+import com.padr.gys.domain.dashboard.constant.EnumRentPaymentStatusStatisticElementType;
+import com.padr.gys.domain.dashboard.context.DashboardHandlerContext;
+import com.padr.gys.domain.dashboard.entity.OccupancyStatistic;
+import com.padr.gys.domain.dashboard.entity.RentPaymentStatusStatistic;
 import com.padr.gys.domain.payment.constant.InvoiceType;
 import com.padr.gys.domain.payment.entity.Invoice;
 import com.padr.gys.domain.realestate.entity.RealEstate;
@@ -85,6 +89,15 @@ public class CreateRentalContractUseCase {
         // Create rent invoices
 
         invoicePersistencePort.saveAll(prepareRentInvoices(rentalContract));
+
+        if (rentalContract.getIsPublished()) {
+            DashboardHandlerContext.getDashboardHandler(OccupancyStatistic.class).updateAllStatisticElements();
+            DashboardHandlerContext.getDashboardHandler(RentPaymentStatusStatistic.class)
+                    .updateStatisticElement(EnumRentPaymentStatusStatisticElementType.UNPAID);
+
+            DashboardHandlerContext.getDashboardHandler(RentPaymentStatusStatistic.class)
+                    .updateStatisticElement(EnumRentPaymentStatusStatisticElementType.UPCOMING);
+        }
 
         return RentalContractResponse.of(rentalContract);
     }

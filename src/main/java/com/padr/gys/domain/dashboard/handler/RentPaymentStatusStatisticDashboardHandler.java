@@ -34,21 +34,10 @@ public class RentPaymentStatusStatisticDashboardHandler
     @Override
     public void updateStatisticElement(EnumRentPaymentStatusStatisticElementType statisticElementType) {
         switch (statisticElementType) {
-            case PAID -> refreshPaidStatisticElement();
             case UNPAID -> refreshUnpaidStatisticElement();
             case UPCOMING -> refreshUpcomingStatisticElement();
             case PENDING -> refreshPendingStatisticElement();
         }
-    }
-
-    private void refreshPaidStatisticElement() {
-        RentPaymentStatusStatistic rentPaymentStatusStatistic = rentPaymentStatusStatisticCachePort.findAll().get(0);
-
-        StatisticElement newPaidStatisticElement = dashboardPersistencePort.findPaidRentPaymentInvoices();
-
-        rentPaymentStatusStatistic.setPaidStatisticElement(newPaidStatisticElement);
-
-        rentPaymentStatusStatisticCachePort.save(rentPaymentStatusStatistic);
     }
 
     private void refreshUnpaidStatisticElement() {
@@ -85,13 +74,11 @@ public class RentPaymentStatusStatisticDashboardHandler
     public void updateAllStatisticElements() {
         rentPaymentStatusStatisticCachePort.deleteAll();
 
-        StatisticElement paidStatisticElement = dashboardPersistencePort.findPaidRentPaymentInvoices();
         StatisticElement unpaidStatisticElement = dashboardPersistencePort.findUnpaidRentPaymentInvoices();
         StatisticElement upcomingStatisticElement = dashboardPersistencePort.findUpcomingRentPaymentInvoices();
         StatisticElement pendingStatisticElement = dashboardPersistencePort.findPendingRentPaymentInvoices();
 
         RentPaymentStatusStatistic rentPaymentStatusStatistic = RentPaymentStatusStatistic.builder()
-                .paidStatisticElement(paidStatisticElement)
                 .unpaidStatisticElement(unpaidStatisticElement)
                 .upcomingStatisticElement(upcomingStatisticElement)
                 .pendingStatisticsElement(pendingStatisticElement)
