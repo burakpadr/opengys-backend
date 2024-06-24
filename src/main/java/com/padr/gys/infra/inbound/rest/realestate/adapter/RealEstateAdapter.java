@@ -2,6 +2,7 @@ package com.padr.gys.infra.inbound.rest.realestate.adapter;
 
 import java.util.List;
 
+import com.padr.gys.infra.inbound.rest.realestate.usecase.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
@@ -22,15 +23,6 @@ import com.padr.gys.infra.inbound.rest.realestate.model.request.UpdateRealEstate
 import com.padr.gys.infra.inbound.rest.realestate.model.response.RealEstateDetailResponse;
 import com.padr.gys.infra.inbound.rest.realestate.model.response.RealEstatePhotoResponse;
 import com.padr.gys.infra.inbound.rest.realestate.model.response.RealEstateResponse;
-import com.padr.gys.infra.inbound.rest.realestate.usecase.ChangeRealEstateCoverPhotoUseCase;
-import com.padr.gys.infra.inbound.rest.realestate.usecase.CreateRealEstatePhotosUseCase;
-import com.padr.gys.infra.inbound.rest.realestate.usecase.CreateRealEstateUseCase;
-import com.padr.gys.infra.inbound.rest.realestate.usecase.DeleteRealEstatePhotoUseCase;
-import com.padr.gys.infra.inbound.rest.realestate.usecase.DeleteRealEstateUseCase;
-import com.padr.gys.infra.inbound.rest.realestate.usecase.FindRealEstateByIdUseCase;
-import com.padr.gys.infra.inbound.rest.realestate.usecase.FindRealEstatePhotosUseCase;
-import com.padr.gys.infra.inbound.rest.realestate.usecase.FindRealEstatesUseCase;
-import com.padr.gys.infra.inbound.rest.realestate.usecase.UpdateRealEstateUseCase;
 
 import lombok.RequiredArgsConstructor;
 
@@ -45,10 +37,10 @@ public class RealEstateAdapter {
     private final UpdateRealEstateUseCase updateRealEstateUseCase;
     private final DeleteRealEstateUseCase deleteRealEstateUseCase;
     private final ChangeRealEstateCoverPhotoUseCase changeRealEstateCoverPhotoUseCase;
-
     private final CreateRealEstatePhotosUseCase createRealEstatePhotosUseCase;
     private final FindRealEstatePhotosUseCase findRealEstatePhotosUseCase;
     private final DeleteRealEstatePhotoUseCase deleteRealEstatePhotoUseCase;
+    private final SearchRealEstateUseCase searchRealEstateUseCase;
 
     @GetMapping
     public Page<RealEstateResponse> findAll(Pageable pageable) {
@@ -94,5 +86,10 @@ public class RealEstateAdapter {
     @DeleteMapping("/{realEstateId}/photos/{realEstatePhotoId}")
     public void deleteRealEstatePhoto(@PathVariable Long realEstateId, @PathVariable Long realEstatePhotoId) {
         deleteRealEstatePhotoUseCase.execute(realEstateId, realEstatePhotoId);
+    }
+
+    @GetMapping("/search")
+    public Page<RealEstateResponse> findBySearchTerm(@RequestParam("search") String searchTerm, Pageable pageable) {
+        return searchRealEstateUseCase.execute(searchTerm, pageable);
     }
 }

@@ -1,6 +1,7 @@
 package com.padr.gys.infra.inbound.rest.rbac.usecase;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.padr.gys.infra.outbound.persistence.rbac.port.UIElementPersistencePort;
@@ -20,10 +21,22 @@ public class CreateOrUpdateUIElementUseCase {
 
     public List<UIElementResponse> execute(List<UIElementRequest> request) {
         List<UIElement> uiElements = request.stream().map(element -> {
-            return UIElement.builder()
-                    .componentName(element.getComponentName())
-                    .label(element.getLabel())
-                    .build();
+            Optional<UIElement> uiElementOptional = uiElementPersistencePort
+                    .findByComponentName(element.getComponentName());
+
+            if (uiElementOptional.isPresent()) {
+                UIElement uiElement = uiElementOptional.get();
+
+                uiElement.setLabel(element.getLabel());
+
+                return uiElement;
+            }
+            else {
+                return UIElement.builder()
+                        .componentName(element.getComponentName())
+                        .label(element.getLabel())
+                        .build();
+            }
         }).collect(Collectors.toList());
 
         return uiElementPersistencePort.saveAll(uiElements).stream().map(UIElementResponse::of).toList();

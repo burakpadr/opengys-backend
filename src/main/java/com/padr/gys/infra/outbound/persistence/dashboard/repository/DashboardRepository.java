@@ -27,7 +27,7 @@ public class DashboardRepository {
                     i.type = 'RENT_PAYMENT'
                     AND i.is_published = true
                     AND i.is_deleted = false
-                    AND NOT EXISTS (SELECT pd.id from payment_declarations pd where pd.invoice_id = i.id and pd.approvement_status = 'APPROVED')
+                    AND NOT EXISTS (SELECT pd.id from payment_declarations pd where pd.invoice_id = i.id and pd.approvement_status = 'APPROVED' OR pd.approvement_status = 'WAITING')
                     AND NOW() > i.date_of_invoice
                 """;
 

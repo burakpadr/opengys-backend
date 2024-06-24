@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -26,8 +27,7 @@ public class CreateRealEstateRequest {
     private Long categoryId;
     private Long subCategoryId;
 
-    @NotNull
-    private MainStatus mainStatus;
+    private MainStatus mainStatus = MainStatus.FOR_RENT;
 
     @NotNull
     @JsonProperty("address")

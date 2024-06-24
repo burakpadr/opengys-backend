@@ -4,6 +4,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 import com.padr.gys.domain.dashboard.context.DashboardHandlerContext;
+import com.padr.gys.domain.dashboard.entity.OccupancyStatistic;
 import com.padr.gys.domain.dashboard.entity.RealEstateDistributionByCategoriesStatistic;
 import com.padr.gys.infra.outbound.persistence.realestate.port.RealEstatePersistencePort;
 import jakarta.persistence.EntityExistsException;
@@ -66,6 +67,8 @@ public class CreateRealEstateUseCase {
 
         DashboardHandlerContext.getDashboardHandler(RealEstateDistributionByCategoriesStatistic.class)
                 .updateAllStatisticElements();
+
+        DashboardHandlerContext.getDashboardHandler(OccupancyStatistic.class).updateAllStatisticElements();
 
         return RealEstateResponse.of(realEstate);
     }

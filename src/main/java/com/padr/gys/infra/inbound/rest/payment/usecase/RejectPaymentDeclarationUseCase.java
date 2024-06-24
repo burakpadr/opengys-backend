@@ -36,5 +36,8 @@ public class RejectPaymentDeclarationUseCase {
 
         DashboardHandlerContext.getDashboardHandler(RentPaymentStatusStatistic.class)
                 .updateStatisticElement(EnumRentPaymentStatusStatisticElementType.PENDING);
+
+        DashboardHandlerContext.getDashboardHandler(RentPaymentStatusStatistic.class)
+                .updateStatisticElement(EnumRentPaymentStatusStatisticElementType.UNPAID);
     }
 }

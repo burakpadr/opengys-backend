@@ -1,6 +1,7 @@
 package com.padr.gys.infra.inbound.rest.realestate.usecase;
 
 import com.padr.gys.domain.dashboard.context.DashboardHandlerContext;
+import com.padr.gys.domain.dashboard.entity.OccupancyStatistic;
 import com.padr.gys.domain.dashboard.entity.RealEstateDistributionByCategoriesStatistic;
 import com.padr.gys.domain.realestate.entity.RealEstate;
 import com.padr.gys.infra.outbound.persistence.realestate.port.RealEstatePersistencePort;
@@ -30,5 +31,7 @@ public class DeleteRealEstateUseCase {
 
         DashboardHandlerContext.getDashboardHandler(RealEstateDistributionByCategoriesStatistic.class)
                 .updateAllStatisticElements();
+
+        DashboardHandlerContext.getDashboardHandler(OccupancyStatistic.class).updateAllStatisticElements();
     } 
 }

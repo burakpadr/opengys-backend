@@ -19,4 +19,6 @@ public interface RealEstatePersistencePort {
     Page<RealEstate> findAll(Pageable pageable);
 
     Optional<RealEstate> findByNo(String no);
+
+    Page<RealEstate> findBySearchTerm(String searchTerm, Pageable pageable);
 }

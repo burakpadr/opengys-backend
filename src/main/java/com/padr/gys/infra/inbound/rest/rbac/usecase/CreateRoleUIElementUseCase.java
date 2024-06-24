@@ -23,8 +23,8 @@ import lombok.RequiredArgsConstructor;
 public class CreateRoleUIElementUseCase {
 
     private final RolePersistencePort rolePersistencePort;
-    private UIElementPersistencePort uiElementPersistencePort;
-    private RoleUIElementPersistencePort roleUIElementPersistencePort;
+    private final UIElementPersistencePort uiElementPersistencePort;
+    private final RoleUIElementPersistencePort roleUIElementPersistencePort;
 
     private final MessageSource messageSource;
 

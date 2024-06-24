@@ -73,6 +73,9 @@ public class CreatePaymentDeclarationUseCase {
         DashboardHandlerContext.getDashboardHandler(RentPaymentStatusStatistic.class)
                 .updateStatisticElement(EnumRentPaymentStatusStatisticElementType.PENDING);
 
+        DashboardHandlerContext.getDashboardHandler(RentPaymentStatusStatistic.class)
+                .updateStatisticElement(EnumRentPaymentStatusStatisticElementType.UNPAID);
+
         return PaymentDeclarationResponse.of(paymentDeclaration);
     }
 }

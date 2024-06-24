@@ -42,4 +42,9 @@ class RealEstatePersistencePortImpl implements RealEstatePersistencePort {
     public Optional<RealEstate> findByNo(String no) {
         return realEstateRepository.findByNo(no);
     }
+
+    @Override
+    public Page<RealEstate> findBySearchTerm(String searchTerm, Pageable pageable) {
+        return realEstateRepository.findBySearchTerm(searchTerm, pageable);
+    }
 }

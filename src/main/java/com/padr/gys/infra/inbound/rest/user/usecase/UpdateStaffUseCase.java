@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class UpdateStaffUseCase {
 
     private final StaffPersistencePort staffPersistencePort;
-    private UserPersistencePort userPersistencePort;
+    private final UserPersistencePort userPersistencePort;
     private final RolePersistencePort rolePersistencePort;
 
     private final MessageSource messageSource;

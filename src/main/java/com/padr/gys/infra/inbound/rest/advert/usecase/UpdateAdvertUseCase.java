@@ -45,7 +45,7 @@ public class UpdateAdvertUseCase {
                                 LocaleContextHolder.getLocale()));
         }
 
-        AdvertPlace advertPlace = advertPlacePersistencePort.findById(id)
+        AdvertPlace advertPlace = advertPlacePersistencePort.findById(request.getAdvertPlaceId())
                 .orElseThrow(() -> new NoSuchElementException(
                         messageSource.getMessage("advertplace.not-found", null, LocaleContextHolder.getLocale())));
 
