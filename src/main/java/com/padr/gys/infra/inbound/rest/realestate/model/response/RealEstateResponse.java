@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import com.padr.gys.domain.realestate.entity.RealEstate;
 
+import com.padr.gys.domain.status.constant.MainStatus;
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,7 +14,7 @@ public class RealEstateResponse {
 
     private Long id;
     private String no;
-    private String mainStatus;
+    private MainStatus mainStatus;
     private String districtName;
     private String cityName;
     private String coverPhotoPath;
@@ -24,7 +25,7 @@ public class RealEstateResponse {
         return RealEstateResponse.builder()
                 .id(realEstate.getId())
                 .no(realEstate.getNo())
-                .mainStatus(realEstate.getMainStatus().getValue())
+                .mainStatus(realEstate.getMainStatus())
                 .districtName(realEstate.getAddress().getDistrictName())
                 .cityName(realEstate.getAddress().getCityName())
                 .coverPhotoPath(coverPhotoIsNotNull ? realEstate.getCoverPhoto().getPath() : null)
