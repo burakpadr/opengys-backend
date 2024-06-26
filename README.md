@@ -2,6 +2,7 @@
 
 **OpenGYS** is an fully open source real estate management system. **OpenGYS**, allow the landlords to manage their real estates. So, the landlords can add rent contract, track rent payments, track monthly rental income and real estate distribution by category via dashboard.
 
+[Frontend project](https://github.com/burakpadr/opengys-backend)
 
 # Prerequisite
 
