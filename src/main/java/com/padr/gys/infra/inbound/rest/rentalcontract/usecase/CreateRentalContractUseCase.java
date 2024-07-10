@@ -110,8 +110,8 @@ public class CreateRentalContractUseCase {
     }
 
     private List<Invoice> prepareRentInvoices(RentalContract rentalContract) {
-        Long rentalContractValidityPeriodAsMonths = DateUtil.differenceBetween(ChronoUnit.MONTHS,
-                rentalContract.getStartDate(), rentalContract.getEndDate()) + 1;
+        long rentalContractValidityPeriodAsMonths = DateUtil.differenceBetween(ChronoUnit.MONTHS,
+                rentalContract.getStartDate(), rentalContract.getEndDate()) + 2;
 
         return LongStream.range(0, rentalContractValidityPeriodAsMonths).boxed().map(index -> {
             int invoiceYear = rentalContract.getStartDate().plusMonths(index).getYear();
@@ -121,11 +121,9 @@ public class CreateRentalContractUseCase {
             int daysInMonth = yearMonth.lengthOfMonth();
 
             LocalDate dateOfInvoice;
-            BigDecimal invoiceFeePaid = BigDecimal.ZERO;
+            BigDecimal invoiceFeePaid;
 
             if (index == 0) {
-                long numberOfDaysInvoicePaid;
-
                 int rentalContractStartDay = rentalContract.getStartDate().getDayOfMonth();
                 int rentalContractEndDay = rentalContract.getEndDate().getDayOfMonth();
 
@@ -137,9 +135,6 @@ public class CreateRentalContractUseCase {
                         dateOfInvoice = rentalContract.getStartDate();
                     }
 
-                    numberOfDaysInvoicePaid = DateUtil.differenceBetween(ChronoUnit.DAYS,
-                            rentalContract.getStartDate(), rentalContract.getEndDate()) + 1;
-
                     invoiceFeePaid = rentalContract.getMonthlyRentFee();
                 } else {
                     dateOfInvoice = rentalContract.getStartDate()
@@ -150,17 +145,17 @@ public class CreateRentalContractUseCase {
                                                     invoiceMonth,
                                                     rentalContract.getRentalPaymentDay());
 
-                    numberOfDaysInvoicePaid = daysInMonth - rentalContract.getStartDate().getDayOfMonth() + 1;
+                    long numberOfDaysInvoicePaid = daysInMonth - rentalContract.getStartDate().getDayOfMonth() + 1;
 
                     invoiceFeePaid = rentalContract.getMonthlyRentFee()
                             .divide(new BigDecimal(daysInMonth), 2, RoundingMode.HALF_UP)
                             .multiply(new BigDecimal(numberOfDaysInvoicePaid));
                 }
 
-            } else if (index == rentalContractValidityPeriodAsMonths - 1) {
+            } else if (index.equals(rentalContractValidityPeriodAsMonths - 1)) {
                 dateOfInvoice = rentalContract.getEndDate()
                         .getDayOfMonth() > rentalContract
-                                .getRentalPaymentDay().intValue() ? LocalDate.of(invoiceYear, invoiceMonth,
+                        .getRentalPaymentDay() ? LocalDate.of(invoiceYear, invoiceMonth,
                                         rentalContract.getRentalPaymentDay())
                                         : rentalContract.getEndDate();
 
