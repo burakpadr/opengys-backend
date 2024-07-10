@@ -84,7 +84,6 @@ public class DashboardRepository {
                     pd.invoice_id = i.id
                 WHERE
                     i.type = 'RENT_PAYMENT'
-                    AND i.is_published = true
                     AND i.is_deleted = false
                     AND pd.approvement_status = 'APPROVED'
                     AND date_part('year', pd.last_modified_date) = date_part('year', NOW())
